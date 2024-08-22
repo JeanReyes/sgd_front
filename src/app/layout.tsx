@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { cookies } from "next/headers";
-import AuthProvider from "@/auth/components/AuthProvider";
+import AuthProvider from "@/app/auth/components/AuthProvider";
+import { inter } from "./config/fonts";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "SGD",
@@ -18,7 +17,9 @@ export default function RootLayout({
 }>) {
 
   const cookieStore = cookies();
-  const theme = JSON.parse(cookieStore.get("theme")?.value ?? "light")
+  const theme = cookieStore.get("theme")?.value
+    ? JSON.parse(cookieStore.get("theme")!.value)
+    : "light";
 
   return (
     <AuthProvider>

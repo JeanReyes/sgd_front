@@ -1,12 +1,18 @@
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import { TopMenu } from "@/components/top-menu/TopMenu";
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { ContainerMenu } from "@/components/sidebar/ContainerMenu";
+import { cookies } from "next/headers";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   const session = await getServerSession(authOptions);
+    const cookieStore = cookies();
+    const theme = cookieStore.get("theme")?.value
+      ? JSON.parse(cookieStore.get("theme")!.value)
+      : "light";
+
 
     if (!session) {
       redirect("/api/auth/signin");
@@ -14,15 +20,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <>
-      <Sidebar />
-      <div className="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%] min-h-screen">
-        <TopMenu />
-        <div
-          className={`px-6 pt-6 p-2 m-6 pb-5 rounded  dark:text-white dark:bg-slate-800`}
-        >
-          {children}
-        </div>
-      </div>
+      <ContainerMenu session={session} theme={theme}>
+        {children}
+      </ContainerMenu>
     </>
   );
 }

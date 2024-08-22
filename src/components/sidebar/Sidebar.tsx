@@ -1,35 +1,37 @@
+'use client'
+
 import Image from 'next/image';
-import React from 'react'
-import { SidebarItem } from './SidebarItem';
-import { IoCalendarOutline, IoCheckboxOutline } from 'react-icons/io5';
-import { LogoutButton } from './LogoutButton';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { SidebarItem, LogoutButton } from "@/components";
+import { titleFont } from '@/app/config/fonts';
+import { menuItem } from './map-menu';
+import { Session } from 'next-auth';
+import {
+  TbLayoutSidebarLeftCollapse,
+} from "react-icons/tb";
+import { useCollapseMenu } from '@/store';
 
-const menuItem = [
-  {
-    href: "/dashboard",
-    title: "Home",
-    icon: <IoCalendarOutline size={30} />,
-  },
-  {
-    href: "/dashboard/solicitud",
-    title: "Solicitudes",
-    icon: <IoCheckboxOutline size={30} />,
-  },
-];
+interface Props {
+  session: Session
+}
 
-export const Sidebar = async () => {
-
-  const session = await getServerSession(authOptions);
+export const Sidebar =  ({ session }: Props) => {
+  
+  const handleCollapseMenu = useCollapseMenu((state) => state.closeCollapseMenu);
 
   return (
-    <aside className="dark:bg-slate-800 border-r dark:border-red-500 ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
+    <aside className="dark:bg-slate-800 border-r dark:border-red-500 ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen bg-white lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] transition-all duration-300">
       <div>
-        <div className="text-center mx-6 px-6 py-4">
-          <h2 className="text-xl">NES-SGD</h2>
+        <div className=" text-center mx-6 px-6 py-4">
+          <span className={`${titleFont.className} antialiased font-bold`}>
+            NES
+          </span>
+          <span> | SGD</span>
+        {/* <TbLayoutSidebarLeftCollapse
+          className="cursor-pointer"
+          size={30}
+          onClick={handleCollapseMenu} 
+         /> */}
         </div>
-
         <div className="mt-8 text-center">
           <Image
             src={

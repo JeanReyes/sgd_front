@@ -20,6 +20,8 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+        console.log(credentials);
+        
         // const user = await signInEmailPassword(
         //   credentials?.email!,
         //   credentials?.password!
