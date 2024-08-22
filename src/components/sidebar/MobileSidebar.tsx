@@ -34,7 +34,7 @@ export const MobileSidebar = ({ position = "left" }: Props) => {
 
       <nav
         className={clsx(
-          `fixed p-5 left-0 top-0 w-[400px] h-screen dark:bg-slate-800 bg-white z-20 shadow-2xl transform transition-all duration-300`,
+          `fixed p-5 left-0 top-0 w-full h-screen dark:bg-slate-800 bg-white z-20 shadow-2xl transform transition-all duration-300`,
           {
             "right-0": position === "right",
             "left-0": position === "left",

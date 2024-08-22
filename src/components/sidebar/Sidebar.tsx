@@ -1,14 +1,12 @@
 'use client'
 
 import Image from 'next/image';
-import { SidebarItem, LogoutButton } from "@/components";
+import { SidebarItem } from "@/components";
 import { titleFont } from '@/app/config/fonts';
 import { menuItem } from './map-menu';
 import { Session } from 'next-auth';
-import {
-  TbLayoutSidebarLeftCollapse,
-} from "react-icons/tb";
 import { useCollapseMenu } from '@/store';
+import { GoSidebarExpand } from 'react-icons/go';
 
 interface Props {
   session: Session
@@ -25,12 +23,6 @@ export const Sidebar =  ({ session }: Props) => {
           <span className={`${titleFont.className} antialiased font-bold`}>
             NES
           </span>
-          <span> | SGD</span>
-        {/* <TbLayoutSidebarLeftCollapse
-          className="cursor-pointer"
-          size={30}
-          onClick={handleCollapseMenu} 
-         /> */}
         </div>
         <div className="mt-8 text-center">
           <Image
@@ -62,8 +54,12 @@ export const Sidebar =  ({ session }: Props) => {
         </ul>
       </div>
 
-      <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t dark:border-red-500">
-        <LogoutButton />
+      <div className="px-6 -mx-6 pt-4 flex justify-center items-center border-t dark:border-red-500">
+        <GoSidebarExpand
+          className="cursor-pointer"
+          size={30}
+          onClick={handleCollapseMenu}
+        />
       </div>
     </aside>
   );
