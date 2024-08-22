@@ -44,7 +44,6 @@ export const ContainerMenu = ({ children, session, theme }: Props) => {
         >
           {children}
         </div>
-        ¡
       </div>
     </div>
   );

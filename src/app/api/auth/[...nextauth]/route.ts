@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
           placeholder: "usuario@gmail.com",
         },
         password: { label: "Password", type: "password" },
+        name: {label: "Nombre", type: "text", placeholder: "nombre"}
       },
       async authorize(credentials, req) {
         console.log(credentials);
@@ -29,7 +30,7 @@ export const authOptions: NextAuthOptions = {
         const user: any = {
           email: credentials?.email!,
           password: credentials?.password!,
-          name: "Nicolas"
+          name: credentials?.name
         };
 
         if (user) {

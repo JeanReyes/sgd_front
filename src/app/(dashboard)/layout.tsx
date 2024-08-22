@@ -12,8 +12,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     const theme = cookieStore.get("theme")?.value
       ? JSON.parse(cookieStore.get("theme")!.value)
       : "light";
-
-
+      
     if (!session) {
       redirect("/api/auth/signin");
     }
