@@ -1,0 +1,11 @@
+services:
+  sgd-app:
+    container_name: sgd-app
+    build:
+      dockerfile: Dockerfile.prod
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - NEXTAUTH_SECRET=c58943b3c2028403060616730f65102e
+      - NEXTAUTH_URL=https://talca.nes-sgd.cl
