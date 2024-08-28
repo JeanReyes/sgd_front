@@ -8,7 +8,7 @@ import {
   IoSearchOutline,
 } from "react-icons/io5";
 import { menuItem } from "./map-menu";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/store/session/session.store";
 
 interface Props {
   position: "left" | "right";
@@ -17,7 +17,8 @@ interface Props {
 export const MobileSidebar = ({ position = "left" }: Props) => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSideMenu);
-  const { data: session } = useSession();
+  const session = useSession((state) => state.session);
+  
 
   return (
     <div>
@@ -44,7 +45,7 @@ export const MobileSidebar = ({ position = "left" }: Props) => {
           }
         )}
       >
-        {session?.user?.name ?? "No Name"}
+        {session ? session?.user?.name : "No Name"}
         <IoCloseOutline
           size={50}
           className="absolute top-5 right-5 cursor-pointer"

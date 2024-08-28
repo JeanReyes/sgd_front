@@ -4,12 +4,12 @@ import Image from 'next/image';
 import { SidebarItem } from "@/components";
 import { titleFont } from '@/app/config/fonts';
 import { menuItem } from './map-menu';
-import { Session } from 'next-auth';
 import { useCollapseMenu } from '@/store';
 import { GoSidebarExpand } from 'react-icons/go';
+import { SessionSgd } from '@/interfaces/session';
 
 interface Props {
-  session: Session
+  session: SessionSgd
 }
 
 export const Sidebar =  ({ session }: Props) => {
@@ -40,7 +40,7 @@ export const Sidebar =  ({ session }: Props) => {
             {session?.user?.name}
           </h5>
           <span className="hidden text-gray-400 text-xs lg:block">
-            {session?.user?.email}
+            {session?.user?.dni}
           </span>
           <span className="hidden text-gray-400 lg:block">
             {session?.user?.roles?.join(",")}

@@ -11,7 +11,5 @@ export const getCookieTheme = () => {
 }
 
 export const changeTheme = (theme: string) => {
-  console.log(theme);
-  
   setCookie("theme", JSON.stringify(theme));
 }

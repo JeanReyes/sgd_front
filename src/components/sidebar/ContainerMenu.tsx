@@ -2,19 +2,26 @@
 
 import clsx from "clsx";
 import { TopMenu } from "../top-menu/TopMenu";
-import { Session } from "next-auth";
 import { MobileSidebar, Sidebar, SidebarHalf } from "@/components";
-import { useCollapseMenu } from "@/store";
+import { useCollapseMenu, useSession } from "@/store";
+import { SessionSgd } from "@/interfaces/session";
+import { useEffect } from "react";
 
 
 interface Props {
   children: React.ReactNode;
-  session: Session;
+  session: SessionSgd;
   theme: string;
 }
 
 export const ContainerMenu = ({ children, session, theme }: Props) => {
   const isCollapseMenu = useCollapseMenu(state => state.isCollapseMenu);
+  const handleSession = useSession((store) => store.setSession)  
+
+  useEffect(() => {
+    handleSession(session)
+  }, [session])
+
 
   return (
     <div className="transition-all">

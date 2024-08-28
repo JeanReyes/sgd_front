@@ -1,32 +1,36 @@
 'use client'
 
-import { signIn } from "next-auth/react";
+import { apiLoginFake } from "@/actions/auth/actions";
+import { SessionSgd } from "@/interfaces/session";
+import { useSession } from "@/store/session/session.store";
 import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
 interface FormData {
-  email: string;
+  dni: string;
   password: string;
-  nombre: string;
+  name: string;
 }
 
 interface FormErrors {
-  email?: string;
+  dni?: string;
   password?: string;
-  nombre?: string;
+  name?: string;
 }
 
 export const LoginGrid = () => {
   const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
-    nombre: "",
+    dni: "176295813",
+    password: "123456",
+    name: "",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
   const router = useRouter();
+  const signIn = useSession((store) => store.signIn)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -35,20 +39,18 @@ export const LoginGrid = () => {
 
   const validate = (): FormErrors => {
     let formErrors: FormErrors = {};
-    if (!formData.email) {
-      formErrors.email = "El email es requerido";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      formErrors.email = "El email no es válido";
+    if (!formData.dni) {
+      formErrors.dni = "El dni es requerido";
+    } 
+
+    if (!formData.dni) {
+      formErrors.dni = "La contraseña es requerida";
+    } else if (formData.dni.length < 6) {
+      formErrors.dni = "La contraseña debe tener al menos 6 caracteres";
     }
 
-    if (!formData.password) {
-      formErrors.password = "La contraseña es requerida";
-    } else if (formData.password.length < 6) {
-      formErrors.password = "La contraseña debe tener al menos 6 caracteres";
-    }
-
-    if (!formData.nombre) {
-      formErrors.nombre = "El nombre es requerido";
+    if (!formData.dni) {
+      formErrors.dni = "El nombre es requerido";
     }
 
     return formErrors;
@@ -60,61 +62,75 @@ export const LoginGrid = () => {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      const res = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        name: formData.nombre,
-        redirect: false,
-      });
 
-      if (!res?.ok) {
-        console.log("error");
-      }
-
-      router.push("/");
+    const res = await apiLoginFake({
+      dni: formData.dni,
+      password: formData.password,
+      name: formData.name,
+    });
+    signIn(res as SessionSgd)
+    
+    router.push("/")
 
       setFormData({
-        email: "",
+        dni: "",
         password: "",
-        nombre: "",
+        name: "",
       });
-      setErrors({});
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Email:</label>
+    <form onSubmit={handleSubmit} className="sm:w-3/4">
+      <h1 className="text-4xl mb-8">Acceso</h1>
+      <div className="w-full mb-4">
+        <label htmlFor="dni" className="block  mb-2">
+          DNI
+        </label>
         <input
-          type="email"
-          name="email"
-          value={formData.email}
+          type="text"
+          id="dni"
+          name="dni"
+          className="w-full p-3 border border-gray-200 dark:bg-gray-700  rounded-lg focus:outline-none"
+          value={formData.dni}
           onChange={handleChange}
         />
-        {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
       </div>
-      <div>
-        <label>Contraseña:</label>
+      <div className="w-full mb-4">
+        <label htmlFor="password" className="block mb-2">
+          Password
+        </label>
         <input
           type="password"
+          id="password"
           name="password"
+          className="w-full p-3 border border-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none"
           value={formData.password}
           onChange={handleChange}
         />
-        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
       </div>
-      <div>
-        <label>Nombre:</label>
+      <div className="w-full mb-4">
+        <label htmlFor="name" className="block  mb-2">
+          Nombre
+        </label>
         <input
           type="text"
-          name="nombre"
-          value={formData.nombre}
+          id="name"
+          name="name"
+          className="w-full p-3 border border-gray-200 dark:bg-gray-700 rounded-lg focus:outline-none"
+          value={formData.name}
           onChange={handleChange}
         />
-        {errors.nombre && <p style={{ color: "red" }}>{errors.nombre}</p>}
       </div>
-      <button type="submit">Enviar</button>
+      <div>
+
+        <button className="w-full p-3 dark:bg-red-600 bg-sky-700 text-white rounded-lg mt-4 dark:hover:bg-red-700">
+          Continuar
+        </button>
+        <a href="#" className="dark:text-red-500  mt-4 hover:underline">
+          ¿Olvidaste Tu Contraseña?
+        </a>
+      </div>
     </form>
   );
 }

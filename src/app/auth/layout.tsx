@@ -6,11 +6,20 @@ export const metadata: Metadata = {
 };
 
 export default function AuthLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-      <main>{children}</main>
+    <main className="flex flex-col sm:flex-row h-screen dark:bg-black">
+      <div className="sm:w-1/2 h-3/4 sm:h-full flex flex-col justify-center items-center dark:bg-black">
+        {children}
+      </div>
+      <div className="sm:w-1/2 h-1/4 sm:h-full flex flex-col sm:flex-row justify-center items-center dark:bg-gray-900 bg-gradient-to-t from-gray-950 to-sky-800 text-white">
+        <h2 className="text-2xl text-center">
+          Sistema de Gestión Documental para Municipalidades
+        </h2>
+      </div>
+    </main>
   );
 }

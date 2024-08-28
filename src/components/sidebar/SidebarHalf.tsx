@@ -4,10 +4,11 @@ import Image from "next/image";
 import { GoSidebarCollapse } from "react-icons/go";
 import { menuItem } from "./map-menu";
 import { SidebarItem } from "./SidebarItem";
+import { SessionSgd } from "@/interfaces/session";
 
 
 interface Props {
-  session: Session;
+  session: SessionSgd;
 }
 
 export const SidebarHalf = ({session}: Props) => {

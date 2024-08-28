@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { cookies } from "next/headers";
-import AuthProvider from "@/app/auth/components/AuthProvider";
 import { inter } from "./config/fonts";
 
 
@@ -22,7 +21,6 @@ export default function RootLayout({
     : "light";
 
   return (
-    <AuthProvider>
       <html lang="en">
         <body
           className={`${inter.className} ${theme} dark:text-white dark:bg-black`}
@@ -30,6 +28,5 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </AuthProvider>
   );
 }
