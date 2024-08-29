@@ -23,10 +23,7 @@ export const SidebarHalf = ({session}: Props) => {
         <div>
           <div className="mt-2 text-center">
             <Image
-              src={
-                session?.user?.image ??
-                "https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
-              }
+              src={session?.user?.image ?? "/assets/images/rucio.jpg"}
               alt="a"
               className="m-auto rounded-full object-cover lg:w-10 lg:h-10"
               width={10}

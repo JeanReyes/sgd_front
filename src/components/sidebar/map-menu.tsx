@@ -1,5 +1,5 @@
-import { IoCalendarOutline, IoCheckboxOutline } from 'react-icons/io5';
-export const  menuItem = [
+import { IoAddCircleSharp, IoCalendarOutline, IoCheckboxOutline } from 'react-icons/io5';
+export const menuItem = [
   {
     href: "/",
     title: "Home",
@@ -9,5 +9,10 @@ export const  menuItem = [
     href: "/solicitud",
     title: "Solicitudes",
     icon: <IoCheckboxOutline size={30} />,
+  },
+  {
+    href: "/chadcn",
+    title: "Componentes",
+    icon: <IoAddCircleSharp size={30} />,
   },
 ];

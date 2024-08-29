@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { cookies } from "next/headers";
-import { inter } from "./config/fonts";
-
+import { fontSans } from "./config/fonts";
+import { cn } from "@/lib/utils";
+import { Toaster as SonnarToaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "SGD",
@@ -21,12 +23,19 @@ export default function RootLayout({
     : "light";
 
   return (
-      <html lang="en">
-        <body
-          className={`${inter.className} ${theme} dark:text-white dark:bg-black`}
-        >
-          {children}
-        </body>
-      </html>
+    <html lang="en">
+      <body
+        // className={`${inter.className} ${theme} dark:text-white dark:bg-black`}
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased dark:text-white dark:bg-black",
+          fontSans.variable,
+          theme
+        )}
+      >
+        {children}
+        <Toaster />
+        <SonnarToaster richColors />
+      </body>
+    </html>
   );
 }

@@ -28,7 +28,7 @@ export const Sidebar =  ({ session }: Props) => {
           <Image
             src={
               session?.user?.image ??
-              "https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
+              "/assets/images/rucio.jpg"
             }
             alt="a"
             className="m-auto rounded-full object-cover lg:w-28 lg:h-28"
