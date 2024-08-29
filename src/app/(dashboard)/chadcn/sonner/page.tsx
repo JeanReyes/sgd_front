@@ -11,8 +11,8 @@ export default function SonnerPage() {
       <Button
         variant="outline"
         onClick={() =>
-          toast("Event has been created", {
-            position: 'top-center',
+          toast.error("Event has been created", {
+            position: 'top-right',
             description: "Sunday, December 03, 2023 at 9:00 AM",
             action: {
               label: "Undo",

@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
-        <SonnarToaster richColors />
+        <SonnarToaster theme={theme} richColors />
       </body>
     </html>
   );

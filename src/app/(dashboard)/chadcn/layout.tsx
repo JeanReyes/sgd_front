@@ -6,9 +6,9 @@ export default function ChadcnLayout({
  children: React.ReactNode;
 }) {
   return (
-    <div className="flex">
+    <div className="flex flex-row gap-2">
       <InsideNav/>
-      <div className="ml-5 mr-5 w-full">
+      <div className="w-full">
         {children}
       </div>
     </div>

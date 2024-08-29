@@ -1,12 +1,9 @@
 "use client"
 
 import { Slider } from "@/components/ui/slider";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-type SliderProps = React.ComponentProps<typeof Slider>;
-
-export default function SliderPage({ className, ...props }: SliderProps) {
+export default function SliderPage() {
 
   const [sliderValue, setSliderValue] = useState(10);
   const [rangeValue, setRangeValue] = useState([10,50]);

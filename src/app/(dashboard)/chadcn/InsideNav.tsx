@@ -2,6 +2,10 @@ import Link from "next/link"
 
 const navMap = [
   {
+    name: "data table",
+    path: "/chadcn/data-table",
+  },
+  {
     name: "accordion",
     path: "/chadcn/accordion",
   },

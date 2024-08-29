@@ -3,14 +3,18 @@
 import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner"
 
+interface CustomProps extends React.ComponentProps<typeof Sonner> {
+  styles?: string;
+}
+
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+const Toaster = ({ ...props }: CustomProps) => {
+  const { theme = "system" } = useTheme();
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      theme={theme as CustomProps["theme"]}
       className="toaster group"
       toastOptions={{
         classNames: {
@@ -25,7 +29,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       {...props}
     />
-  )
-}
+  );
+};
 
 export { Toaster }

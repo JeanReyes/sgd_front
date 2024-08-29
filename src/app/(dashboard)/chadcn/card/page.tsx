@@ -23,7 +23,7 @@ const notifications = [
   },
 ];
 
-export default function CardPage({ className, ...props }: CardProps) {
+export default function CardPage() {
   return (
     <div className="grid sm:grid-cols-6 gap-2">
       {"123456789".split("").map((item) => (
@@ -40,7 +40,7 @@ export default function CardPage({ className, ...props }: CardProps) {
           </CardFooter>
         </Card>
       ))}
-      <Card className={cn("col-span-3", className)} {...props}>
+      <Card className="col-span-3">
         <CardHeader>
           <CardTitle>Notifications</CardTitle>
           <CardDescription>You have 3 unread messages.</CardDescription>
@@ -56,7 +56,6 @@ export default function CardPage({ className, ...props }: CardProps) {
                 Send notifications to device.
               </p>
             </div>
-          
           </div>
           <div>
             {notifications.map((notification, index) => (
