@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { cookies } from "next/headers";
 import { fontSans } from "./config/fonts";
 import { cn } from "@/lib/utils";
 import { Toaster as SonnarToaster } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "SGD",
@@ -23,16 +25,23 @@ export default function RootLayout({
     : "light";
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         // className={`${inter.className} ${theme} dark:text-white dark:bg-black`}
         className={cn(
-          "min-h-screen bg-background font-sans antialiased dark:text-white dark:bg-black",
+          "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
           theme
         )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
         <Toaster />
         <SonnarToaster theme={theme} richColors />
       </body>

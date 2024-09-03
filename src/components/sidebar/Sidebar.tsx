@@ -17,7 +17,7 @@ export const Sidebar =  ({ session }: Props) => {
   const handleCollapseMenu = useCollapseMenu((state) => state.closeCollapseMenu);
 
   return (
-    <aside className="dark:bg-slate-800 border-r dark:border-red-500 ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen bg-white lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] transition-all duration-300">
+    <aside className="dark:bg-slate-950 border-r dark:border-red-500 ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen bg-white lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] transition-all duration-300">
       <div>
         <div className=" text-center mx-6 px-6 py-4">
           <span className={`${titleFont.className} antialiased font-bold`}>

@@ -19,7 +19,7 @@ export const SidebarHalf = ({session}: Props) => {
 
   return (
     <div className="hidden lg:block">
-      <aside className="dark:bg-slate-800 border-r dark:border-red-500 fixed z-10 pb-3  w-full flex flex-col justify-between h-screen bg-white transition-all duration-300 lg:w-[7%] xl:w-[7%] 2xl:w-[6%]">
+      <aside className="dark:bg-slate-950 border-r dark:border-red-500 fixed z-10 pb-3  w-full flex flex-col justify-between h-screen bg-white transition-all duration-300 lg:w-[7%] xl:w-[7%] 2xl:w-[6%]">
         <div>
           <div className="mt-2 text-center">
             <Image

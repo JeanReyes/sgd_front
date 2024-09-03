@@ -2,6 +2,10 @@ import Link from "next/link"
 
 const navMap = [
   {
+    name: "Formu",
+    path: "/chadcn/form",
+  },
+  {
     name: "data table",
     path: "/chadcn/data-table",
   },
@@ -98,7 +102,7 @@ export const InsideNav = () => {
         navMap.map((nav, i) => (
           <li key={i} className="w-[130px] ">
           <Link 
-            className="flex border justify-center dark:border-red-600 px-3 border-sky-600 dark:text-white text-black w-full"
+            className="flex border justify-center px-3 w-full"
             href={nav.path}
           >
               {nav.name}

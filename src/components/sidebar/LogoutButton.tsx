@@ -46,7 +46,7 @@ export const LogoutButton = ({collapse = false}: Props) => {
     >
       {/* <CiLogout /> */}
       {!collapse && (
-        <span className="dark:group-hover:text-gray-400">Logout</span>
+        <span>Logout</span>
       )}
     </button>
   );
