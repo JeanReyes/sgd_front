@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 
 import "./globals.css";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "SGD",
@@ -26,6 +27,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "33fed03e147040169e4441a984064765"}'></script>
+      </Head>
       <body
         // className={`${inter.className} ${theme} dark:text-white dark:bg-black`}
         className={cn(
