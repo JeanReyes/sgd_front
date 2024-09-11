@@ -54,6 +54,10 @@ const navMap = [
     path: "/chadcn/comman",
   },
   {
+    name: "combobox",
+    path: "/chadcn/combobox",
+  },
+  {
     name: "context menu",
     path: "/chadcn/context-menu",
   },

@@ -1,26 +1,25 @@
-import { SessionSgd, UserLogin } from "@/interfaces/session";
+import { initSession, removeSession } from "@/actions/auth/cookies";
+import { Session, UserLogin } from "@/interfaces/session";
 import { create } from "zustand";
-import { getCookie } from 'cookies-next';
-import { apiLoginFake, initSession, removeSession } from "@/actions/auth/actions";
 
 
 interface State {
-  session: SessionSgd;
-  signIn: ({ user }: SessionSgd) => void;
+  session: Session;
+  signIn: (data : Session) => void;
   signOut: () => void;
-  setSession: (session: SessionSgd) => void;
+  setSession: (session: Session) => void;
 }
 
 
 export const useSession = create<State>()((set) => ({
-  session: {} as SessionSgd,
-  signIn: async (user: SessionSgd) => {
+  session: {} as Session,
+  signIn: async (user: Session) => {
     initSession(user);
     set({ session: user });
   },
   signOut: () => {
     removeSession();
-    set({ session: {} as SessionSgd });
+    set({ session: {} as Session });
   },
-  setSession: (session: SessionSgd) => set({ session: session }),
+  setSession: (session: Session) => set({ session: session }),
 }));

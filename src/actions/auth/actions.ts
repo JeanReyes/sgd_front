@@ -1,21 +1,51 @@
-import { SessionSgd, UserLogin } from "@/interfaces/session";
-import { setCookie, deleteCookie } from "cookies-next";
+"use server"
 
-export const initSession = (user: SessionSgd) => {
-  setCookie("auth", JSON.stringify(user))
+import { ISessionAPI } from "@/interfaces/session";
+
+const headers = {
+  "Content-Type": "application/json",
 };
 
-export const removeSession = () => {
-  deleteCookie("auth"); 
-}
+export const logIn = async <T>(data: T): Promise<ISessionAPI | undefined> => {
+  const userFake = {
+    password: "contraseña",
+    name: 'Jean',
+    email: "jreyesalvarez18@gmail.com",
+    roles: ["MANAGER", "ADMIN"],
+    rut: "176295813",
+  };
 
-export const apiLoginFake = async (user: UserLogin) => {
-  return new Promise((resolve) => {
-    resolve({
-      user: {
-        ...user,
-        roles: ["admin", "super admin"],
-      },
-    } as SessionSgd);
-  });
+  try {
+    const response = await fetch(
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/auth/authenticate`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify(data),
+      }
+    );
+    const session = await response.json()
+    session.data.user = userFake;
+    return session
+  } catch (error) {
+    return undefined
+  }
+};
+
+export const register = async <T>(data: T): Promise<ISessionAPI | undefined> => {
+
+  try {
+    const response = await fetch(
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/auth/register`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify(data),
+      }
+    );
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    return undefined;
+  }
 };
