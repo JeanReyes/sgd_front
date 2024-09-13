@@ -1,7 +1,7 @@
 "use client";
 
 import { logIn, register } from "@/actions/auth/actions";
-import { Session } from "@/interfaces/session";
+
 import { useSession } from "@/store/session/session.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -75,12 +75,10 @@ export const RegisterGrid = () => {
 
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    values.dni = cleanRut(values.dni)
-  
     const res = await register({
       nombres: values.nombres,
       apellidos: values.apellidos,
-      dni: cleanRut(values.dni),
+      dni: cleanRut(values.dni).slice(0, -1),
       correo: values.correo,
       role: values.role,
     });

@@ -89,7 +89,7 @@ export const LoginGrid = () => {
                   name="rut"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Rut</FormLabel>
+                      <FormLabel>Dni</FormLabel>
                       <FormControl>
                         <Input                         
                           placeholder="Dni"

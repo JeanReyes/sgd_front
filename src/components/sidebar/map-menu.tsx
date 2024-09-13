@@ -1,4 +1,6 @@
 import { IoAddCircleSharp, IoCalendarOutline, IoCheckboxOutline } from 'react-icons/io5';
+import { GrConfigure } from "react-icons/gr";
+import { CgComponents } from "react-icons/cg";
 export const menuItem = [
   {
     href: "/",
@@ -13,6 +15,11 @@ export const menuItem = [
   {
     href: "/chadcn",
     title: "Componentes",
-    icon: <IoAddCircleSharp size={30} />,
+    icon: <CgComponents size={30} />,
+  },
+  {
+    href: "/mainteiner",
+    title: "Mantenedor",
+    icon: <GrConfigure size={30} />,
   },
 ];

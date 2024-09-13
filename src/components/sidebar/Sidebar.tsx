@@ -6,10 +6,10 @@ import { titleFont } from '@/app/config/fonts';
 import { menuItem } from './map-menu';
 import { useCollapseMenu } from '@/store';
 import { GoSidebarExpand } from 'react-icons/go';
-import { SessionSgd } from '@/interfaces/session';
+import { Session } from '@/interfaces/session';
 
 interface Props {
-  session: SessionSgd
+  session: Session
 }
 
 export const Sidebar =  ({ session }: Props) => {
@@ -25,7 +25,7 @@ export const Sidebar =  ({ session }: Props) => {
           </span>
         </div>
         <div className="mt-8 text-center">
-          <Image
+          {/* <Image
             src={
               session?.user?.image ??
               "/assets/images/rucio.jpg"
@@ -35,12 +35,12 @@ export const Sidebar =  ({ session }: Props) => {
             width={10}
             height={10}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          /> */}
           <h5 className="hidden mt-4 text-xl font-semibold lg:block">
             {session?.user?.name}
           </h5>
           <span className="hidden text-gray-400 text-xs lg:block">
-            {session?.user?.dni}
+            {session?.user?.rut}
           </span>
           <span className="hidden text-gray-400 lg:block">
             {session?.user?.roles?.join(",")}

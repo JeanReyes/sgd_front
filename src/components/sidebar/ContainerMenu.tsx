@@ -4,13 +4,13 @@ import clsx from "clsx";
 import { TopMenu } from "../top-menu/TopMenu";
 import { MobileSidebar, Sidebar, SidebarHalf } from "@/components";
 import { useCollapseMenu, useSession } from "@/store";
-import { SessionSgd } from "@/interfaces/session";
+import { Session } from "@/interfaces/session";
 import { useEffect } from "react";
 
 
 interface Props {
   children: React.ReactNode;
-  session: SessionSgd;
+  session: Session;
   theme: string;
 }
 
@@ -47,7 +47,7 @@ export const ContainerMenu = ({ children, session, theme }: Props) => {
       >
         <TopMenu theme={theme} />
         <div
-          className={`m-2 px-5 pt-5 p-2 sm:m-5 pb-5 min-h-screen rounded bg-slate-50 dark:text-white dark:bg-slate-950`}
+          className={`m-2 px-5 pt-5 p-2 pb-5 min-h-screen rounded bg-slate-50 dark:text-white dark:bg-slate-950`}
         >
           {children}
         </div>
