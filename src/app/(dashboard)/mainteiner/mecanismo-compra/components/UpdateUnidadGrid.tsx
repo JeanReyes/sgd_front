@@ -8,9 +8,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Unidad } from "../interfaces/unidad";
 import { updateUnidad } from "@/actions/mainteiner/unidad/actions";
 import { Textarea } from "@/components/ui/textarea";
+import { Unidad } from "../../unidad/interfaces/unidad";
 
 
 const formSchema = z.object({
