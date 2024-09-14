@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { SidebarItem } from "@/components";
 import { titleFont } from '@/app/config/fonts';
-import { menuItem } from './map-menu';
+import { sidebarRoutes } from "./map-routes";
 import { useCollapseMenu } from '@/store';
 import { GoSidebarExpand } from 'react-icons/go';
 import { Session } from '@/interfaces/session';
@@ -48,7 +48,7 @@ export const Sidebar =  ({ session }: Props) => {
         </div>
 
         <ul className="space-y-2 tracking-wide mt-8">
-          {menuItem.map((item) => (
+          {sidebarRoutes.map((item) => (
             <SidebarItem key={item.title} {...item} />
           ))}
         </ul>

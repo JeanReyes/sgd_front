@@ -7,7 +7,7 @@ import {
   IoCloseOutline,
   IoSearchOutline,
 } from "react-icons/io5";
-import { menuItem } from "./map-menu";
+import { sidebarRoutes } from "./map-routes";
 import { useSession } from "@/store/session/session.store";
 
 interface Props {
@@ -64,7 +64,7 @@ export const MobileSidebar = ({ position = "left" }: Props) => {
           />
         </div>
 
-        {menuItem.map((item, i) => (
+        {sidebarRoutes.map((item, i) => (
           <Link
             onClick={closeMenu}
             key={i}

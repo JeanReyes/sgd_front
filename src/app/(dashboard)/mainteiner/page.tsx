@@ -1,7 +1,7 @@
 import { Title } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { menuConfig } from "./map-config";
+import { manteinerRoutes } from "./map-routes";
 import Link from "next/link";
 import { CiLogin } from "react-icons/ci";
 
@@ -13,8 +13,8 @@ export default function HomeConfig() {
         subTitle="Aquí puede ver, agregar, actualizar y eliminar propiedades de la solicitud"
       />
       <div className="grid grid-cols-1 sm:grid-cols-4  gap-3">
-        {menuConfig.map((config) => (
-          <Card key={config.href}>
+        {manteinerRoutes.map((config) => (
+          <Card key={config.href} className="flex flex-col justify-between">
             <CardHeader className="flex flex-row">
               <div>
                 <CardTitle className="flex items-center">

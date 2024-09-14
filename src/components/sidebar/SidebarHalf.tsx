@@ -1,7 +1,7 @@
 import { useCollapseMenu } from "@/store";
 import Image from "next/image";
 import { GoSidebarCollapse } from "react-icons/go";
-import { menuItem } from "./map-menu";
+import { sidebarRoutes } from "./map-routes";
 import { SidebarItem } from "./SidebarItem";
 import { Session } from "@/interfaces/session";
 
@@ -34,7 +34,7 @@ export const SidebarHalf = ({session}: Props) => {
             </h5>
           </div>
           <ul className="space-y-2 tracking-wide mt-8">
-            {menuItem.map((item) => (
+            {sidebarRoutes.map((item) => (
               <SidebarItem key={item.title} {...item} isHalf />
             ))}
           </ul>

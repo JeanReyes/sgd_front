@@ -1,7 +1,8 @@
 import { IoAddCircleSharp, IoCalendarOutline, IoCheckboxOutline } from 'react-icons/io5';
 import { GrConfigure } from "react-icons/gr";
 import { CgComponents } from "react-icons/cg";
-export const menuItem = [
+
+export const sidebarRoutes = [
   {
     href: "/",
     title: "Home",

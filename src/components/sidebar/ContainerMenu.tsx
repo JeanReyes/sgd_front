@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { TopMenu } from "../top-menu/TopMenu";
-import { MobileSidebar, Sidebar, SidebarHalf } from "@/components";
+import { BreadcrumbGrid, MobileSidebar, Sidebar, SidebarHalf } from "@/components";
 import { useCollapseMenu, useSession } from "@/store";
 import { Session } from "@/interfaces/session";
 import { useEffect } from "react";
@@ -49,6 +49,7 @@ export const ContainerMenu = ({ children, session, theme }: Props) => {
         <div
           className={`m-2 px-5 pt-5 p-2 pb-5 min-h-screen rounded bg-slate-50 dark:text-white dark:bg-slate-950`}
         >
+          <BreadcrumbGrid/>
           {children}
         </div>
       </div>
