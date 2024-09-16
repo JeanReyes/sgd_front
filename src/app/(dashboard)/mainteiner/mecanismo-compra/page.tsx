@@ -11,7 +11,7 @@ export default async function HomeMecanismoCompra() {
     ? JSON.parse(cookieStore.get("auth")!.value)
     : null;
 
-  const mecanismos = await getAllUnidad();
+  // const mecanismos = await getAllUnidad();
 
   return (
     <div>

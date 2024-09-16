@@ -47,7 +47,7 @@ export const ContainerMenu = ({ children, session, theme }: Props) => {
       >
         <TopMenu theme={theme} />
         <div
-          className={`m-2 px-5 pt-5 p-2 pb-5 min-h-screen rounded bg-slate-50 dark:text-white dark:bg-slate-950`}
+          className={`m-2 px-2 pt-2 sm:px-5 sm-pt-5 p-2 pb-5 min-h-screen rounded bg-slate-50 dark:text-white dark:bg-slate-950`}
         >
           <BreadcrumbGrid/>
           {children}

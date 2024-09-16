@@ -75,8 +75,8 @@ export const UpdateUnidadGrid = ({ unidad, setDialogOpen }: Props) => {
             control={form.control}
             name="id"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>id</FormLabel>
+              <FormItem hidden>
+                <FormLabel className="flex py-2">id</FormLabel>
                 <FormControl>
                   <Input disabled placeholder="id" {...field} />
                 </FormControl>
@@ -89,7 +89,7 @@ export const UpdateUnidadGrid = ({ unidad, setDialogOpen }: Props) => {
             name="nombre"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombre</FormLabel>
+                <FormLabel className="flex py-2">Nombre</FormLabel>
                 <FormControl>
                   <Input placeholder="Nombre" {...field} />
                 </FormControl>
@@ -103,7 +103,7 @@ export const UpdateUnidadGrid = ({ unidad, setDialogOpen }: Props) => {
             name="descripcion"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Descripcion</FormLabel>
+                <FormLabel className="flex py-2">Descripcion</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Descripcion" {...field} />
                 </FormControl>

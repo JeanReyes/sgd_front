@@ -94,7 +94,7 @@ export const UpdateUnidadGrid = ({ funcionario, setDialogOpen }: Props) => {
             name="nombres"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombres</FormLabel>
+                <FormLabel className="flex py-2">Nombres</FormLabel>
                 <FormControl>
                   <Input placeholder="Nombres" {...field} />
                 </FormControl>
@@ -108,7 +108,7 @@ export const UpdateUnidadGrid = ({ funcionario, setDialogOpen }: Props) => {
             name="apellidos"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>apellidos</FormLabel>
+                <FormLabel className="flex py-2">apellidos</FormLabel>
                 <FormControl>
                   <Input placeholder="Apellidos" {...field} />
                 </FormControl>
@@ -175,7 +175,7 @@ export const UpdateUnidadGrid = ({ funcionario, setDialogOpen }: Props) => {
             name="rut"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Rut</FormLabel>
+                <FormLabel className="flex py-2">Rut</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Rut"
@@ -193,7 +193,7 @@ export const UpdateUnidadGrid = ({ funcionario, setDialogOpen }: Props) => {
             name="correo"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Correo</FormLabel>
+                <FormLabel className="flex py-2">Correo</FormLabel>
                 <FormControl>
                   <Input placeholder="Correo" {...field} />
                 </FormControl>
@@ -207,7 +207,7 @@ export const UpdateUnidadGrid = ({ funcionario, setDialogOpen }: Props) => {
             name="estado"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Estado</FormLabel>
+                <FormLabel className="flex py-2">Estado</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}

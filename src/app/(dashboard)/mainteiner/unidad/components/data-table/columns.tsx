@@ -113,25 +113,28 @@ export const columns: ColumnDef<Unidad>[] = [
           </DropdownMenu>
 
           <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <AlertDialogTitle>Actualice la unidad</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
                   </AlertDialogCancel>
                 </div>
                 <div>
-                  <UpdateUnidadGrid unidad={unidad} setDialogOpen={setDialogOpen}/>
+                  <UpdateUnidadGrid
+                    unidad={unidad}
+                    setDialogOpen={setDialogOpen}
+                  />
                 </div>
               </AlertDialogHeader>
             </AlertDialogContent>
           </AlertDialog>
 
           <AlertDialog open={deleteItem} onOpenChange={setDeleteItem}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <AlertDialogTitle>Eliminar la unidad</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />

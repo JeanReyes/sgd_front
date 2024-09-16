@@ -11,7 +11,7 @@ export default async function RequisitoscionCompra() {
     ? JSON.parse(cookieStore.get("auth")!.value)
     : null;
 
-  const requisitos = await getAllUnidad();
+  // const requisitos = await getAllUnidad();
 
   return (
     <div>

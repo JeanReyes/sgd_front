@@ -9,24 +9,28 @@ export default function HomeConfig() {
   return (
     <div>
       <Title
-        title="Configuración"
+        title="Mantenedor"
         subTitle="Aquí puede ver, agregar, actualizar y eliminar propiedades de la solicitud"
       />
       <div className="grid grid-cols-1 sm:grid-cols-4  gap-3">
         {manteinerRoutes.map((config) => (
-          <Card key={config.href} className="flex flex-col justify-between">
-            <CardHeader className="flex flex-row">
+          <Card
+            key={config.href}
+            className="flex flex-row sm:flex-col justify-between h-[130px] sm:h-full"
+          >
+            <CardHeader className="flex flex-row p-5">
               <div>
                 <CardTitle className="flex items-center">
-                  {config.title} <span className="ml-2">{config.icon}</span>
+                  <span>{config.icon}</span>
+                  <span className="ml-2 text-sm">{config.title} </span>
                 </CardTitle>
                 <CardDescription>{config.detail}</CardDescription>
               </div>
             </CardHeader>
 
-            <CardFooter className="flex justify-end">
+            <CardFooter className="flex p-5">
               <Link href={config.href}>
-                <Button>
+                <Button className="h-full">
                   <CiLogin size={20} />
                 </Button>
               </Link>

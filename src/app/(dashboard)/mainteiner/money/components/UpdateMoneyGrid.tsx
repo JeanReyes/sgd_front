@@ -83,8 +83,8 @@ export const UpdateMoneyGrid = ({ money, setDialogOpen }: Props) => {
             control={form.control}
             name="id"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>id</FormLabel>
+              <FormItem hidden>
+                <FormLabel className="flex py-2">id</FormLabel>
                 <FormControl>
                   <Input disabled placeholder="id" {...field} />
                 </FormControl>
@@ -97,7 +97,7 @@ export const UpdateMoneyGrid = ({ money, setDialogOpen }: Props) => {
             name="codigo"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Código</FormLabel>
+                <FormLabel className="flex py-2">Código</FormLabel>
                 <FormControl>
                   <Input placeholder="Código" {...field} />
                 </FormControl>
@@ -111,7 +111,7 @@ export const UpdateMoneyGrid = ({ money, setDialogOpen }: Props) => {
             name="decimales"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Decimales</FormLabel>
+                <FormLabel className="flex py-2">Decimales</FormLabel>
                 <FormControl>
                   <Input placeholder="Decimales" {...field} />
                 </FormControl>
@@ -125,7 +125,7 @@ export const UpdateMoneyGrid = ({ money, setDialogOpen }: Props) => {
             name="nombre"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombre</FormLabel>
+                <FormLabel className="flex py-2">Nombre</FormLabel>
                 <FormControl>
                   <Input placeholder="Nombre" {...field} />
                 </FormControl>
@@ -139,7 +139,7 @@ export const UpdateMoneyGrid = ({ money, setDialogOpen }: Props) => {
             name="descripcion"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Descripcion</FormLabel>
+                <FormLabel className="flex py-2">Descripcion</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Descripcion" {...field} />
                 </FormControl>

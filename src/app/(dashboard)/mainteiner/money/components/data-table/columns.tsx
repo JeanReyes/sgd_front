@@ -136,9 +136,9 @@ export const columns: ColumnDef<Money>[] = [
           </DropdownMenu>
 
           <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <AlertDialogTitle>Actualice la moneda</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
@@ -155,9 +155,9 @@ export const columns: ColumnDef<Money>[] = [
           </AlertDialog>
 
           <AlertDialog open={deleteItem} onOpenChange={setDeleteItem}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <AlertDialogTitle>Eliminar la moneda</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
@@ -169,10 +169,12 @@ export const columns: ColumnDef<Money>[] = [
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction onClick={() => {
-                  deleteMoney(money.id);
-                  router.refresh()
-                }}>
+                <AlertDialogAction
+                  onClick={() => {
+                    deleteMoney(money.id);
+                    router.refresh();
+                  }}
+                >
                   Eliminar
                 </AlertDialogAction>
               </AlertDialogFooter>

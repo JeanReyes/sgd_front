@@ -52,10 +52,14 @@ export function BreadcrumbGrid() {
   const generateBreadcrumb = () => {
     return segments.map((segment, index) => {
       const path = "/" + segments.slice(0, index + 1).join("/");
+
       return (
         <span key={path} className="flex items-center">
           <BreadcrumbItem>
-            <Link href={path}>
+            <Link
+              href={path}
+              className={index === segments.length - 1 ? "font-extrabold text-white" : ""}
+            >
               {setRoutes(segment) ? setRoutes(segment) : capitalize(segment)}
             </Link>
           </BreadcrumbItem>
@@ -78,7 +82,7 @@ export function BreadcrumbGrid() {
         {/* Generar Breadcrumb dinámico */}
         {generateBreadcrumb()}
 
-        {segments.length > 0 && (
+        {/* {segments.length > 0 && (
           <BreadcrumbItem>
             <BreadcrumbPage className="font-extrabold">
               {setRoutes(segments[segments.length - 1])
@@ -86,7 +90,7 @@ export function BreadcrumbGrid() {
                 : capitalize(segments[segments.length - 1])}
             </BreadcrumbPage>
           </BreadcrumbItem>
-        )}
+        )} */}
       </BreadcrumbList>
     </Breadcrumb>
   );

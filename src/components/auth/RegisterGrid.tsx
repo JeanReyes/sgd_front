@@ -106,13 +106,13 @@ export const RegisterGrid = () => {
   };
 
   return (
-    <Card className="flex flex-col pb-5 w-[80%] sm:w-[400px]">
+    <Card className="flex flex-col pb-5 w-[90%] sm:w-[400px]">
       <CardHeader>
         <CardTitle className="text-center text-2xl">
           Registrar Usuario
         </CardTitle>
         <CardDescription className="text-center">
-          Bienbenido a NES/CORP
+          Bienvenido a NES/CORP
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -157,9 +157,9 @@ export const columns: ColumnDef<Funcionario>[] = [
           </DropdownMenu>
 
           <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <AlertDialogTitle>Actualice un funcionario</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
@@ -176,9 +176,9 @@ export const columns: ColumnDef<Funcionario>[] = [
           </AlertDialog>
 
           <AlertDialog open={deleteItem} onOpenChange={setDeleteItem}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <AlertDialogTitle>Eliminar un funcionario</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />

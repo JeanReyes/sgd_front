@@ -18,10 +18,12 @@ export default async function HomeFuncionario() {
   return (
     <div>
       <Title title="Funcionario" />
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <AddFuncionarioGrid />
-      </div>
-      <DataTable columns={columns} data={funcionarios.data} />
+      </div> */}
+      <DataTable columns={columns} data={funcionarios.data}>
+        <AddFuncionarioGrid />
+      </DataTable>
     </div>
   );
 }

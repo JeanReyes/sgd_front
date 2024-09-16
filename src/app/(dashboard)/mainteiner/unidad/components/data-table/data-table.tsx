@@ -34,16 +34,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  children: React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  children
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -78,7 +81,7 @@ export function DataTable<TData, TValue>({
     <div>
       {/* init table */}
       <div>
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between items-center py-4 gap-2">
           {/* <Input
           placeholder="Filter"
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -135,7 +138,7 @@ export function DataTable<TData, TValue>({
           </Button>
         )} */}
 
-          {/* <DropdownMenu>
+          <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns
@@ -161,7 +164,8 @@ export function DataTable<TData, TValue>({
                 );
               })}
           </DropdownMenuContent>
-        </DropdownMenu> */}
+        </DropdownMenu>
+          <div>{children}</div>
         </div>
         <div className="rounded-md border">
           <Table>
@@ -256,7 +260,6 @@ export function DataTable<TData, TValue>({
         </Select>
       </div>
       {/* end table */}
-
     </div>
   );
 }

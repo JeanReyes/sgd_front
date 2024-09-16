@@ -134,10 +134,10 @@ export const AddFuncionarioGrid = () => {
         <Button onClick={() => seDialogOpen(true)}>Agregar</Button>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={seDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[95%]">
           <AlertDialogHeader>
-            <div className="flex justify-between">
-              <AlertDialogTitle>Agregue un nuevo funcionario</AlertDialogTitle>
+            <div className="flex justify-between items-center">
+              <AlertDialogTitle >Nuevo funcionario</AlertDialogTitle>
               <AlertDialogCancel>
                 <AiOutlineClose />
               </AlertDialogCancel>
@@ -152,7 +152,7 @@ export const AddFuncionarioGrid = () => {
                   name="nombres"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nombres</FormLabel>
+                      <FormLabel className="flex py-2">Nombres</FormLabel>
                       <FormControl>
                         <Input placeholder="Nombres" {...field} />
                       </FormControl>
@@ -166,7 +166,7 @@ export const AddFuncionarioGrid = () => {
                   name="apellidos"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>apellidos</FormLabel>
+                      <FormLabel className="flex py-2">apellidos</FormLabel>
                       <FormControl>
                         <Input placeholder="Apellidos" {...field} />
                       </FormControl>
@@ -176,7 +176,7 @@ export const AddFuncionarioGrid = () => {
                 />
 
                 <div className="my-2">
-                  <Label>Fecha de nacimiento</Label>
+                  <Label className="flex py-2">Fecha de nacimiento</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -233,7 +233,7 @@ export const AddFuncionarioGrid = () => {
                   name="rut"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Rut</FormLabel>
+                      <FormLabel className="flex py-2">Rut</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Rut"
@@ -251,7 +251,7 @@ export const AddFuncionarioGrid = () => {
                   name="correo"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Correo</FormLabel>
+                      <FormLabel className="flex py-2">Correo</FormLabel>
                       <FormControl>
                         <Input placeholder="Correo" {...field} />
                       </FormControl>
@@ -265,7 +265,7 @@ export const AddFuncionarioGrid = () => {
                   name="estado"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Estado</FormLabel>
+                      <FormLabel className="flex py-2">Estado</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}

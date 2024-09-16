@@ -89,9 +89,9 @@ export const AddMoneyGrid = () => {
         <Button onClick={() => seDialogOpen(true)}>Agregar</Button>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={seDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[95%]">
           <AlertDialogHeader>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <AlertDialogTitle>Agregue nueva moneda</AlertDialogTitle>
               <AlertDialogCancel>
                 <AiOutlineClose />
@@ -107,7 +107,7 @@ export const AddMoneyGrid = () => {
                   name="codigo"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Código</FormLabel>
+                      <FormLabel className="flex py-2">Código</FormLabel>
                       <FormControl>
                         <Input placeholder="Código" {...field} />
                       </FormControl>
@@ -121,7 +121,7 @@ export const AddMoneyGrid = () => {
                   name="decimales"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Decimales</FormLabel>
+                      <FormLabel className="flex py-2">Decimales</FormLabel>
                       <FormControl>
                         <Input placeholder="Decimales" {...field} />
                       </FormControl>
@@ -135,7 +135,7 @@ export const AddMoneyGrid = () => {
                   name="nombre"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nombre</FormLabel>
+                      <FormLabel className="flex py-2">Nombre</FormLabel>
                       <FormControl>
                         <Input placeholder="Nombre" {...field} />
                       </FormControl>
@@ -149,7 +149,7 @@ export const AddMoneyGrid = () => {
                   name="descripcion"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Descripcion</FormLabel>
+                      <FormLabel className="flex py-2">Descripcion</FormLabel>
                       <FormControl>
                         <Textarea placeholder="Descripcion" {...field} />
                       </FormControl>

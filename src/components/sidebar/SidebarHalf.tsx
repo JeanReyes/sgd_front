@@ -5,7 +5,6 @@ import { sidebarRoutes } from "./map-routes";
 import { SidebarItem } from "./SidebarItem";
 import { Session } from "@/interfaces/session";
 
-
 interface Props {
   session: Session;
 }
@@ -15,6 +14,7 @@ export const SidebarHalf = ({session}: Props) => {
   const handleCollapseMenu = useCollapseMenu(
     (state) => state.openCollapseMenu
   );
+
 
   return (
     <div className="hidden lg:block">
