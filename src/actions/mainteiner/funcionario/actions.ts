@@ -26,7 +26,7 @@ export const getAllFuncionario = async <T>( data?: T,): Promise<any> => {
         method: "GET",
         headers: headers(),
       }
-    );
+    )
    
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
