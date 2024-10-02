@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { cookies } from "next/headers";
-import AuthProvider from "@/app/auth/components/AuthProvider";
-import { inter } from "./config/fonts";
+import { fontSans } from "./config/fonts";
+import { cn } from "@/lib/utils";
+import { Toaster as SonnarToaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
+import "./globals.css";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "SGD",
@@ -22,14 +26,29 @@ export default function RootLayout({
     : "light";
 
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body
-          className={`${inter.className} ${theme} dark:text-white dark:bg-black`}
+    <html lang="en" suppressHydrationWarning>
+      <Head>
+        <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "33fed03e147040169e4441a984064765"}'></script>
+      </Head>
+      <body
+        // className={`${inter.className} ${theme} dark:text-white dark:bg-black`}
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+          theme
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
           {children}
-        </body>
-      </html>
-    </AuthProvider>
+        </ThemeProvider>
+        <Toaster />
+        <SonnarToaster theme={theme} richColors />
+      </body>
+    </html>
   );
 }

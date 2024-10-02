@@ -2,9 +2,10 @@
 
 import clsx from "clsx";
 import { TopMenu } from "../top-menu/TopMenu";
-import { Session } from "next-auth";
-import { MobileSidebar, Sidebar, SidebarHalf } from "@/components";
-import { useCollapseMenu } from "@/store";
+import { BreadcrumbGrid, MobileSidebar, Sidebar, SidebarHalf } from "@/components";
+import { useCollapseMenu, useSession } from "@/store";
+import { Session } from "@/interfaces/session";
+import { useEffect } from "react";
 
 
 interface Props {
@@ -15,6 +16,12 @@ interface Props {
 
 export const ContainerMenu = ({ children, session, theme }: Props) => {
   const isCollapseMenu = useCollapseMenu(state => state.isCollapseMenu);
+  const handleSession = useSession((store) => store.setSession)  
+
+  useEffect(() => {
+    handleSession(session)
+  }, [session])
+
 
   return (
     <div className="transition-all">
@@ -40,8 +47,9 @@ export const ContainerMenu = ({ children, session, theme }: Props) => {
       >
         <TopMenu theme={theme} />
         <div
-          className={`m-2 px-5 pt-5 p-2 sm:m-5 pb-5 min-h-screen rounded bg-slate-200 dark:text-white dark:bg-slate-800`}
+          className={`m-2 px-2 pt-2 sm:px-5 sm-pt-5 p-2 pb-5 min-h-screen rounded bg-slate-50 dark:text-white dark:bg-slate-950`}
         >
+          <BreadcrumbGrid/>
           {children}
         </div>
       </div>

@@ -7,8 +7,8 @@ import {
   IoCloseOutline,
   IoSearchOutline,
 } from "react-icons/io5";
-import { menuItem } from "./map-menu";
-import { useSession } from "next-auth/react";
+import { sidebarRoutes } from "./map-routes";
+import { useSession } from "@/store/session/session.store";
 
 interface Props {
   position: "left" | "right";
@@ -17,7 +17,8 @@ interface Props {
 export const MobileSidebar = ({ position = "left" }: Props) => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSideMenu);
-  const { data: session } = useSession();
+  const session = useSession((state) => state.session);
+  
 
   return (
     <div>
@@ -34,7 +35,7 @@ export const MobileSidebar = ({ position = "left" }: Props) => {
 
       <nav
         className={clsx(
-          `fixed p-5 left-0 top-0 w-full h-screen dark:bg-slate-800 bg-white z-20 shadow-2xl transform transition-all duration-300`,
+          `fixed p-5 left-0 top-0 w-full h-screen dark:bg-slate-950 bg-white z-20 shadow-2xl transform transition-all duration-300`,
           {
             "right-0": position === "right",
             "left-0": position === "left",
@@ -44,7 +45,7 @@ export const MobileSidebar = ({ position = "left" }: Props) => {
           }
         )}
       >
-        {session?.user?.name ?? "No Name"}
+        {session ? session?.user?.name : "No Name"}
         <IoCloseOutline
           size={50}
           className="absolute top-5 right-5 cursor-pointer"
@@ -63,7 +64,7 @@ export const MobileSidebar = ({ position = "left" }: Props) => {
           />
         </div>
 
-        {menuItem.map((item, i) => (
+        {sidebarRoutes.map((item, i) => (
           <Link
             onClick={closeMenu}
             key={i}

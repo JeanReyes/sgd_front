@@ -1,121 +1,139 @@
 'use client'
 
-import { signIn } from "next-auth/react";
+import { logIn } from "@/actions/auth/actions";
+import { Session } from "@/interfaces/session";
+import { useSession } from "@/store/session/session.store";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { formatRUT } from "@/utils/rut-validate";
+import { cleanRut } from '../../utils/rut-validate';
 
-interface FormData {
-  email: string;
-  password: string;
-  nombre: string;
+//https://www.npmjs.com/package/zod
+const formSchema = z.object({
+  rut: z.string(),
+  password: z.string(),
+});
+
+interface Props {
+  urlBase?: string
 }
 
-interface FormErrors {
-  email?: string;
-  password?: string;
-  nombre?: string;
-}
-
-export const LoginGrid = () => {
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
-    nombre: "",
+export const LoginGrid = ({ urlBase }: Props) => {
+  const router = useRouter();
+  const signIn = useSession((store) => store.signIn);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      rut: "",
+      password: "",
+    },
+    mode: "onChange",
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
-  const router = useRouter();
+  const handleDNIChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: any
+  ) => {
+    const formattedRut = formatRUT(e.target.value); // Formateamos el RUT
+    field.onChange(formattedRut); // Actualizamos el valor en el formulario
+  };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const res = await logIn({
+      rut: cleanRut(values.rut),
+      password: values.password,
     });
-  };
 
-  const validate = (): FormErrors => {
-    let formErrors: FormErrors = {};
-    if (!formData.email) {
-      formErrors.email = "El email es requerido";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      formErrors.email = "El email no es válido";
-    }
-
-    if (!formData.password) {
-      formErrors.password = "La contraseña es requerida";
-    } else if (formData.password.length < 6) {
-      formErrors.password = "La contraseña debe tener al menos 6 caracteres";
-    }
-
-    if (!formData.nombre) {
-      formErrors.nombre = "El nombre es requerido";
-    }
-
-    return formErrors;
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      const res = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        name: formData.nombre,
-        redirect: false,
+    if (!res) {
+      toast.error("Error", {
+        position: "top-right",
+        description: "Intente denuevo",
       });
+      return;
+    }
 
-      if (!res?.ok) {
-        console.log("error");
-      }
-
+    if (!res.status.hasError) {
+      signIn(res.data as Session);
       router.push("/");
-
-      setFormData({
-        email: "",
-        password: "",
-        nombre: "",
+      return;
+    } else {
+      toast.error("Error", {
+        position: "top-right",
+        description: res.data.message,
       });
-      setErrors({});
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
-      </div>
-      <div>
-        <label>Contraseña:</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
-      </div>
-      <div>
-        <label>Nombre:</label>
-        <input
-          type="text"
-          name="nombre"
-          value={formData.nombre}
-          onChange={handleChange}
-        />
-        {errors.nombre && <p style={{ color: "red" }}>{errors.nombre}</p>}
-      </div>
-      <button type="submit">Enviar</button>
-    </form>
+    <Card className="flex flex-col pb-5 w-[90%] sm:w-[400px]">
+      <CardHeader>
+        <CardTitle className="text-center text-2xl">Acceso</CardTitle>
+        <CardDescription className="text-center">
+          Bienvenido a NES/CORP
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="w-full">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col"
+            >
+              <FormField
+                control={form.control}
+                name="rut"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Dni</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Dni"
+                        value={field.value} // El valor formateado
+                        onChange={(e) => handleDNIChange(e, field)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type={"password"}
+                        placeholder="Password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                disabled={!form.formState.isValid}
+                className="mt-4"
+                type="submit"
+                variant={"destructive"}
+              >
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </CardContent>
+    </Card>
   );
-}
+};
 

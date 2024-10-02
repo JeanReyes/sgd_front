@@ -1,0 +1,119 @@
+import Link from "next/link"
+
+const navMap = [
+  {
+    name: "Formu",
+    path: "/chadcn/form",
+  },
+  {
+    name: "data table",
+    path: "/chadcn/data-table",
+  },
+  {
+    name: "accordion",
+    path: "/chadcn/accordion",
+  },
+  {
+    name: "alert",
+    path: "/chadcn/alert",
+  },
+  {
+    name: "button",
+    path: "/chadcn/button",
+  },
+  {
+    name: "alert dialog",
+    path: "/chadcn/alert-dialog",
+  },
+  {
+    name: "dialog",
+    path: "/chadcn/dialog",
+  },
+  {
+    name: "badge",
+    path: "/chadcn/badge",
+  },
+  {
+    name: "calendar",
+    path: "/chadcn/calendar",
+  },
+  {
+    name: "card",
+    path: "/chadcn/card",
+  },
+  {
+    name: "carousel",
+    path: "/chadcn/carousel",
+  },
+  {
+    name: "checkbok",
+    path: "/chadcn/checkbox",
+  },
+  {
+    name: "command",
+    path: "/chadcn/comman",
+  },
+  {
+    name: "combobox",
+    path: "/chadcn/combobox",
+  },
+  {
+    name: "context menu",
+    path: "/chadcn/context-menu",
+  },
+  {
+    name: "menu bar",
+    path: "/chadcn/menu-bar",
+  },
+  {
+    name: "input otp",
+    path: "/chadcn/input-otp",
+  },
+  {
+    name: "progress",
+    path: "/chadcn/progress",
+  },
+  {
+    name: "sheet",
+    path: "/chadcn/sheet",
+  },
+  {
+    name: "skeleton",
+    path: "/chadcn/skeleton",
+  },
+  {
+    name: "slider",
+    path: "/chadcn/slider",
+  },
+  {
+    name: "sonner",
+    path: "/chadcn/sonner",
+  },
+  {
+    name: "toast",
+    path: "/chadcn/toast",
+  },
+  {
+    name: "tabs",
+    path: "/chadcn/tabs",
+  },
+];
+
+export const InsideNav = () => {
+  return (
+    <ul className="flex flex-col gap-2 mb-4">
+      {
+        navMap.map((nav, i) => (
+          <li key={i} className="w-[130px] ">
+          <Link 
+            className="flex border justify-center px-3 w-full"
+            href={nav.path}
+          >
+              {nav.name}
+          </Link>
+          </li>
+        ))
+      }
+    </ul>
+  )
+}
