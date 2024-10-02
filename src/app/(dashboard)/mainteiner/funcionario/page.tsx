@@ -6,6 +6,7 @@ import { columns } from "./components/data-table/columns";
 import { getAllUnidad } from "@/actions/mainteiner/unidad/actions";
 import { AddFuncionarioGrid } from "./components/AddFuncionarioGrid";
 import { getAllFuncionario } from "@/actions/mainteiner/funcionario/actions";
+import { redirect } from "next/navigation";
 
 export default async function HomeFuncionario() {
   const cookieStore = cookies();
@@ -13,7 +14,21 @@ export default async function HomeFuncionario() {
     ? JSON.parse(cookieStore.get("auth")!.value)
     : null;
 
+  if (!session) {
+    redirect("/auth/login");
+  }
+
   const funcionarios = await getAllFuncionario();
+
+  // console.log("funcionarios", funcionarios);
+
+  // if (!funcionarios || funcionarios === undefined) {
+  //   return (
+  //     <>
+  //       <h1>Error nuevo</h1>
+  //     </>
+  //   );
+  // }
 
   return (
     <div>
