@@ -33,7 +33,7 @@ const myCustomFilterFn: FilterFn<Funcionario> = (
 
   const filterParts = filterValue.split(" ");
   const rowValues =
-    `${row.original.apellidos} ${row.original.nombres}`.toLowerCase();
+    `${row.original.apellidos} ${row.original.nombres} ${row.original.correo} ${row.original.rut}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
 
   //esto es cada campo por separado
@@ -72,6 +72,7 @@ export const columns: ColumnDef<Funcionario>[] = [
     cell: ({ row }) => {
       return <div>{row.getValue("nombres")}</div>;
     },
+    filterFn: myCustomFilterFn,
   },
   {
     accessorKey: "apellidos",

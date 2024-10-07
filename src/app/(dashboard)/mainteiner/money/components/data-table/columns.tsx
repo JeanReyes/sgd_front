@@ -34,7 +34,7 @@ const myCustomFilterFn: FilterFn<Money> = (
 
   const filterParts = filterValue.split(" ");
   const rowValues =
-    `${row.original.codigo} ${row.original.codigo}`.toLowerCase();
+    `${row.original.codigo} ${row.original.nombre} ${row.original.descripcion}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
 
   //esto es cada campo por separado
@@ -73,7 +73,6 @@ export const columns: ColumnDef<Money>[] = [
   },
   {
     accessorKey: "decimales",
-    filterFn: myCustomFilterFn,
     header: ({ column }) => {
       return (
         <Button
@@ -90,20 +89,19 @@ export const columns: ColumnDef<Money>[] = [
     accessorKey: "nombre",
     header: () => <div className="text-left">Nombre</div>,
     cell: ({ row }) => {
-      return (
-        <div>{row.getValue("nombre")}</div>
-      );
+      return <div>{row.getValue("nombre")}</div>;
     },
+    filterFn: myCustomFilterFn,
   },
   {
     accessorKey: "descripcion",
-    header: () => <div className="text-left">Descripción</div>
+    header: () => <div className="text-left">Descripción</div>,
   },
   {
     id: "actions",
     cell: ({ row }) => {
       const money = row.original;
-      const router = useRouter()
+      const router = useRouter();
       const [dialogOpen, setDialogOpen] = useState(false);
       const [deleteItem, setDeleteItem] = useState(false);
 

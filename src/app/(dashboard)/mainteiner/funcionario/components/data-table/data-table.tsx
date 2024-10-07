@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 
 
 interface DataTableProps<TData, TValue> {
@@ -82,18 +83,21 @@ export function DataTable<TData, TValue>({
       {/* init table */}
       <div>
         <div className="flex justify-between items-center py-4 gap-2">
-          {/* <Input
-          placeholder="Filter"
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => {
-            //al filtrar por email, se limpian los otros filtros en este caso el status
-            // setCurrentStatus("all");
-            // table.getColumn("status")?.setFilterValue(undefined);
-            table.getColumn("email")?.setFilterValue(event.target.value);
-          }}
-          className="max-w-sm"
-        />
-        <Select
+          <Input
+            placeholder="Filter"
+            value={
+              (table.getColumn("nombres")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) => {
+              //al filtrar por email, se limpian los otros filtros en este caso el status
+              // setCurrentStatus("all");
+              // table.getColumn("status")?.setFilterValue(undefined);
+              table.getColumn("nombres")?.setFilterValue(event.target.value);
+            }}
+            className="max-w-sm"
+          />
+
+          {/* <Select
           value={currentStatus}
           onValueChange={(value) => {
             if (value === "all") {
@@ -119,8 +123,9 @@ export function DataTable<TData, TValue>({
               <SelectItem value="failed">Failed</SelectItem>
             </SelectGroup>
           </SelectContent>
-        </Select>
-        {isVisibleDelete && (
+        </Select> */}
+
+          {/* {isVisibleDelete && (
           <Button
             className="ml-2"
             variant={"destructive"}
@@ -166,7 +171,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>
           <div>{children}</div>
         </div>
-        <div className="rounded-md border">
+        <div className="rounded-md ">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
