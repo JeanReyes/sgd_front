@@ -1,5 +1,6 @@
 "use server"
 
+import { ApiAllFuncionario } from "@/interfaces/funcionario";
 import { cookies } from "next/headers";
 
 const headers = () => {
@@ -17,8 +18,7 @@ const headers = () => {
 };
 
 
-export const getAllFuncionario = async <T>( data?: T,): Promise<any> => {
-
+export const getAllFuncionario = async <T>(data?: T): Promise<ApiAllFuncionario> => {
   try {
     const response = await fetch(
       `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/findAll`,
@@ -26,18 +26,24 @@ export const getAllFuncionario = async <T>( data?: T,): Promise<any> => {
         method: "GET",
         headers: headers(),
       }
-    )
-   
+    );
+
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
 
     const res = await response.json(); // Verifica la respuesta de la API
     return res;
-    
+
     return res;
   } catch (error) {
-    return undefined;
+    return {
+      status: {
+        code: 404,
+        hasError: true,
+      },
+      data: [],
+    };
   }
 };
 

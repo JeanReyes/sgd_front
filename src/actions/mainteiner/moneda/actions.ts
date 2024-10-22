@@ -1,5 +1,6 @@
 "use server"
 
+import { ApiAllMoney } from "@/interfaces/money";
 import { cookies } from "next/headers";
 
 const headers = () => {
@@ -17,7 +18,7 @@ const headers = () => {
 };
 
 
-export const getAllMoney = async <T>( data?: T,): Promise<any> => {
+export const getAllMoney = async <T>( data?: T,): Promise<ApiAllMoney> => {
 
   try {
     const response = await fetch(
@@ -38,7 +39,13 @@ export const getAllMoney = async <T>( data?: T,): Promise<any> => {
     
     return res;
   } catch (error) {
-    return undefined;
+    return {
+      status: {
+        code: 404,
+        hasError: true,
+      },
+      data: [],
+    };
   }
 };
 

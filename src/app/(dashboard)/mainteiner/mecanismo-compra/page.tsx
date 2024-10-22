@@ -3,7 +3,8 @@ import { cookies } from "next/headers";
 import { DataTable } from "./components/data-table/data-table";
 import { columns } from "./components/data-table/columns";
 import { getAllUnidad } from "@/actions/mainteiner/unidad/actions";
-import { AddUnidadGrid } from "./components/AddUnidadGrid";
+import { AddMecanismoGrid } from "./components/AddMecanimoGrid";
+import { getAllMecanismo } from "@/actions/mainteiner/mecanismo-compra/actions";
 
 export default async function HomeMecanismoCompra() {
   const cookieStore = cookies();
@@ -11,15 +12,15 @@ export default async function HomeMecanismoCompra() {
     ? JSON.parse(cookieStore.get("auth")!.value)
     : null;
 
-  // const mecanismos = await getAllUnidad();
+  const mecanismos = await getAllMecanismo();
 
   return (
     <div>
-      <Title title="Mecanismo de la compra" />
-      {/* <div className="flex justify-end">
-        <AddUnidadGrid />
-      </div>
-      <DataTable columns={columns} data={unidades.data} /> */}
+      <Title title="Mecanismo de compra" />
+      {/* {JSON.stringify(mecanismos)} */}
+      <DataTable columns={columns} data={mecanismos.data}>
+        <AddMecanismoGrid />
+      </DataTable>
     </div>
   );
 }

@@ -90,7 +90,7 @@ export const AddUnidadGrid = () => {
         <AlertDialogContent className="w-[95%]">
           <AlertDialogHeader>
             <div className="flex justify-between items-center">
-              <AlertDialogTitle>Agregue nueva unidad</AlertDialogTitle>
+              <AlertDialogTitle>Nueva unidad</AlertDialogTitle>
               <AlertDialogCancel>
                 <AiOutlineClose />
               </AlertDialogCancel>

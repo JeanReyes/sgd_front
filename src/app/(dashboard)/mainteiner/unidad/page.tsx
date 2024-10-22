@@ -16,9 +16,6 @@ export default async function HomeMoneda() {
   return (
     <div>
       <Title title="Unidad" />
-      {/* <div className="flex justify-end">
-        <AddUnidadGrid/>
-      </div> */}
       <DataTable columns={columns} data={unidades.data}>
         <AddUnidadGrid />
       </DataTable>

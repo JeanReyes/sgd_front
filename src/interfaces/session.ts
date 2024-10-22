@@ -1,3 +1,4 @@
+import { Status } from "./generic-api";
 
 export interface UserLogin {
   password: string;
@@ -11,11 +12,6 @@ export interface UserSession {
   email: string;
   roles: string[];
   rut: string;
-}
-
-export interface Status {
-  code: number;
-  hasError: boolean;
 }
 
 export interface Session {

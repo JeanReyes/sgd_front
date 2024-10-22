@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updateUnidad } from "@/actions/mainteiner/unidad/actions";
 import { Textarea } from "@/components/ui/textarea";
-import { Unidad } from "../../unidad/interfaces/unidad";
+import { Unidad } from "../../../../../interfaces/unidad";
 
 
 const formSchema = z.object({
@@ -27,7 +27,7 @@ interface Props {
   setDialogOpen: (value: boolean) => void;
 }
 
-export const UpdateUnidadGrid = ({ unidad, setDialogOpen }: Props) => {
+export const UpdateRequisitoGrid = ({ unidad, setDialogOpen }: Props) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

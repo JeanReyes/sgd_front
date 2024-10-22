@@ -18,12 +18,13 @@ import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { UpdateUnidadGrid } from "../UpdateUnidadGrid";
+import { UpdateRequisitoGrid } from "../UpdaterequisitoGrid";
 import { deleteUnidad } from "@/actions/mainteiner/unidad/actions";
-import { Unidad } from "../../../unidad/interfaces/unidad";
+import { Unidad } from "../../../../../../interfaces/unidad";
+import { Requisito } from '../../../../../../interfaces/requisito';
 
-const myCustomFilterFn: FilterFn<Unidad> = (
-  row: Row<Unidad>,
+const myCustomFilterFn: FilterFn<Requisito> = (
+  row: Row<Requisito>,
   columnId: string,
   filterValue: string,
   addMeta: (meta: any) => void
@@ -79,7 +80,7 @@ export const columns: ColumnDef<Unidad>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const unidad = row.original;
+      const requisito = row.original;
       const router = useRouter();
       const [dialogOpen, setDialogOpen] = useState(false);
       const [deleteItem, setDeleteItem] = useState(false);
@@ -116,13 +117,16 @@ export const columns: ColumnDef<Unidad>[] = [
             <AlertDialogContent>
               <AlertDialogHeader>
                 <div className="flex justify-between">
-                  <AlertDialogTitle>Actualice la unidad</AlertDialogTitle>
+                  <AlertDialogTitle>Actualice el Requisito</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
                   </AlertDialogCancel>
                 </div>
                 <div>
-                  <UpdateUnidadGrid unidad={unidad} setDialogOpen={setDialogOpen}/>
+                  <UpdateRequisitoGrid
+                    unidad={requisito}
+                    setDialogOpen={setDialogOpen}
+                  />
                 </div>
               </AlertDialogHeader>
             </AlertDialogContent>
@@ -132,20 +136,20 @@ export const columns: ColumnDef<Unidad>[] = [
             <AlertDialogContent>
               <AlertDialogHeader>
                 <div className="flex justify-between">
-                  <AlertDialogTitle>Eliminar la unidad</AlertDialogTitle>
+                  <AlertDialogTitle>Eliminar el Requisito</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
                   </AlertDialogCancel>
                 </div>
                 <AlertDialogDescription>
-                  ¿Seguro quieres eliminar esta unidad?
+                  ¿Seguro quieres eliminar este Requisito?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
-                    deleteUnidad(unidad.id);
+                    deleteUnidad(requisito.id);
                     router.refresh();
                   }}
                 >

@@ -18,7 +18,7 @@ import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { Unidad } from "../../interfaces/unidad";
+import { Unidad } from "../../../../../../interfaces/unidad";
 import { UpdateUnidadGrid } from "../UpdateUnidadGrid";
 import { deleteUnidad } from "@/actions/mainteiner/unidad/actions";
 

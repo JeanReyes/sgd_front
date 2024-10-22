@@ -92,7 +92,7 @@ export const AddMoneyGrid = () => {
         <AlertDialogContent className="w-[95%]">
           <AlertDialogHeader>
             <div className="flex justify-between items-center">
-              <AlertDialogTitle>Agregue nueva moneda</AlertDialogTitle>
+              <AlertDialogTitle>Nueva moneda</AlertDialogTitle>
               <AlertDialogCancel>
                 <AiOutlineClose />
               </AlertDialogCancel>

@@ -9,7 +9,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updateUnidad } from "@/actions/mainteiner/unidad/actions";
-import { Funcionario } from '../interfaces/funcionario';
+import { Funcionario } from '../../../../../interfaces/funcionario';
 import { formatRUT, validarRUT } from "@/utils/rut-validate";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { Money } from "../interfaces/money";
+import { Money } from "../../../../../interfaces/money";
 import { toast } from "sonner";
 import { updateMoney } from "@/actions/mainteiner/moneda/actions";
 import { Textarea } from "@/components/ui/textarea";

@@ -38,7 +38,7 @@ const formSchema = z.object({
   descripcion: z.string(),
 });
 
-export const AddUnidadGrid = () => {
+export const AddMecanismoGrid = () => {
   const [dialogOpen, seDialogOpen] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,34 +51,34 @@ export const AddUnidadGrid = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const res = await addUnidad({
-      nombre: values.nombre,
-      descripcion: values.descripcion,
-    });
+    // const res = await addUnidad({
+    //   nombre: values.nombre,
+    //   descripcion: values.descripcion,
+    // });
 
-    if (!res) {
-      toast.error("Error", {
-        position: "top-right",
-        description: "Intente denuevo",
-      });
-      return;
-    }
+    // if (!res) {
+    //   toast.error("Error", {
+    //     position: "top-right",
+    //     description: "Intente denuevo",
+    //   });
+    //   return;
+    // }
 
-    if (!res.status.hasError) {
-      toast.success("Unidad creada", {
-        position: "top-right",
-        description: res.data.message,
-      });
-      router.refresh();
-      seDialogOpen(false);
-      form.reset();
-      return;
-    } else {
-      toast.error("Error", {
-        position: "top-right",
-        description: res.data.message,
-      });
-    }
+    // if (!res.status.hasError) {
+    //   toast.success("Unidad creada", {
+    //     position: "top-right",
+    //     description: res.data.message,
+    //   });
+    //   router.refresh();
+    //   seDialogOpen(false);
+    //   form.reset();
+    //   return;
+    // } else {
+    //   toast.error("Error", {
+    //     position: "top-right",
+    //     description: res.data.message,
+    //   });
+    // }
   };
 
   return (
@@ -90,7 +90,7 @@ export const AddUnidadGrid = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <div className="flex justify-between">
-              <AlertDialogTitle>Agregue nueva unidad</AlertDialogTitle>
+              <AlertDialogTitle>Nuevo Mecanismo</AlertDialogTitle>
               <AlertDialogCancel>
                 <AiOutlineClose />
               </AlertDialogCancel>

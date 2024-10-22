@@ -16,7 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { ChevronDownIcon, ChevronUpIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
-import { Money } from "../../interfaces/money";
+import { Money } from "../../../../../../interfaces/money";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { AiOutlineClose } from "react-icons/ai";
@@ -67,6 +67,13 @@ const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
  
 
 export const columns: ColumnDef<Money>[] = [
+  {
+    accessorKey: "idMoneda",
+    header: () => <div className="text-left">id</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue("idMoneda")}</div>;
+    },
+  },
   {
     accessorKey: "codigo",
     header: "Código",
@@ -169,7 +176,7 @@ export const columns: ColumnDef<Money>[] = [
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
-                    deleteMoney(money.id);
+                    deleteMoney(money.idMoneda);
                     router.refresh();
                   }}
                 >

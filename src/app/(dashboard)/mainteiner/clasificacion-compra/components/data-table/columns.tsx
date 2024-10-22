@@ -20,7 +20,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { UpdateUnidadGrid } from "../UpdateUnidadGrid";
 import { deleteUnidad } from "@/actions/mainteiner/unidad/actions";
-import { Unidad } from "../../../unidad/interfaces/unidad";
+import { Unidad } from "../../../../../../interfaces/unidad";
 
 const myCustomFilterFn: FilterFn<Unidad> = (
   row: Row<Unidad>,

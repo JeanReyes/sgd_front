@@ -1,6 +1,5 @@
 "use server"
 
-import { ApiAllUnidad } from "@/interfaces/unidad";
 import { cookies } from "next/headers";
 
 const headers = () => {
@@ -18,16 +17,16 @@ const headers = () => {
 };
 
 
-export const getAllUnidad = async <T>( data?: T,): Promise<ApiAllUnidad> => {
+export const getAll = async <T>( data?: T,): Promise<any> => {
 
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Unidad/findAll`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/findAll`,
       {
         method: "GET",
         headers: headers(),
       }
-    );
+    )
    
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -38,20 +37,14 @@ export const getAllUnidad = async <T>( data?: T,): Promise<ApiAllUnidad> => {
     
     return res;
   } catch (error) {
-    return {
-      status: {
-        code: 404,
-        hasError: true,
-      },
-      data: [],
-    };
+    return undefined;
   }
 };
 
-export const addUnidad = async <T>( data?: T): Promise<any> => {
+export const addFuncionario = async <T>( data?: T): Promise<any> => {
     try {
       const response = await fetch(
-        `${process.env.BACK_URL_FOR_FRONT}/api/v1/Unidad/save`,
+        `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/save`,
         {
           method: "POST",
           headers: headers(),
@@ -65,10 +58,10 @@ export const addUnidad = async <T>( data?: T): Promise<any> => {
     }
 }
 
-export const updateUnidad = async <T>( data?: T): Promise<any> => {
+export const updateFuncionario = async <T>( data?: T): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Unidad/update`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/update`,
       {
         method: "PUT",
         headers: headers(),
@@ -83,10 +76,10 @@ export const updateUnidad = async <T>( data?: T): Promise<any> => {
   }
 };
 
-export const deleteUnidad = async (id: number): Promise<any> => {
+export const deleteFuncionario = async (id: number): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Unidad/deleteById/${id}`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/deleteById/${id}`,
       {
         method: "DELETE",
         headers: headers(),

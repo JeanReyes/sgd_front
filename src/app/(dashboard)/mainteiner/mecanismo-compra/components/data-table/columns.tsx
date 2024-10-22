@@ -19,12 +19,13 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
-import { UpdateUnidadGrid } from "../UpdateUnidadGrid";
+import { UpdateUnidadGrid } from "../UpdateMecanismoGrid";
 import { deleteUnidad } from "@/actions/mainteiner/unidad/actions";
-import { Unidad } from "../../../unidad/interfaces/unidad";
+import { Unidad } from "../../../../../../interfaces/unidad";
+import { MecanismoCompra } from "../../../../../../interfaces/mecanismo-compra";
 
-const myCustomFilterFn: FilterFn<Unidad> = (
-  row: Row<Unidad>,
+const myCustomFilterFn: FilterFn<MecanismoCompra> = (
+  row: Row<MecanismoCompra>,
   columnId: string,
   filterValue: string,
   addMeta: (meta: any) => void
@@ -33,7 +34,7 @@ const myCustomFilterFn: FilterFn<Unidad> = (
 
   const filterParts = filterValue.split(" ");
   const rowValues =
-    `${row.original.descripcion} ${row.original.nombre}`.toLowerCase();
+    `${row.original.nombre}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
 
   //esto es cada campo por separado
@@ -70,12 +71,10 @@ export const columns: ColumnDef<Unidad>[] = [
     accessorKey: "nombre",
     header: () => <div className="text-left">Nombre</div>,
     cell: ({ row }) => {
-      return <div>{row.getValue("nombre")}</div>;
+      return (
+        <div className="cursor-pointer" onClick={() => console.log(row.original)}>{row.getValue("nombre")}</div>
+      );
     },
-  },
-  {
-    accessorKey: "descripcion",
-    header: () => <div className="text-left">Descripción</div>,
   },
   {
     id: "actions",

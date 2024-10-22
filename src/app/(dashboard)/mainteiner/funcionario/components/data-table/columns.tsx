@@ -18,7 +18,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { UpdateUnidadGrid } from "../UpdateFuncionarioGrid";
 import { deleteUnidad } from "@/actions/mainteiner/unidad/actions";
-import { Funcionario } from "../../interfaces/funcionario";
+import { Funcionario } from "../../../../../../interfaces/funcionario";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { formatRUT } from "@/utils/rut-validate";
 import { deleteFuncionario } from "@/actions/mainteiner/funcionario/actions";

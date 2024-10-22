@@ -20,9 +20,6 @@ export default async function HomeMoneda() {
   return (
     <div>
       <Title title="Moneda" />
-      {/* <div className="flex justify-end">
-        <AddMoneyGrid/>
-      </div> */}
       <div >
         <DataTable  columns={columns} data={moneys.data} >
           <AddMoneyGrid/>
