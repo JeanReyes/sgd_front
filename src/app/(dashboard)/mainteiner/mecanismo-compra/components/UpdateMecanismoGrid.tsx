@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updateUnidad } from "@/actions/mainteiner/unidad/actions";
 import { Textarea } from "@/components/ui/textarea";
-import { Unidad } from "../../../../../interfaces/unidad";
+import { MecanismoCompra } from '../../../../../interfaces/mecanismo-compra';
 
 
 const formSchema = z.object({
@@ -23,15 +23,15 @@ const formSchema = z.object({
 });
 
 interface Props {
-  unidad: Unidad;
+  mecanismoCompra: MecanismoCompra;
   setDialogOpen: (value: boolean) => void;
 }
 
-export const UpdateUnidadGrid = ({ unidad, setDialogOpen }: Props) => {
+export const UpdateMecanismoGrid = ({ mecanismoCompra, setDialogOpen }: Props) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: unidad,
+    defaultValues: mecanismoCompra,
     mode: "onChange",
   });
 
@@ -89,7 +89,7 @@ export const UpdateUnidadGrid = ({ unidad, setDialogOpen }: Props) => {
             name="nombre"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombre</FormLabel>
+                <FormLabel className="flex py-2">Nombre</FormLabel>
                 <FormControl>
                   <Input placeholder="Nombre" {...field} />
                 </FormControl>
@@ -103,7 +103,7 @@ export const UpdateUnidadGrid = ({ unidad, setDialogOpen }: Props) => {
             name="descripcion"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Descripcion</FormLabel>
+                <FormLabel className="flex py-2">Descripcion</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Descripcion" {...field} />
                 </FormControl>

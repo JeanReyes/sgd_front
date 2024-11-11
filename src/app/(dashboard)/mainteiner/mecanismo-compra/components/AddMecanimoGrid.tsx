@@ -87,7 +87,7 @@ export const AddMecanismoGrid = () => {
         <Button onClick={() => seDialogOpen(true)}>Agregar</Button>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={seDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[95%]">
           <AlertDialogHeader>
             <div className="flex justify-between">
               <AlertDialogTitle>Nuevo Mecanismo</AlertDialogTitle>
@@ -105,7 +105,7 @@ export const AddMecanismoGrid = () => {
                   name="nombre"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nombre</FormLabel>
+                      <FormLabel className="flex py-2">Nombre</FormLabel>
                       <FormControl>
                         <Input placeholder="Nombre" {...field} />
                       </FormControl>
@@ -119,7 +119,7 @@ export const AddMecanismoGrid = () => {
                   name="descripcion"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Descripcion</FormLabel>
+                      <FormLabel className="flex py-2">Descripcion</FormLabel>
                       <FormControl>
                         <Textarea placeholder="Descripcion" {...field} />
                       </FormControl>

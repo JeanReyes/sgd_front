@@ -13,16 +13,18 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { ChevronDownIcon, ChevronUpIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronUpIcon, CopyIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
-import { UpdateUnidadGrid } from "../UpdateMecanismoGrid";
+import { UpdateMecanismoGrid } from "../UpdateMecanismoGrid";
 import { deleteUnidad } from "@/actions/mainteiner/unidad/actions";
 import { Unidad } from "../../../../../../interfaces/unidad";
 import { MecanismoCompra } from "../../../../../../interfaces/mecanismo-compra";
+import { DialogHeader, DialogFooter, Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const myCustomFilterFn: FilterFn<MecanismoCompra> = (
   row: Row<MecanismoCompra>,
@@ -66,20 +68,67 @@ const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
 };
  
 
-export const columns: ColumnDef<Unidad>[] = [
+export const columns: ColumnDef<MecanismoCompra>[] = [
   {
     accessorKey: "nombre",
     header: () => <div className="text-left">Nombre</div>,
     cell: ({ row }) => {
+      const [openDetail, setOpenDetail] = useState(false);
       return (
-        <div className="cursor-pointer" onClick={() => console.log(row.original)}>{row.getValue("nombre")}</div>
+        <>
+          <div
+            className="cursor-pointer font-medium"
+            onClick={() => setOpenDetail(true)}
+          >
+            {row.getValue("nombre")}
+          </div>
+
+          <Dialog open={openDetail} onOpenChange={setOpenDetail}>
+            <DialogContent className="sm:max-w-md w-[95%]">
+              <DialogHeader>
+                <DialogTitle className="text-xl">
+                  {" "}
+                  {row.getValue("nombre")}
+                </DialogTitle>
+              </DialogHeader>
+              {/* Sección de requisitos */}
+              <div className="space-y-4 text-pretty">
+                <h3 className=" font-semibold">Requisitos:</h3>
+                <ul className="space-y-2 pl-4 list-disc">
+                  {row.original.requisitos.map((requisito) => (
+                    <li
+                      key={requisito.idRequisito}
+                      className="flex justify-between"
+                    >
+                      <span>- {requisito.nombre}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </>
       );
+    },
+  },
+  {
+    accessorKey: "montoMinimo",
+    header: () => <div className="text-left">Monto minimo</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue("montoMinimo")}</div>;
+    },
+  },
+  {
+    accessorKey: "montoMaximo",
+    header: () => <div className="text-left">Monto maximo</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue("montoMaximo")}</div>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const unidad = row.original;
+      const mecanismo = row.original;
       const router = useRouter();
       const [dialogOpen, setDialogOpen] = useState(false);
       const [deleteItem, setDeleteItem] = useState(false);
@@ -113,16 +162,19 @@ export const columns: ColumnDef<Unidad>[] = [
           </DropdownMenu>
 
           <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
                 <div className="flex justify-between">
-                  <AlertDialogTitle>Actualice la unidad</AlertDialogTitle>
+                  <AlertDialogTitle>Actualice la Mecanismo</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
                   </AlertDialogCancel>
                 </div>
                 <div>
-                  <UpdateUnidadGrid unidad={unidad} setDialogOpen={setDialogOpen}/>
+                  <UpdateMecanismoGrid
+                    mecanismoCompra={mecanismo}
+                    setDialogOpen={setDialogOpen}
+                  />
                 </div>
               </AlertDialogHeader>
             </AlertDialogContent>
@@ -132,20 +184,20 @@ export const columns: ColumnDef<Unidad>[] = [
             <AlertDialogContent>
               <AlertDialogHeader>
                 <div className="flex justify-between">
-                  <AlertDialogTitle>Eliminar la unidad</AlertDialogTitle>
+                  <AlertDialogTitle>Eliminar Mecanismo</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
                   </AlertDialogCancel>
                 </div>
                 <AlertDialogDescription>
-                  ¿Seguro quieres eliminar esta unidad?
+                  ¿Seguro quieres eliminar este Mecanismo?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
-                    deleteUnidad(unidad.id);
+                    deleteUnidad(+mecanismo.idMecanismo);
                     router.refresh();
                   }}
                 >

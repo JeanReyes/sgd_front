@@ -8,3 +8,5 @@ export const initSession = (user: Session) => {
 export const removeSession = () => {
   deleteCookie("auth");
 };
+
+

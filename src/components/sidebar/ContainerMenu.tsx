@@ -5,7 +5,8 @@ import { TopMenu } from "../top-menu/TopMenu";
 import { BreadcrumbGrid, MobileSidebar, Sidebar, SidebarHalf } from "@/components";
 import { useCollapseMenu, useSession } from "@/store";
 import { Session } from "@/interfaces/session";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getCookieCollapse } from "@/actions/cookies/actions";
 
 
 interface Props {
@@ -14,16 +15,29 @@ interface Props {
   theme: string;
 }
 
-
-
-export const ContainerMenu = ({ children, session, theme }: Props) => {
-  const isCollapseMenu = useCollapseMenu(state => state.isCollapseMenu);
-  const handleSession = useSession((store) => store.setSession)  
+export const ContainerMenu = ({ children, session, theme, }: Props) => {
+  const isCollapseMenu = useCollapseMenu((state) => state.isCollapseMenu);
+   const { setCollapseState } = useCollapseMenu();
+  const handleSession = useSession((store) => store.setSession);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    handleSession(session)
+    handleSession(session);
   }, [session])
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const collapseState = getCookieCollapse(); // Obtiene el valor de la cookie
+      console.log(collapseState);
+      
+      setCollapseState(collapseState);
+      setIsMounted(true);
+    }
+  }, [setCollapseState]);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="transition-all">
@@ -51,11 +65,10 @@ export const ContainerMenu = ({ children, session, theme }: Props) => {
         <div
           className={`m-2 px-2 pt-2 sm:px-5 sm-pt-5 p-2 pb-5 min-h-screen rounded bg-slate-50 dark:text-white dark:bg-slate-950`}
         >
-          <BreadcrumbGrid/>
+          <BreadcrumbGrid />
           {children}
         </div>
       </div>
     </div>
   );
-
 };

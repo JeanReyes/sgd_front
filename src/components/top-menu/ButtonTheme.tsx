@@ -1,6 +1,5 @@
 'use client'
 
-import { changeTheme } from "@/actions/theme/actions";
 import { useRouter } from "next/navigation";
 import { CiSun } from "react-icons/ci";
 import { IoMoonOutline } from "react-icons/io5";

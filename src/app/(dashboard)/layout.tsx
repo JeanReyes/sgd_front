@@ -14,9 +14,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
     ? JSON.parse(cookieStore.get("auth")!.value)
     : null;
 
-    console.log(session);
-    
-
   if (!session) {
     redirect("/auth/login")
   }

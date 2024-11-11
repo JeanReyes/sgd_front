@@ -7,13 +7,6 @@ const headers = {
 };
 
 export const logIn = async <T>(data: T): Promise<ISessionAPI | undefined> => {
-  const userFake = {
-    password: "contraseña",
-    name: 'Jean',
-    email: "jreyesalvarez18@gmail.com",
-    roles: ["MANAGER", "ADMIN"],
-    rut: "176295813",
-  };
 
   try {
     const response = await fetch(
@@ -25,7 +18,9 @@ export const logIn = async <T>(data: T): Promise<ISessionAPI | undefined> => {
       }
     );
     const session = await response.json()
-    session.data.user = userFake;
+    console.log(session);
+    
+
     return session
   } catch (error) {
     return undefined

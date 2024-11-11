@@ -13,11 +13,11 @@ export const sidebarRoutes = [
     title: "Solicitudes",
     icon: <IoCheckboxOutline size={30} />,
   },
-  {
-    href: "/chadcn",
-    title: "Componentes",
-    icon: <CgComponents size={30} />,
-  },
+  // {
+  //   href: "/chadcn",
+  //   title: "Componentes",
+  //   icon: <CgComponents size={30} />,
+  // },
   {
     href: "/mainteiner",
     title: "Mantenedor",

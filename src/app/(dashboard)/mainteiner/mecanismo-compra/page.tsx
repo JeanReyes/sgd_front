@@ -17,7 +17,6 @@ export default async function HomeMecanismoCompra() {
   return (
     <div>
       <Title title="Mecanismo de compra" />
-      {/* {JSON.stringify(mecanismos)} */}
       <DataTable columns={columns} data={mecanismos.data}>
         <AddMecanismoGrid />
       </DataTable>

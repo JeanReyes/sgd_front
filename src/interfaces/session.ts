@@ -6,12 +6,28 @@ export interface UserLogin {
 }
 
 export interface UserSession {
-  password: string;
+  password?: string;
   name: string;
-  image: string;
+  image?: string;
   email: string;
   roles: string[];
   rut: string;
+  cargosActivos: ICargosActivos[];
+}
+
+export interface ICargosActivos {
+  id: number;
+  isCargoPrincipal: string;
+  nombre: string;
+  descripcion: string;
+  estado: string;
+  fechaCreacion: string;
+  nombreDependencia: string;
+  nombreFuncionario: string;
+  nombreTipoCargo: string;
+  funcionarioID: null;
+  dependenciaID: null;
+  tipoCargoID: null;
 }
 
 export interface Session {

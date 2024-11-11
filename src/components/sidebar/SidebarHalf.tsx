@@ -18,17 +18,14 @@ export const SidebarHalf = ({session}: Props) => {
 
   return (
     <div className="hidden lg:block">
-      <aside className="dark:bg-slate-950 border-r dark:border-red-500 fixed z-10 pb-3  w-full flex flex-col justify-between h-screen bg-white transition-all duration-300 lg:w-[7%] xl:w-[7%] 2xl:w-[6%]">
+      <aside className="dark:bg-slate-950 border-r dark:border-red-500 border-blue-500 fixed z-10 pb-3  w-full flex flex-col justify-between h-screen bg-white transition-all duration-300 lg:w-[7%] xl:w-[7%] 2xl:w-[6%]">
         <div>
+          <div className=" text-center px-1 py-4">
+            <h1 className=" bg-slate-950 font-bold text-md lg:text-md bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent">
+              NES<span className="text-indigo-500">.</span>CORP
+            </h1>
+          </div>
           <div className="mt-2 text-center">
-            {/* <Image
-              src={session?.user?.image ?? "/assets/images/rucio.jpg"}
-              alt="a"
-              className="m-auto rounded-full object-cover lg:w-10 lg:h-10"
-              width={10}
-              height={10}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            /> */}
             <h5 className="hidden mt-4 text-sm font-semibold lg:block">
               {session?.user?.name}
             </h5>
@@ -39,7 +36,7 @@ export const SidebarHalf = ({session}: Props) => {
             ))}
           </ul>
         </div>
-        <div className=" pt-4 flex justify-center items-center border-t dark:border-red-500">
+        <div className=" pt-4 flex justify-center items-center border-t dark:border-red-500 border-blue-500">
           <GoSidebarCollapse
             className="cursor-pointer"
             size={30}
