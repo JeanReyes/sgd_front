@@ -9,7 +9,7 @@ import { DataClasificacion } from "@/interfaces/clasificacion-compra";
 import { mapClasicacion } from "../../page";
 import { CreateSolicitudGrid } from "../components/CreateSolicitudGrid";
 import { getAllUnidad } from "@/actions/mainteiner/unidad/actions";
-import { getAllMoney } from "@/actions/mainteiner/moneda/actions";
+import { getAllindicators, getAllMoney } from "@/actions/mainteiner/moneda/actions";
 import { getAllIndicePresupuestario } from "@/actions/mainteiner/indice-presupuestario/actions";
 
 export default async function HomeSolicitud({ params }: { params: { solicitud: string } }) {
@@ -30,11 +30,18 @@ export default async function HomeSolicitud({ params }: { params: { solicitud: s
   }
 
 
-    const [clasificaciones, unidades, monedas, indicePresupuestario] = await Promise.all([
+    const [
+      clasificaciones,
+      unidades,
+      monedas,
+      indicePresupuestario,
+      indicators,
+    ] = await Promise.all([
       getAllClasificacion(),
       getAllUnidad(),
       getAllMoney(),
-      getAllIndicePresupuestario()
+      getAllIndicePresupuestario(),
+      getAllindicators()
     ]);
     
 
@@ -68,6 +75,7 @@ export default async function HomeSolicitud({ params }: { params: { solicitud: s
         cargosByRut={session?.user?.cargosActivos}
         monedas={monedas.data}
         indicePresupuestario={indicePresupuestario.data}
+        indicators={indicators.data}
       />
     </div>
   );

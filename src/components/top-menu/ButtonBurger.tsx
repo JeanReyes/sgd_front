@@ -7,7 +7,7 @@ export const ButtonBurger = () => {
   return (
     <button
       onClick={openMenu}
-      className="w-12 h-16 -mr-2 border-r dark:border-red-500"
+      className="w-12 h-16 -mr-2 border-r dark:border-red-500 border-blue-500"
     >
       <CiMenuBurger size={20} />
     </button>

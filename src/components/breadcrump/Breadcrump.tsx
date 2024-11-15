@@ -58,7 +58,7 @@ export function BreadcrumbGrid() {
           <BreadcrumbItem>
             <Link
               href={path}
-              className={index === segments.length - 1 ? "font-extrabold text-white" : ""}
+              className={index === segments.length - 1 ? "font-extrabold dark:text-white text-black" : ""}
             >
               {setRoutes(segment) ? setRoutes(segment) : capitalize(segment)}
             </Link>

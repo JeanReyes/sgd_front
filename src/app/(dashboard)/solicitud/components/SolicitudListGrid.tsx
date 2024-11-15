@@ -14,10 +14,13 @@ export const SolicitudListGrid = ({ clasificaciones }: Props) => {
   const isMobile = useDevice();
   
   return (
-
-      isMobile
-        ? <SolicitudListGridMobile clasificaciones={clasificaciones} />
-        : <SolicitudListGridDesktop clasificaciones={clasificaciones} />
-    
+    <>
+      <SolicitudListGridMobile clasificaciones={clasificaciones} />
+      {/* {  
+        isMobile
+          ? <SolicitudListGridMobile clasificaciones={clasificaciones} />
+          : <SolicitudListGridDesktop clasificaciones={clasificaciones} />
+      } */}
+    </>
   );
 };

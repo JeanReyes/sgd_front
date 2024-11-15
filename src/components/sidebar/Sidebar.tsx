@@ -1,8 +1,6 @@
 'use client'
 
-import Image from 'next/image';
 import { SidebarItem } from "@/components";
-import { titleFont } from '@/app/config/fonts';
 import { sidebarRoutes } from "./map-routes";
 import { useCollapseMenu } from '@/store';
 import { GoSidebarExpand } from 'react-icons/go';

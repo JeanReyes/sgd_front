@@ -28,8 +28,6 @@ export const ContainerMenu = ({ children, session, theme, }: Props) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const collapseState = getCookieCollapse(); // Obtiene el valor de la cookie
-      console.log(collapseState);
-      
       setCollapseState(collapseState);
       setIsMounted(true);
     }

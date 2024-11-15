@@ -12,3 +12,14 @@ export type Money = {
   nombre: string;
   descripcion: string;
 };
+
+export interface ApiAllIndicators {
+  status: Status;
+  data: Indicators[];
+}
+
+export interface Indicators {
+  cod: string;
+  value: number;
+  date: string;
+}

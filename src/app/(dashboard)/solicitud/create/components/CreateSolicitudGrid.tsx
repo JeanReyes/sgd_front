@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -22,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -31,7 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataClasificacion } from "@/interfaces/clasificacion-compra";
 import { Unidad } from "@/interfaces/unidad";
 import { ICargosActivos } from "@/interfaces/session";
@@ -39,35 +38,35 @@ import { Money } from "@/interfaces/money";
 import { Switch } from "@/components/ui/switch";
 import AddItemModal from "./AddItemSolicitud";
 import { IndicePresupestrario } from "@/interfaces/indice-presupuestario";
+import {  Calculator } from "lucide-react";
+import {
+  handleformatCurrency,
+  handleTransformItemToMoney,
+  transformStringsToNumbers,
+} from "@/utils/utils";
+import { Indicators } from '../../../../../interfaces/money';
+import EconomicIndicators from "./IndicatorsGrid";
+import { TableRequisitos } from "./TableRequisitos";
 import { MecanismoCompra } from "@/interfaces/mecanismo-compra";
-import { Requisito } from "@/interfaces/requisito";
-import { Upload, FileText, Calculator } from "lucide-react";
-import { Label } from "recharts";
-import { handleformatCurrency } from "@/utils/utils";
+import { PurchaseRequest } from "@/interfaces/solicitud";
+import { addRequest } from "@/actions/solicitud/actions";
+import { toast } from "sonner";
 
 const purchaseSchema = z.object({
-  requestNumber: z.string(),
+  cargoCreador: z.string().min(1, "Cargo es requerido"),
   idMecanismoDeCompra: z.string(),
   idMoneda: z.string().min(1, "Tipo de moneda es requerido"),
-  date: z.string(),
-  cargoCreador: z.string().min(1, "Cargo es requerido"),
-  // area: z.string().min(1, "Área es requerida"),
-  // unit: z.string().min(1, "Unidad es requerida"),
+  materia: z.string(),
   items: z.array(
     z.object({
-      cantidad: z.number().min(1),
-      idUnidad: z.number(),
-      description: z.string(),
+      cantidad: z.string().min(1),
+      idUnidad: z.string(),
+      descripcion: z.string(),
       precioUnitario: z.string(),
-      idClasificacionPresupuestraria: z.number().min(0),
+      idClasificacionPresupuestaria: z.string().min(0),
     })
   ),
   afectoIva: z.boolean(),
-  totalNet: z.number(),
-  vat: z.number(),
-  totalGross: z.number(),
-  destination: z.string(),
-  program: z.string(),
 });
 
 interface Props {
@@ -77,15 +76,17 @@ interface Props {
   cargosByRut: ICargosActivos[];
   monedas: Money[];
   indicePresupuestario: IndicePresupestrario[];
+  indicators: Indicators[];
 }
 
-interface ItemSolicitud {
+export interface ItemSolicitud {
   cantidad: string;
   idUnidad: string;
-  description: string;
+  descripcion: string;
   precioUnitario: string;
-  idClasificacionPresupuestraria: string;
+  idClasificacionPresupuestaria: string;
 }
+export type ItemFormValuesCreate = z.infer<typeof purchaseSchema>;
 
 export const CreateSolicitudGrid = ({
   solitudes,
@@ -94,31 +95,31 @@ export const CreateSolicitudGrid = ({
   cargosByRut,
   monedas,
   indicePresupuestario,
+  indicators,
 }: Props) => {
   const [items, setItems] = useState([] as ItemSolicitud[]);
   const [currentItem, setCurrentItem] = useState({
     cantidad: "",
     idUnidad: "",
-    description: "",
-    idClasificacionPresupuestraria: "",
+    descripcion: "",
+    idClasificacionPresupuestaria: "",
     precioUnitario: "",
   } as ItemSolicitud);
+
+  const [valueInUtm, setValueInUtm] = useState(0);
+  const [mecanismoSelected, setMecanismoSelected] = useState(
+    {} as MecanismoCompra
+  );
 
   const form = useForm({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
-      requestNumber: "",
       idMecanismoDeCompra: "",
       idMoneda: "",
       cargoCreador: "",
-      date: "",
-      items: [],
-      afectoIva: false,
-      totalNet: 0,
-      vat: 0,
-      totalGross: 0,
-      destination: "",
-      program: "",
+      materia: "",
+      items: [] as ItemSolicitud[],
+      afectoIva: true,
     },
   });
 
@@ -127,8 +128,8 @@ export const CreateSolicitudGrid = ({
     setCurrentItem({
       cantidad: "",
       idUnidad: "",
-      description: "",
-      idClasificacionPresupuestraria: "",
+      descripcion: "",
+      idClasificacionPresupuestaria: "",
       precioUnitario: "",
     });
   };
@@ -136,139 +137,69 @@ export const CreateSolicitudGrid = ({
   const handleAfectoIva = () => {
     return items.reduce((sum, item) => {
       if (form.watch().afectoIva) {
-        return (
-          sum + ((Number(item.precioUnitario) * Number(item.cantidad)) * 1.19) 
-        );
+        return sum + Number(item.precioUnitario) * Number(item.cantidad) * 1.19;
       }
       return sum + Number(item.precioUnitario) * Number(item.cantidad);
     }, 0);
   };
 
-  const handleRequisitos = () => {
-      const mecanismo = solicitudSelected.mecanismosCompra.find(
-        (mecanismo: MecanismoCompra) => mecanismo.idMecanismo === form.watch().idMecanismoDeCompra
-      )
+  const onSubmitRequest = async () => {
+    let data = form.getValues();
+    data.items = items;
+    data.idMecanismoDeCompra = mecanismoSelected.idMecanismo;
 
-  return (
-      <div>
-        <span className="flex items-center gap-1">
-          <FileText className="w-4 h-4" />
-          Requerimientos
-        </span>
-        <Table className="w-full">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-left">Nombre del Requisito</TableHead>
-              <TableHead className="text-left">Acción</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {mecanismo?.requisitos.map((requisito: Requisito, index) => (
-              <TableRow key={index}>
-                <TableCell className="text-sm font-medium">
-                  {requisito.nombre}
-                </TableCell>
-                <TableCell>
-                  <div className="rounded-lg border border-dashed p-2 transition-colors flex flex-col items-center">
-                    <Upload className="h-4 w-4 text-muted-foreground mb-1" />
-                    <p className="text-xs text-muted-foreground">
-                      Arrastre archivos aquí o haga clic para seleccionar
-                    </p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    );
-  }
+    const dataFinal: PurchaseRequest = transformStringsToNumbers(data);
+    dataFinal.afectoIva = dataFinal.afectoIva ? 1 : 0;
 
-  const onSubmit = () => {
-    console.log("Valores del formulario:", form.getValues()); // Revisa los valores aquí
+    const newRequest = await addRequest(dataFinal);
+    console.log("Nueva solicitud creada: ", newRequest);
+    if (newRequest.status.code === 200) {
+        toast.success("Solicitud creada exitosamente", {
+          position: "top-right",
+        });
+        form.reset();
+        setItems([]);
+    }
   };
 
+ useEffect(() => {
+  // transform items ingresdos a utm
+    if (items.length > 0 ) { 
+      const totalRequest = handleAfectoIva();
+      const selectedMoney = monedas.find((m) => m.idMoneda === Number(form.watch().idMoneda))?.codigo;
+
+      setValueInUtm(
+        handleTransformItemToMoney(
+          totalRequest,
+          indicators,
+          selectedMoney as string
+        ) as number
+      );
+    }
+  }, [items]);
+
+// agregar 3 opciones de tamaño de letra para toda la plataforma
   return (
     <Card className="w-full  mx-auto">
-      <CardHeader>{/* <CardTitle>{params.solicitud}</CardTitle> */}</CardHeader>
       {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(currentItem, null, 2)}</pre> */}
       <CardContent>
+        <EconomicIndicators indicators={indicators} />
+        calculos: {valueInUtm}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(onSubmitRequest)}
+            className="space-y-6"
+          >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* <FormField
-                control={form.control}
-                name="requestNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nro de Solicitud</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled
-                        placeholder="Solicitud de Compra N° XXX"
-                        {...field}
-                        value={1}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
-              <FormField
-                control={form.control}
-                name="idMecanismoDeCompra"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Mecanismo de compra</FormLabel>
-                    <Select onValueChange={field.onChange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Mecanismo de compra" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {solicitudSelected.mecanismosCompra.map(
-                          (mecanismo: MecanismoCompra) => (
-                            <SelectItem
-                              value={String(mecanismo.idMecanismo)}
-                              key={String(mecanismo.idMecanismo)}
-                            >
-                              {mecanismo.nombre}
-                            </SelectItem>
-                          )
-                        )}
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-
-              {/* <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fecha de ingreso</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled
-                        type="date"
-                        {...field}
-                        value={
-                          field.value || new Date().toISOString().split("T")[0]
-                        } // Fecha actual por defecto
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
-
               <FormField
                 control={form.control}
                 name="cargoCreador"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cargo</FormLabel>
+                    <FormLabel>
+                      Cargo <span className="text-red-800">*</span>
+                    </FormLabel>
                     <Select onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Cargo" />
@@ -293,8 +224,11 @@ export const CreateSolicitudGrid = ({
                 name="idMoneda"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Moneda</FormLabel>
+                    <FormLabel>
+                      Moneda <span className="text-red-800">*</span>
+                    </FormLabel>
                     <Select
+                      disabled={items.length > 0}
                       onValueChange={(value) => field.onChange(value)}
                       value={field.value} // Cambiado a `value` en lugar de `defaultValue`
                     >
@@ -315,14 +249,30 @@ export const CreateSolicitudGrid = ({
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="materia"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex py-1">Materia</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             {/* Add item */}
             <div className="space-y-4">
-              <div className="flex justify-center">
+              <div className="flex justify-end">
                 <AddItemModal
+                  control={form.control}
                   onAddItem={addItem}
                   unidades={unidades}
+                  monedas={monedas}
                   indicePresupuestario={indicePresupuestario}
                 />
               </div>
@@ -343,13 +293,12 @@ export const CreateSolicitudGrid = ({
                     <TableRow key={index + 1}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{item.cantidad}</TableCell>
-                      <TableCell>{item.description}</TableCell>
+                      <TableCell>{item.descripcion}</TableCell>
                       <TableCell>{item.idUnidad}</TableCell>
                       <TableCell>
-                        {item.idClasificacionPresupuestraria}
+                        {item.idClasificacionPresupuestaria}
                       </TableCell>
                       <TableCell>
-                        $
                         {handleformatCurrency(
                           String(
                             Number(item.precioUnitario) * Number(item.cantidad)
@@ -362,8 +311,16 @@ export const CreateSolicitudGrid = ({
               </Table>
             </div>
 
-              {/* Calulate fiscal y Requisitos */}
+            {/* Calulate fiscal y Requisitos */}
             <div className="grid grid-cols-1 md:grid-cols-8 pt-5 gap-6">
+              <div className="col-span-8 md:col-span-5">
+                <TableRequisitos
+                  valueInUtm={valueInUtm}
+                  solicitudSelected={solicitudSelected}
+                  items={items}
+                  setMecanismoSelected={setMecanismoSelected}
+                />
+              </div>
               <div className="col-span-8 md:col-span-3">
                 <span className="flex items-center gap-1">
                   <Calculator className="w-4 h-4" />
@@ -430,13 +387,11 @@ export const CreateSolicitudGrid = ({
                   </div>
                 </div>
               </div>
-             
-              <div className="col-span-8 md:col-span-5">{handleRequisitos()}</div>
             </div>
 
             {/* flujo destino */}
             <div className="space-y-4">
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="destination"
                 render={({ field }) => (
@@ -481,10 +436,10 @@ export const CreateSolicitudGrid = ({
                     </Select>
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-end">
               <Button
                 type="submit"
                 className="w-full flex items-end md:w-[400px]"

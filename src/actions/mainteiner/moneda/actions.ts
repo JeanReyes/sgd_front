@@ -1,6 +1,6 @@
 "use server"
 
-import { ApiAllMoney } from "@/interfaces/money";
+import { ApiAllIndicators, ApiAllMoney } from "@/interfaces/money";
 import { cookies } from "next/headers";
 
 const headers = () => {
@@ -98,5 +98,28 @@ export const deleteMoney = async (id: number): Promise<any> => {
     return res;
   } catch (error) {
     return undefined;
+  }
+};
+
+export const getAllindicators = async (): Promise<ApiAllIndicators> => {
+  try {
+    const response = await fetch(
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/moneda/getIndicatorsEconomic`,
+      {
+        method: "GET",
+        headers: headers(),
+      }
+    );
+    const res = await response.json();
+
+    return res;
+  } catch (error) {
+    return {
+      status: {
+        code: 404,
+        hasError: true,
+      },
+      data: [],
+    };
   }
 };

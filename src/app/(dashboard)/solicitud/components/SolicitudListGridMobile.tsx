@@ -15,11 +15,12 @@ export const SolicitudListGridMobile = ({ clasificaciones }: Props) => {
   const router = useRouter();
   const [openCreateSolicitud, setOpenCreateSolicitud] = useState(false);
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-4  gap-3">
-      <p>MOSTRAR TABLA DE SOLICITUDES DEL USUARIO</p>
-      <Button className="h-full" onClick={() => setOpenCreateSolicitud(true)}>
-        crear solicitud
-      </Button>
+    <div className="grid grid-cols-1 md:grid-cols-1  gap-3">
+      <div className="w-full flex justify-end">
+        <Button className="h-full flex " onClick={() => setOpenCreateSolicitud(true)}>
+          crear solicitud
+        </Button>
+      </div>
       <AlertDialog
         open={openCreateSolicitud}
         onOpenChange={setOpenCreateSolicitud}

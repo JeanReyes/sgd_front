@@ -8,21 +8,28 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { ChevronDownIcon, ChevronUpIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { toast } from "sonner";
+
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { AiOutlineClose } from "react-icons/ai";
-import { useRouter } from "next/navigation";
-import { UpdateRequisitoGrid } from "../UpdaterequisitoGrid";
-import { Requisito } from '../../../../../../interfaces/requisito';
 
-const myCustomFilterFn: FilterFn<Requisito> = (
-  row: Row<Requisito>,
+import { deleteMoney } from "@/actions/mainteiner/moneda/actions";
+import { useRouter } from "next/navigation";
+import { Money } from "@/interfaces/money";
+import { AiOutlineClose } from "react-icons/ai";
+import { UpdateMoneyGrid } from "@/app/(dashboard)/mainteiner/money/components/UpdateMoneyGrid";
+import { Solicitud } from "@/interfaces/solicitud";
+import { Badge, BadgeProps } from "@/components/ui/badge";
+
+const myCustomFilterFn: FilterFn<Solicitud> = (
+  row: Row<Solicitud>,
   columnId: string,
   filterValue: string,
   addMeta: (meta: any) => void
@@ -31,7 +38,7 @@ const myCustomFilterFn: FilterFn<Requisito> = (
 
   const filterParts = filterValue.split(" ");
   const rowValues =
-    `${row.original.descripcion} ${row.original.nombre}`.toLowerCase();
+    `${row.original.cod} ${row.original.estado} ${row.original.cargoCreador}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
 
   //esto es cada campo por separado
@@ -63,25 +70,59 @@ const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
 };
  
 
-export const columns: ColumnDef<Requisito>[] = [
+export const columns: ColumnDef<Solicitud>[] = [
   {
-    accessorKey: "nombre",
-    header: () => <div className="text-left">Nombre</div>,
+    accessorKey: "cod",
+    header: () => <div className="text-left">cod</div>,
     cell: ({ row }) => {
-      return <div>{row.getValue("nombre")}</div>;
+      return <div>{row.getValue("cod")}</div>;
     },
   },
   {
-    accessorKey: "descripcion",
-    header: () => <div className="text-left">Descripción</div>,
+    accessorKey: "estado",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Estado
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      type StatusKey = keyof typeof map;
+      const map = {
+        Ingresada: "success",
+        Pendiente: "destructive",
+      };
+
+      const status = row.getValue("estado") as StatusKey;
+
+      return (
+        <Badge variant={map[status] as BadgeProps["variant"]}>{status}</Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "cargoCreador",
+    header: () => <div className="text-left">Creador</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue("cargoCreador")}</div>;
+    },
+    filterFn: myCustomFilterFn,
+  },
+  {
+    accessorKey: "materia",
+    header: () => <div className="text-left">Materia</div>,
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const requisito = row.original;
+      const solicitud = row.original;
       const router = useRouter();
       const [dialogOpen, setDialogOpen] = useState(false);
-      const [deleteItem, setDeleteItem] = useState(false);
 
       return (
         <>
@@ -99,61 +140,30 @@ export const columns: ColumnDef<Requisito>[] = [
                   setDialogOpen(true);
                 }}
               >
-                Editar
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  setDeleteItem(true);
-                }}
-              >
-                Eliminar
+                ver
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[95%]">
               <AlertDialogHeader>
-                <div className="flex justify-between">
-                  <AlertDialogTitle>Actualice el Requisito</AlertDialogTitle>
+                <div className="flex justify-between items-center">
+                  <AlertDialogTitle>Solicitud</AlertDialogTitle>
                   <AlertDialogCancel>
                     <AiOutlineClose />
                   </AlertDialogCancel>
                 </div>
                 <div>
-                  <UpdateRequisitoGrid
-                    requisito={requisito}
+                  {/* <UpdateMoneyGrid
+                    money={money}
                     setDialogOpen={setDialogOpen}
-                  />
+                  /> */}
+                  <pre className=" overflow-x-auto">
+                    {JSON.stringify(solicitud, null, 2)}
+                  </pre>
                 </div>
               </AlertDialogHeader>
-            </AlertDialogContent>
-          </AlertDialog>
-
-          <AlertDialog open={deleteItem} onOpenChange={setDeleteItem}>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <div className="flex justify-between">
-                  <AlertDialogTitle>Eliminar el Requisito</AlertDialogTitle>
-                  <AlertDialogCancel>
-                    <AiOutlineClose />
-                  </AlertDialogCancel>
-                </div>
-                <AlertDialogDescription>
-                  ¿Seguro quieres eliminar este Requisito?
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction
-                  // onClick={() => {
-                  //   deleteUnidad(requisito.id);
-                  //   router.refresh();
-                  // }}
-                >
-                  Eliminar
-                </AlertDialogAction>
-              </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         </>

@@ -1,5 +1,6 @@
 "use server"
 
+import { ApiAllSolicitud, PurchaseRequest } from "@/interfaces/solicitud";
 import { cookies } from "next/headers";
 
 const headers = () => {
@@ -17,34 +18,37 @@ const headers = () => {
 };
 
 
-export const getAll = async <T>( data?: T,): Promise<any> => {
-
+export const getAllSolicitud = async <T>(data?: T): Promise<ApiAllSolicitud> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/findAll`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/solicitud/findAllByUser`,
       {
         method: "GET",
         headers: headers(),
       }
-    )
-   
+    );
+
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
 
     const res = await response.json(); // Verifica la respuesta de la API
     return res;
-    
-    return res;
   } catch (error) {
-    return undefined;
+    return {
+      status: {
+        code: 404,
+        hasError: true,
+      },
+      data: [],
+    };
   }
 };
 
-export const addFuncionario = async <T>( data?: T): Promise<any> => {
+export const addRequest = async ( data: PurchaseRequest): Promise<any> => {
     try {
       const response = await fetch(
-        `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/save`,
+        `${process.env.BACK_URL_FOR_FRONT}/api/v1/solicitud/createNew`,
         {
           method: "POST",
           headers: headers(),
@@ -52,6 +56,8 @@ export const addFuncionario = async <T>( data?: T): Promise<any> => {
         }
       );
       const res = await response.json();
+      console.log("Solicitud creada: ", res);
+      
       return res;
     } catch (error) {
       return undefined;

@@ -7,6 +7,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SolicitudListGrid } from "./components/SolicitudListGrid";
 import { DataClasificacion } from "@/interfaces/clasificacion-compra";
+import { getAllSolicitud } from "@/actions/solicitud/actions";
+import { DataTable } from "./components/data-table/data-table";
+import { columns } from "./components/data-table/columns";
 
 export const mapClasicacion = {
   "Trato Directo": "trato-directo",
@@ -30,9 +33,7 @@ export default async function HomeSolicitud() {
 
 
   const clasificaciones = await getAllClasificacion();
-
-  console.log(clasificaciones);
-  
+  const solicitudes = await getAllSolicitud();
   
   const newClasificaciones = clasificaciones.data.map(
     (clasificacion: DataClasificacion) => {
@@ -47,7 +48,10 @@ export default async function HomeSolicitud() {
   return (
     <div>
       <Title title="Solicitudes" />
+      {/* <pre>{JSON.stringify(solicitudes.data, null, 2)}</pre> */}
       <SolicitudListGrid clasificaciones={newClasificaciones} />
+      <DataTable columns={columns} data={solicitudes.data}/>
+     
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useRef } from 'react';
 
 
 import {
@@ -21,14 +21,17 @@ interface Props {
 }
 
 export const SidebarItem = ({ href , title, icon, isHalf = false}: Props) => {
+  
   const currentPath = usePathname();
+  
+  const pathSelected = currentPath.includes(href) && href.length > 1;
 
   if (isHalf) {
       return (
         <div>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger className='w-full'>
+              <TooltipTrigger className="w-full">
                 {" "}
                 <Link
                   href={href}
@@ -36,7 +39,7 @@ export const SidebarItem = ({ href , title, icon, isHalf = false}: Props) => {
                     py-4 sm:m-1 md:m-2 flex justify-center items-center rounded-md group
                     hover:bg-gradient-to-t hover:bg-sky-600 hover:text-white
                     ${
-                      href === currentPath
+                      (currentPath === href) || pathSelected
                         ? "text-white bg-gradient-to-r from-sky-600 to-cyan-400"
                         : ""
                     }
@@ -61,7 +64,11 @@ export const SidebarItem = ({ href , title, icon, isHalf = false}: Props) => {
         className={`
           px-4 py-3 flex items-center space-x-4 rounded-md group
           hover:bg-gradient-to-t hover:bg-sky-600 hover:text-white
-          ${href === currentPath ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400' : ''}
+          ${
+            currentPath === href || pathSelected
+              ? "text-white bg-gradient-to-r from-sky-600 to-cyan-400"
+              : ""
+          }
         `}
       >
         {icon}
