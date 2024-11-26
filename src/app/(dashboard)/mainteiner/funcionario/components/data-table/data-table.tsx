@@ -146,7 +146,7 @@ export function DataTable<TData, TValue>({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
-                Columns
+                Columnas
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -214,7 +214,7 @@ export function DataTable<TData, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No hay resultados.
                   </TableCell>
                 </TableRow>
               )}
@@ -223,8 +223,8 @@ export function DataTable<TData, TValue>({
         </div>
         <div className="flex items-center justify-between space-x-2 py-4 mx-2">
           <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
+            {table.getFilteredSelectedRowModel().rows.length} de{" "}
+            {table.getFilteredRowModel().rows.length} fila(s) seleccionada.
           </div>
           <Button
             variant="outline"
@@ -232,7 +232,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Anterior
           </Button>
           <Button
             variant="outline"
@@ -240,7 +240,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Siguiente
           </Button>
         </div>
 
@@ -250,7 +250,7 @@ export function DataTable<TData, TValue>({
           }}
         >
           <SelectTrigger className="w-[180px] ml-2">
-            <SelectValue placeholder="Rows" />
+            <SelectValue placeholder="Filas" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>

@@ -3,35 +3,16 @@
 import { useRouter } from "next/navigation";
 import { CiSun } from "react-icons/ci";
 import { IoMoonOutline } from "react-icons/io5";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../../ui/dropdown-menu";
+import { Button } from "../../../ui/button";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 
 interface Props {
-  theme: string
+  theme?: string
 }
 
 export const ButtonTheme = ({theme}: Props) => {
-
-  // const router = useRouter();
-  // const handleSetTheme = () => {
-  //   changeTheme(theme === 'light' ? 'dark' : 'light');
-  //   router.refresh()
-  // }
-
-  // return (
-  //   <button
-  //     onClick={() => handleSetTheme()}
-  //     className="flex items-center justify-center w-10 h-10 rounded-xl border"
-  //   >
-  //     {theme === "light" ? (
-  //       <CiSun className="w-5 h-5" size={20} />
-  //     ) : (
-  //       <IoMoonOutline className="w-5 h-5" size={20} />
-  //     )}
-  //   </button>
-  // );
 
   const { setTheme } = useTheme();
 
@@ -46,13 +27,13 @@ export const ButtonTheme = ({theme}: Props) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          Claro
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          Oscuro
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          Sistema
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

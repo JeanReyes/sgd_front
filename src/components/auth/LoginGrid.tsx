@@ -91,10 +91,10 @@ export const LoginGrid = ({ urlBase }: Props) => {
                 name="rut"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Dni</FormLabel>
+                    <FormLabel>RUT</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Dni"
+                        placeholder="RUT"
                         value={field.value} // El valor formateado
                         onChange={(e) => handleDNIChange(e, field)}
                       />
@@ -109,11 +109,11 @@ export const LoginGrid = ({ urlBase }: Props) => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Contraseña</FormLabel>
                     <FormControl>
                       <Input
                         type={"password"}
-                        placeholder="Password"
+                        placeholder="Contraseña"
                         {...field}
                       />
                     </FormControl>
@@ -127,7 +127,7 @@ export const LoginGrid = ({ urlBase }: Props) => {
                 type="submit"
                 variant={"destructive"}
               >
-                Submit
+                Ingresar
               </Button>
             </form>
           </Form>

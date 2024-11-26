@@ -11,8 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Checkbox } from "@/components/ui/checkbox";
-
 import { ChevronDownIcon, ChevronUpIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -20,6 +18,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { UpdateRequisitoGrid } from "../UpdaterequisitoGrid";
 import { Requisito } from '../../../../../../interfaces/requisito';
+import { deleteRequisito } from "@/actions/mainteiner/requisito/actions";
+import { Badge, BadgeProps } from "@/components/ui/badge";
 
 const myCustomFilterFn: FilterFn<Requisito> = (
   row: Row<Requisito>,
@@ -33,35 +33,7 @@ const myCustomFilterFn: FilterFn<Requisito> = (
   const rowValues =
     `${row.original.descripcion} ${row.original.nombre}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
-
-  //esto es cada campo por separado
-  // if (row.original.email.includes(filterValue)) {
-  //   return true
-  // }
-
-  // if (row.original.clientName.includes(filterValue)) {
-  //   return true;
-  // }
-
-  // if (row.original.status.includes(filterValue)) {
-  //   return true;
-  // }
-  return false;
 };
-
-
-const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
-  if (isSorted === "asc") {
-    return <ChevronUpIcon className="h-4 w-4"/>
-  }
-
-  if (isSorted === 'desc') {
-    return <ChevronDownIcon className="h-4 w-4" />;
-  }
-
-  return null;
-};
- 
 
 export const columns: ColumnDef<Requisito>[] = [
   {
@@ -70,10 +42,28 @@ export const columns: ColumnDef<Requisito>[] = [
     cell: ({ row }) => {
       return <div>{row.getValue("nombre")}</div>;
     },
+    filterFn: myCustomFilterFn,
   },
   {
     accessorKey: "descripcion",
     header: () => <div className="text-left">Descripción</div>,
+  },
+  {
+    accessorKey: "obligatorio",
+    header: () => <div className="text-left">Obligatorio</div>,
+    cell: ({ row }) => {
+      type StatusKey = keyof typeof map;
+      const map = {
+        true: "success",
+        false: "destructive",
+      };
+
+      const status = row.getValue("obligatorio") as StatusKey;
+
+      return (
+        <Badge variant={map[status] as BadgeProps["variant"]}>{status}</Badge>
+      );
+    },
   },
   {
     id: "actions",
@@ -93,7 +83,7 @@ export const columns: ColumnDef<Requisito>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   setDialogOpen(true);
@@ -146,10 +136,10 @@ export const columns: ColumnDef<Requisito>[] = [
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
-                  // onClick={() => {
-                  //   deleteUnidad(requisito.id);
-                  //   router.refresh();
-                  // }}
+                  onClick={() => {
+                    deleteRequisito(+requisito.id!);
+                    router.refresh();
+                  }}
                 >
                   Eliminar
                 </AlertDialogAction>

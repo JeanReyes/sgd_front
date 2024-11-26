@@ -6,7 +6,7 @@ import { AddrequisitoGrid } from "./components/AddRequisitoGrid";
 import { redirect } from "next/navigation";
 import { getAllRequisito } from "@/actions/mainteiner/requisito/actions";
 
-export default async function RequisitoscionCompra() {
+export default async function HomeRequisitos() {
   const cookieStore = cookies();
   const session = cookieStore.get("auth")?.value
     ? JSON.parse(cookieStore.get("auth")!.value)

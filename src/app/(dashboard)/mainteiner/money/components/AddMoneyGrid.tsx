@@ -50,6 +50,7 @@ export const AddMoneyGrid = () => {
 
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
     const res = await addMoney({
       codigo: values.codigo,
       decimales: values.decimales,

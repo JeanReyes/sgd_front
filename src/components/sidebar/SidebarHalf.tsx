@@ -1,7 +1,7 @@
 import { useCollapseMenu } from "@/store";
 import Image from "next/image";
 import { GoSidebarCollapse } from "react-icons/go";
-import { sidebarRoutes } from "./map-routes";
+import { sidebarRoutes } from "./new-sidebar/map-routes";
 import { SidebarItem } from "./SidebarItem";
 import { Session } from "@/interfaces/session";
 
@@ -22,7 +22,7 @@ export const SidebarHalf = ({session}: Props) => {
         <div>
           <div className=" text-center px-1 py-4">
             <h1 className=" bg-slate-950 font-bold text-md lg:text-md bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent">
-              NES<span className="text-indigo-500">.</span>CORP
+              Logo Municipal
             </h1>
           </div>
           <div className="mt-2 text-center">

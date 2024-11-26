@@ -28,15 +28,20 @@ const selectIndicator = (
 
 export const handleTransformItemToMoney = (total: number, IndicatorsValues: Indicators[] = [], moneySelected: string): number | undefined => {
 
-  const utmValue = Number(selectIndicator(IndicatorsValues, "UTM")?.value)
+  const utmValue = Number(selectIndicator(IndicatorsValues, "UTM")?.value);
 
+ console.log(moneySelected);
+ if (moneySelected === 'CLP') {
+   return total / utmValue;
+ }
+ 
   //valor de la moneda seleccionada
-  const valueMoneySelectd = selectIndicator(IndicatorsValues, moneySelected)?.value;
+  const valueMoneySelected = selectIndicator(IndicatorsValues, moneySelected)?.value;
 
-  if (!valueMoneySelectd) return;
+  if (!valueMoneySelected) return
 
   // calculo total de la moneda seleccionada a peso
-  const transormedValueToPeso = total * valueMoneySelectd;
+  const transormedValueToPeso = total * valueMoneySelected;
 
   // valor final en UTM
   const calculatePesoToUTM = transormedValueToPeso / utmValue;

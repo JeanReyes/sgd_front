@@ -152,7 +152,6 @@ export const CreateSolicitudGrid = ({
     dataFinal.afectoIva = dataFinal.afectoIva ? 1 : 0;
 
     const newRequest = await addRequest(dataFinal);
-    console.log("Nueva solicitud creada: ", newRequest);
     if (newRequest.status.code === 200) {
         toast.success("Solicitud creada exitosamente", {
           position: "top-right",
@@ -163,20 +162,22 @@ export const CreateSolicitudGrid = ({
   };
 
  useEffect(() => {
-  // transform items ingresdos a utm
-    if (items.length > 0 ) { 
-      const totalRequest = handleAfectoIva();
-      const selectedMoney = monedas.find((m) => m.idMoneda === Number(form.watch().idMoneda))?.codigo;
+   // transform items ingresdos a utm
+   if (items.length > 0) {
+     const totalRequest = handleAfectoIva();
+     const selectedMoney = monedas.find(
+       (m) => m.idMoneda === Number(form.watch().idMoneda)
+     )?.codigo;
 
-      setValueInUtm(
-        handleTransformItemToMoney(
-          totalRequest,
-          indicators,
-          selectedMoney as string
-        ) as number
-      );
-    }
-  }, [items]);
+     setValueInUtm(
+       handleTransformItemToMoney(
+         totalRequest,
+         indicators,
+         selectedMoney as string
+       ) as number
+     );
+   }
+ }, [items, form.watch().afectoIva]);
 
 // agregar 3 opciones de tamaño de letra para toda la plataforma
   return (
@@ -334,7 +335,7 @@ export const CreateSolicitudGrid = ({
                       <FormItem className="flex flex-row w-full items-center justify-between rounded-lg border p-4 col-span-1 sm:col-span-2">
                         <div className="space-y-0.5">
                           <FormDescription>
-                            Solicitud afecta a IVA.{" "}
+                            Solicitud {form.watch().afectoIva ? 'afecta a' : 'excenta de'} IVA.{" "}
                           </FormDescription>
                         </div>
                         <FormControl>
@@ -367,14 +368,14 @@ export const CreateSolicitudGrid = ({
                     <Input
                       className="w-40"
                       readOnly
-                      value={items.reduce(
+                      value={ form.watch().afectoIva ? items.reduce(
                         (sum, item) =>
                           sum +
                           Number(item.precioUnitario) *
                             Number(item.cantidad) *
                             0.19,
                         0
-                      )}
+                      ) : 0}
                     />
                   </div>
                   <div className="flex justify-between">

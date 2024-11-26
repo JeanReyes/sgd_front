@@ -143,7 +143,7 @@ export const columns: ColumnDef<MecanismoCompra>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>Aciones</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   setDialogOpen(true);

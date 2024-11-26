@@ -1,15 +1,15 @@
 import { IoAddCircleSharp, IoCalendarOutline, IoCheckboxOutline } from 'react-icons/io5';
 import { GrConfigure } from "react-icons/gr";
-import { CgComponents } from "react-icons/cg";
+import { CiHome } from 'react-icons/ci';
 
 export const sidebarRoutes = [
   {
-    href: "/",
-    title: "Home",
-    icon: <IoCalendarOutline size={30} />,
+    url: "/",
+    title: "Inicio",
+    icon: <CiHome size={30} />,
   },
   {
-    href: "/solicitud",
+    url: "/solicitud",
     title: "Solicitudes",
     icon: <IoCheckboxOutline size={30} />,
   },
@@ -19,8 +19,8 @@ export const sidebarRoutes = [
   //   icon: <CgComponents size={30} />,
   // },
   {
-    href: "/mainteiner",
-    title: "Mantenedor",
+    url: "/mainteiner",
+    title: "Mantenedores",
     icon: <GrConfigure size={30} />,
   },
 ];

@@ -7,7 +7,7 @@ import {
   IoCloseOutline,
   IoSearchOutline,
 } from "react-icons/io5";
-import { sidebarRoutes } from "./map-routes";
+import { sidebarRoutes } from "./new-sidebar/map-routes";
 import { useSession } from "@/store/session/session.store";
 
 interface Props {
@@ -68,7 +68,7 @@ export const MobileSidebar = ({ position = "left" }: Props) => {
           <Link
             onClick={closeMenu}
             key={i}
-            href={item.href}
+            href={item.url}
             className="flex items-center mt-10 p-2 hover:bg-gray-100 hover:text-gray-900 rounded transition-all"
           >
             {item.icon}

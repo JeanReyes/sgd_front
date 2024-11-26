@@ -15,7 +15,7 @@ export default function HomeConfig() {
       <div className="grid grid-cols-1 sm:grid-cols-4  gap-3">
         {manteinerRoutes.map((config) => (
           <Card
-            key={config.href}
+            key={config.url}
             className="flex flex-row sm:flex-col justify-between h-[130px] sm:h-full"
           >
             <CardHeader className="flex flex-row p-5">
@@ -29,7 +29,7 @@ export default function HomeConfig() {
             </CardHeader>
 
             <CardFooter className="flex p-5">
-              <Link href={config.href}>
+              <Link href={config.url}>
                 <Button className="h-full">
                   <CiLogin size={20} />
                 </Button>

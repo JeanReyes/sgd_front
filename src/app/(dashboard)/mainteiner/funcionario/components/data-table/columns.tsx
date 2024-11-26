@@ -36,19 +36,6 @@ const myCustomFilterFn: FilterFn<Funcionario> = (
     `${row.original.apellidos} ${row.original.nombres} ${row.original.correo} ${row.original.rut}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
 
-  //esto es cada campo por separado
-  // if (row.original.email.includes(filterValue)) {
-  //   return true
-  // }
-
-  // if (row.original.clientName.includes(filterValue)) {
-  //   return true;
-  // }
-
-  // if (row.original.status.includes(filterValue)) {
-  //   return true;
-  // }
-  return false;
 };
 
 
@@ -139,7 +126,7 @@ export const columns: ColumnDef<Funcionario>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   setDialogOpen(true);

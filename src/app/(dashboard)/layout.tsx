@@ -19,10 +19,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
   }
 
   return (
-    <>
-      <ContainerMenu session={session} theme={theme}>
-        {children}
-      </ContainerMenu>
-    </>
+    <ContainerMenu session={session} theme={theme}>
+      {children}
+    </ContainerMenu>
   );
 }

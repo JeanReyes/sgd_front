@@ -1,7 +1,7 @@
 'use client'
 
 import { SidebarItem } from "@/components";
-import { sidebarRoutes } from "./map-routes";
+import { sidebarRoutes } from "./new-sidebar/map-routes";
 import { useCollapseMenu } from '@/store';
 import { GoSidebarExpand } from 'react-icons/go';
 import { Session } from '@/interfaces/session';
@@ -19,7 +19,7 @@ export const Sidebar =  ({ session }: Props) => {
       <div>
         <div className=" text-center mx-6 px-6 py-4">
           <h1 className=" bg-slate-950 font-bold text-md lg:text-md bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent">
-            NES<span className="text-indigo-500">.</span>CORP
+            Logo Municipal
           </h1>
         </div>
         <div className=" text-center">

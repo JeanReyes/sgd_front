@@ -12,7 +12,7 @@ export default function ButtonPage() {
       <Button variant={"outline"}>outline</Button>
       <Button variant={"secondary"}>secondary</Button>
       <Button disabled>disabled</Button>
-      <Button variant={'success'}>disabled</Button>
+      <Button variant={'link'}>disabled</Button>
     </div>
   );
 }

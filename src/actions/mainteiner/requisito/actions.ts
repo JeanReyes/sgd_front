@@ -47,7 +47,7 @@ export const getAllRequisito = async <T>(data?: T): Promise<ApiAllRequisito> => 
 export const addRequisito = async <T>(data?: T): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/save`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Requisito/save`,
       {
         method: "POST",
         headers: headers(),
@@ -64,7 +64,7 @@ export const addRequisito = async <T>(data?: T): Promise<any> => {
 export const updateRequisito = async <T>(data?: T): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/update`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Requisito/update`,
       {
         method: "PUT",
         headers: headers(),
@@ -82,7 +82,7 @@ export const updateRequisito = async <T>(data?: T): Promise<any> => {
 export const deleteRequisito = async (id: number): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/deleteById/${id}`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Requisito/deleteById/${id}`,
       {
         method: "DELETE",
         headers: headers(),

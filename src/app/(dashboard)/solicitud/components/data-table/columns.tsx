@@ -38,7 +38,7 @@ const myCustomFilterFn: FilterFn<Solicitud> = (
 
   const filterParts = filterValue.split(" ");
   const rowValues =
-    `${row.original.cod} ${row.original.estado} ${row.original.cargoCreador}`.toLowerCase();
+    `${row.original.cod} ${row.original.estado} ${row.original.cargoCreador} ${row.original.materia}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
 
   //esto es cada campo por separado
@@ -73,10 +73,11 @@ const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
 export const columns: ColumnDef<Solicitud>[] = [
   {
     accessorKey: "cod",
-    header: () => <div className="text-left">cod</div>,
+    header: () => <div className="text-left">N° solicitud</div>,
     cell: ({ row }) => {
       return <div>{row.getValue("cod")}</div>;
     },
+    filterFn: myCustomFilterFn,
   },
   {
     accessorKey: "estado",
@@ -134,13 +135,27 @@ export const columns: ColumnDef<Solicitud>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   setDialogOpen(true);
                 }}
               >
-                ver
+                Firmar solicitud
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setDialogOpen(true);
+                }}
+              >
+                Ver Solicitud
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setDialogOpen(true);
+                }}
+              >
+                Revisar Adjuntos
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

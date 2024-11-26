@@ -13,11 +13,10 @@ export default function AlertDialogPage() {
     <div className="grid grid-cols-5 gap-3">
       <AlertDialog
         open={dialogOpen}
-        // onOpenChange={(open) => console.log({ open })}
         onOpenChange={seDialogOpen}
       >
         <AlertDialogTrigger asChild>
-          <Button variant="success">Show Dialog</Button>
+          <Button variant="link">Show Dialog</Button>
         </AlertDialogTrigger>
 
         <AlertDialogContent>

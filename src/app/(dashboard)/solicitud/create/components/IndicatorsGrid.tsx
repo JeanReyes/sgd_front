@@ -1,23 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { BsCashCoin } from "react-icons/bs";
 import {
-  Tooltip,
-  TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
   TrendingUp,
   TrendingDown,
   Minus,
-  DollarSign,
-  Timer,
-  Building2,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 import { Indicators } from "@/interfaces/money";
 
 
@@ -32,7 +25,7 @@ export default function EconomicIndicators({ indicators }: { indicators: Indicat
               <div key={index} className="flex gap-2">
                 <IndicatorCard
                   title={indicator.cod}
-                  icon={<Timer className="h-4 w-4" />}
+                  icon={<BsCashCoin className="h-4 w-4" />}
                   value={Number(indicator.value)}
                   // trend={indicators.utm.trend}
                   // change={indicators.utm.change}

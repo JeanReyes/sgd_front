@@ -1,5 +1,5 @@
-export { ButtonTheme } from './top-menu/ButtonTheme';
-export { TopMenu } from './top-menu/TopMenu';
+export { ButtonTheme } from './sidebar/new-sidebar/top-menu/ButtonTheme';
+export { TopMenu } from './sidebar/new-sidebar/top-menu/TopMenu';
 
 export * from './not-found/PageNotFound'
 export * from './title/Title'

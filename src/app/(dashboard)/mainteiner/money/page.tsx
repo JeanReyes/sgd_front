@@ -13,8 +13,6 @@ export default async function HomeMoneda() {
     ? JSON.parse(cookieStore.get("auth")!.value)
     : null;
 
-  
-
   const moneys = await getAllMoney()
 
   return (

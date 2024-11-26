@@ -46,7 +46,7 @@ export const LogoutButton = ({collapse = false}: Props) => {
     >
       {/* <CiLogout /> */}
       {!collapse && (
-        <span>Logout</span>
+        <span>Cerrar sesión</span>
       )}
     </button>
   );

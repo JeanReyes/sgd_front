@@ -1,5 +1,8 @@
 // nextauth.d.ts
 import { DefaultSession, DefaultUser } from "next-auth";
+import { TableMeta } from "@tanstack/react-table";
+import { TipoDependencia } from "@/interfaces/tipo-dependencia";
+import { Sector } from "@/interfaces/sector";
 
 interface IUser extends DefaultUser {
   /**
@@ -21,4 +24,12 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
   interface JWT extends IUser {}
+}
+
+// Extender el tipo TableMeta para incluir las nuevas propiedades
+declare module "@tanstack/react-table" {
+  interface TableMeta<TData> {
+    tipoDependencias?: TipoDependencia[];
+    sectores?: Sector[];
+  }
 }

@@ -11,7 +11,7 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { sidebarRoutes } from "../sidebar/map-routes";
+import { sidebarRoutes } from "../sidebar/new-sidebar/map-routes";
 import { manteinerRoutes } from "@/app/(dashboard)/mainteiner/map-routes";
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -29,7 +29,7 @@ export function BreadcrumbGrid() {
 
   const setRoutes = (segment: string) => {
     const path = allRoutes.find((route) => {
-      const arrayRoute = route.href.split("/").filter(Boolean);
+      const arrayRoute = route.url.split("/").filter(Boolean);
       const occurrences = arrayRoute.filter((item) => item === segment).length;
       
       if (occurrences === 1) {
@@ -54,11 +54,15 @@ export function BreadcrumbGrid() {
       const path = "/" + segments.slice(0, index + 1).join("/");
 
       return (
-        <span key={path} className="flex items-center">
-          <BreadcrumbItem>
+        <span key={path} className="flex items-center ">
+          <BreadcrumbItem >
             <Link
               href={path}
-              className={index === segments.length - 1 ? "font-extrabold dark:text-white text-black" : ""}
+              className={`${
+                index === segments.length - 1
+                  ? "font-extrabold dark:text-white text-black"
+                  : ""
+              } text-xs md:text-sm`}
             >
               {setRoutes(segment) ? setRoutes(segment) : capitalize(segment)}
             </Link>
@@ -70,27 +74,16 @@ export function BreadcrumbGrid() {
   };
 
   return (
-    <Breadcrumb className="mb-5">
+    // <Breadcrumb className="mb-5">
+    <Breadcrumb className="flex items-center">
       <BreadcrumbList>
         <span className="flex items-center">
           <BreadcrumbItem>
-            <Link href="/">Home</Link>
+            <Link href="/">Inicio</Link>
           </BreadcrumbItem>
           {segments.length > 0 && <BreadcrumbSeparator />}
         </span>
-
-        {/* Generar Breadcrumb dinámico */}
         {generateBreadcrumb()}
-
-        {/* {segments.length > 0 && (
-          <BreadcrumbItem>
-            <BreadcrumbPage className="font-extrabold">
-              {setRoutes(segments[segments.length - 1])
-                ? setRoutes(segments[segments.length - 1])
-                : capitalize(segments[segments.length - 1])}
-            </BreadcrumbPage>
-          </BreadcrumbItem>
-        )} */}
       </BreadcrumbList>
     </Breadcrumb>
   );

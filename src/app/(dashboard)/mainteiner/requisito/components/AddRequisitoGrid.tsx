@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,11 +24,11 @@ import { z } from "zod";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { addUnidad } from "@/actions/mainteiner/unidad/actions";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { extensiones, formatoBase } from "../utils/data";
+import { addRequisito } from "@/actions/mainteiner/requisito/actions";
 
 export type Money = {
   id: string;
@@ -66,36 +65,41 @@ export const AddrequisitoGrid = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     
-    // const res = await addUnidad({
-    //   nombre: values.nombre,
-    //   descripcion: values.descripcion,
-    // });
+    const data = {
+      nombre: values.nombre,
+      descripcion: values.descripcion,
+      cantidad: String(values.cantidad),
+      obligatorio: values.obligatorio ? "true" : "false",
+      extensiones: values.extensiones,
+      formatoBase: values.formatoBase,
+    };
 
-    // if (!res) {
-    //   toast.error("Error", {
-    //     position: "top-right",
-    //     description: "Intente denuevo",
-    //   });
-    //   return;
-    // }
+    const res = await addRequisito(data);
 
-    // if (!res.status.hasError) {
-    //   toast.success("Unidad creada", {
-    //     position: "top-right",
-    //     description: res.data.message,
-    //   });
-    //   router.refresh();
-    //   seDialogOpen(false);
-    //   form.reset();
-    //   return;
-    // } else {
-    //   toast.error("Error", {
-    //     position: "top-right",
-    //     description: res.data.message,
-    //   });
-    // }
+    if (!res) {
+      toast.error("Error", {
+        position: "top-right",
+        description: "Intente denuevo",
+      });
+      return;
+    }
+
+    if (!res.status.hasError) {
+      toast.success("Unidad creada", {
+        position: "top-right",
+        description: res.data.message,
+      });
+      router.refresh();
+      seDialogOpen(false);
+      form.reset();
+      return;
+    } else {
+      toast.error("Error", {
+        position: "top-right",
+        description: res.data.message,
+      });
+    }
   };
 
   return (

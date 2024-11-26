@@ -8,7 +8,6 @@ export default function HomeDashboard() {
   return (
     <div>
       <Title title="Dashboard" />
-      {BASE_URL}
       <DashboardGrid />
     </div>
   );
