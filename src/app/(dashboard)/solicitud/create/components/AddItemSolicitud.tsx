@@ -124,7 +124,7 @@ export default function AddItemModal({
       <Button
         type="button"
         variant="outline"
-        className="mt-4 w-full md:w-[200px] border-2 dark:bg-black dark:text-white border-flashing dark:border-flashing-dark"
+        className="mt-4 w-full md:w-[200px] border-2 dark:bg-black dark:text-white border-flashing dark:border-flashing-dark "
         onClick={handleOpenModal} // Ejecuta la validación antes de abrir el modal
       >
         Nuevo item

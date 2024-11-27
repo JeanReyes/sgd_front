@@ -88,8 +88,6 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
-           
               <LogoutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>

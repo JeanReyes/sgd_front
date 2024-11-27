@@ -4,6 +4,8 @@ import { useSession } from "@/store/session/session.store";
 import { CiLogout } from "react-icons/ci";
 import { IoShieldOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface Props {
   collapse?: boolean;
@@ -18,36 +20,18 @@ export const LogoutButton = ({collapse = false}: Props) => {
     router.refresh();
   }
 
-  // if (status === 'loading') {
-  //   return (
-  //     <button className="px-4 py-3 flex items-center space-x-4 rounded-md group">
-  //       {/* <IoShieldOutline /> */}
-  //       <span className="dark:group-hover:text-gray-400">Espere...</span>
-  //     </button>
-  //   );
-  // }
-
-  //   if (status === "unauthenticated") {
-  //     return (
-  //       <button
-  //         onClick={() => signIn()}
-  //         className="px-4 py-3 flex items-center space-x-4 rounded-md group border-2 border-white"
-  //       >
-  //         {/* <CiLogout /> */}
-  //         <span className="dark:group-hover:text-gray-400">Ingresar</span>
-  //       </button>
-  //     );
-  //   }
-
   return (
-    <button
+    <Button
       onClick={handleSignOut}
-      className="px-4 py-3 flex items-center space-x-4 rounded-md group"
+      className=" flex items-center space-x-4 rounded-md group w-full"
     >
       {/* <CiLogout /> */}
       {!collapse && (
-        <span>Cerrar sesión</span>
+        <>
+          <LogOut />
+          <span>Cerrar sesión</span>
+        </>
       )}
-    </button>
+    </Button>
   );
 }

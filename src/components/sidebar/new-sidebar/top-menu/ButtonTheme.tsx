@@ -1,8 +1,5 @@
 'use client'
 
-import { useRouter } from "next/navigation";
-import { CiSun } from "react-icons/ci";
-import { IoMoonOutline } from "react-icons/io5";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../../ui/dropdown-menu";
 import { Button } from "../../../ui/button";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";

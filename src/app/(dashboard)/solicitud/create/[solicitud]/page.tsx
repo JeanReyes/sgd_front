@@ -137,7 +137,7 @@ export default async function HomeSolicitud({
         </div>
       </div>
 
-      <Suspense fallback={<p>Cargando datos adicionales...</p>}>
+      <Suspense fallback={<p>Cargando indicadores economicos...</p>}>
         <LazyLoadedGrid
           solitudes={clasificaciones.data}
           solicitudSelected={solicitudSelected}

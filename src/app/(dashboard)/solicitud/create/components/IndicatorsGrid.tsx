@@ -18,7 +18,7 @@ export default function EconomicIndicators({ indicators }: { indicators: Indicat
 
   return (
     <TooltipProvider>
-      <Card className="bg-card/50 backdrop-blur border-none mb-6">
+      <Card className="bg-card/50 backdrop-blur border mb-6">
         <CardContent className="p-4">
           <div className="flex justify-between md:justify-around">
             {indicators.map((indicator, index) => (

@@ -1,15 +1,14 @@
 'use client'
 
-import clsx from "clsx";
-import { TopMenu } from "./new-sidebar/top-menu/TopMenu";
-import { BreadcrumbGrid, ButtonTheme, MobileSidebar, Sidebar, SidebarHalf } from "@/components";
+import { BreadcrumbGrid, ButtonTheme } from "@/components";
 import { useCollapseMenu, useSession } from "@/store";
 import { Session } from "@/interfaces/session";
 import { useEffect, useState } from "react";
 import { getCookieCollapse } from "@/actions/cookies/actions";
-import { SidebarInset, SidebarProvider, SidebarTrigger, useSidebar } from "../ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import { AppSidebar } from "./new-sidebar/AppSidebar";
 import { Separator } from "../ui/separator";
+import FontSizePopover from "../font-size/FontSizePopover";
 
 
 interface Props {
@@ -59,13 +58,14 @@ export const ContainerMenu = ({ children, session, theme }: Props) => {
       <SidebarProvider defaultOpen={isOpen}>
         <AppSidebar session={session} />
         <SidebarInset>
-          <header className="flex h-16 justify-between items-center gap-2 border-b dark:border-red-500  border-blue-500 px-4">
-            <div className="flex h-16  items-center gap-2 ">
+          <header className="flex h-12 justify-between items-center gap-2 border-b dark:border-white  border-black px-4">
+            <div className="flex h-12  items-center gap-2 ">
               <SidebarTrigger onClick={handleSetOpenClose} />
               <Separator orientation="vertical" className="mr-2 h-4" />
               <BreadcrumbGrid />
             </div>
-            <div>
+            <div className="flex gap-2">
+              <FontSizePopover/>
               <ButtonTheme />
             </div>
           </header>
