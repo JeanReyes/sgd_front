@@ -7,8 +7,8 @@ export interface ApiAllRequisito {
 
 export interface Requisito {
   nombre: string;
-  idRequisito: string | null;
-  id?: number
+  idRequisito?: string | null;
+  id: string;
   cantidad: string;
   obligatorio: string;
   descripcion: string;

@@ -62,6 +62,7 @@ export default function AddItemModal({
   control: Control<ItemFormValuesCreate>;
   monedas: Money[];
 }) {
+
   const [isOpen, setIsOpen] = useState(false);
   const formValues = useWatch({ control });
 
@@ -70,7 +71,7 @@ export default function AddItemModal({
     defaultValues: {
       cantidad: "20",
       idUnidad: "1",
-      descripcion: "detallr",
+      descripcion: "detalle",
       idClasificacionPresupuestaria: "1",
       precioUnitario: "20",
     },
@@ -137,7 +138,7 @@ export default function AddItemModal({
             <DialogTitle className="flex justify-between">
               Item valorizado en:{" "}
               {
-                monedas.find((m) => m.idMoneda === Number(formValues.idMoneda))
+                monedas.find((m) => Number(m.id) === Number(formValues.idMoneda))
                   ?.codigo
               }
             </DialogTitle>

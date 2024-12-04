@@ -6,7 +6,7 @@ export interface ApiAllMoney {
 }
 
 export type Money = {
-  idMoneda: number;
+  id: string;
   codigo: string;
   decimales: number;
   nombre: string;

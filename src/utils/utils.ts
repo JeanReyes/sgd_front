@@ -37,6 +37,8 @@ export const handleTransformItemToMoney = (total: number, IndicatorsValues: Indi
  
   //valor de la moneda seleccionada
   const valueMoneySelected = selectIndicator(IndicatorsValues, moneySelected)?.value;
+  console.log("valueMoneySelected", valueMoneySelected);
+  
 
   if (!valueMoneySelected) return
 
@@ -46,6 +48,8 @@ export const handleTransformItemToMoney = (total: number, IndicatorsValues: Indi
   // valor final en UTM
   const calculatePesoToUTM = transormedValueToPeso / utmValue;
 
+  console.log("calculatePesoToUTM", calculatePesoToUTM);
+  
   return calculatePesoToUTM;
   //tranformar 
 } 

@@ -196,10 +196,10 @@ export const columns: ColumnDef<MecanismoCompra>[] = [
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={() => {
-                    deleteUnidad(+mecanismo.idMecanismo);
-                    router.refresh();
-                  }}
+                  // onClick={() => {
+                  //   deleteUnidad(+mecanismo.idMecanismo);
+                  //   router.refresh();
+                  // }}
                 >
                   Eliminar
                 </AlertDialogAction>

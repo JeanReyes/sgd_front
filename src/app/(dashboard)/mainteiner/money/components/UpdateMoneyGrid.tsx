@@ -15,10 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 
 const formSchema = z.object({
-  id: z.preprocess(
-    (val) => parseInt(val as string, 10), // Convierte el valor a número
-    z.number().int({ message: "Debe ser un número entero" }) // Asegura que es un número
-  ),
+  id: z.string(),
   codigo: z.string(),
   decimales: z.preprocess(
     (val) => parseInt(val as string, 10), // Convierte el valor a número

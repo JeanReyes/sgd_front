@@ -25,7 +25,7 @@ export const TableRequisitos = ({
   const [selectedMecanismo, setSelected] = useState<MecanismoCompra | null>(
     null
   );
-
+  
   const selectedRequisitos = () => {
     for (const mecanismo of solicitudSelected.mecanismosCompra) {
       if (

@@ -44,6 +44,36 @@ export const getAllRequisito = async <T>(data?: T): Promise<ApiAllRequisito> => 
   }
 };
 
+
+export const getAllRequisitoAvailable = async <T>(
+  data?: T
+): Promise<ApiAllRequisito> => {
+  try {
+    const response = await fetch(
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Requisito/findAllAvaible`,
+      {
+        method: "GET",
+        headers: headers(),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    const res = await response.json(); // Verifica la respuesta de la API
+    return res;
+  } catch (error) {
+    return {
+      status: {
+        code: 404,
+        hasError: true,
+      },
+      data: [],
+    };
+  }
+};
+
 export const addRequisito = async <T>(data?: T): Promise<any> => {
   try {
     const response = await fetch(

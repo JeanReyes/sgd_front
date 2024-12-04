@@ -1,14 +1,9 @@
-import { Title } from "@/components";
+
 import { cookies } from "next/headers";
-import { DataTable } from "./components/data-table/data-table";
-import { columns } from "./components/data-table/columns";
-import { getAllUnidad } from "@/actions/mainteiner/unidad/actions";
-import { AddUnidadGrid } from "./components/AddUnidadGrid";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import  ManteinerGrid  from "./components/ManteinerGrid";
 import { getAllClasificacion } from "@/actions/mainteiner/clasificacion-compra/actions";
+import { getAllRequisitoAvailable } from "@/actions/mainteiner/requisito/actions";
+import { getAllDependencias } from "@/actions/mainteiner/dependencia/actions";
 
 export default async function HomeclasificacionCompra() {
   const cookieStore = cookies();
@@ -17,16 +12,16 @@ export default async function HomeclasificacionCompra() {
     : null;
 
   const clasificaciones = await getAllClasificacion();
-  
+  const requisitosAvailable = await getAllRequisitoAvailable();
+  const dependencias = await getAllDependencias();
 
   return (
     <div>
-      <Title title="Clasificación de la compra" />
-      {/* <div className="flex justify-end">
-        <AddUnidadGrid />
-      </div>
-      <DataTable columns={columns} data={unidades.data} /> */}
-      <ManteinerGrid clasificaciones={clasificaciones.data}/>
+      <ManteinerGrid
+        clasificaciones={clasificaciones.data}
+        requisitosAvailable={requisitosAvailable.data}
+        dependencias={dependencias.data}
+      />
     </div>
   );
 

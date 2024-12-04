@@ -18,7 +18,6 @@ import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { UpdateUnidadGrid } from "../UpdateUnidadGrid";
 import { deleteUnidad } from "@/actions/mainteiner/unidad/actions";
 import { Unidad } from "../../../../../../interfaces/unidad";
 
@@ -122,7 +121,7 @@ export const columns: ColumnDef<Unidad>[] = [
                   </AlertDialogCancel>
                 </div>
                 <div>
-                  <UpdateUnidadGrid unidad={unidad} setDialogOpen={setDialogOpen}/>
+                  {/* <UpdateUnidadGrid unidad={unidad} setDialogOpen={setDialogOpen}/> */}
                 </div>
               </AlertDialogHeader>
             </AlertDialogContent>

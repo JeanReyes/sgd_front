@@ -176,7 +176,7 @@ export const columns: ColumnDef<Money>[] = [
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
-                    deleteMoney(money.idMoneda);
+                    deleteMoney(+money.id);
                     router.refresh();
                   }}
                 >

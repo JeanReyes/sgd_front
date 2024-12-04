@@ -125,7 +125,7 @@ export const LoginGrid = ({ urlBase }: Props) => {
                 disabled={!form.formState.isValid}
                 className="mt-4"
                 type="submit"
-                variant={"destructive"}
+
               >
                 Ingresar
               </Button>

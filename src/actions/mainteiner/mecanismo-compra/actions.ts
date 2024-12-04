@@ -42,7 +42,7 @@ export const getAllMecanismo = async <T>(data?: T): Promise<any> => {
 export const addMecanismo = async <T>(data?: T): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/save`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/MecanismoCompra/save`,
       {
         method: "POST",
         headers: headers(),
@@ -59,7 +59,7 @@ export const addMecanismo = async <T>(data?: T): Promise<any> => {
 export const updateMecanismo = async <T>(data?: T): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/update`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/MecanismoCompra/update`,
       {
         method: "PUT",
         headers: headers(),
@@ -77,7 +77,7 @@ export const updateMecanismo = async <T>(data?: T): Promise<any> => {
 export const deleteMecanismo = async (id: number): Promise<any> => {
   try {
     const response = await fetch(
-      `${process.env.BACK_URL_FOR_FRONT}/api/v1/Funcionario/deleteById/${id}`,
+      `${process.env.BACK_URL_FOR_FRONT}/api/v1/MecanismoCompra/deleteById/${id}`,
       {
         method: "DELETE",
         headers: headers(),

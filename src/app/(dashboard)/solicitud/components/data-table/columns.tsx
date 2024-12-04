@@ -40,20 +40,6 @@ const myCustomFilterFn: FilterFn<Solicitud> = (
   const rowValues =
     `${row.original.cod} ${row.original.estado} ${row.original.cargoCreador} ${row.original.materia}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
-
-  //esto es cada campo por separado
-  // if (row.original.email.includes(filterValue)) {
-  //   return true
-  // }
-
-  // if (row.original.clientName.includes(filterValue)) {
-  //   return true;
-  // }
-
-  // if (row.original.status.includes(filterValue)) {
-  //   return true;
-  // }
-  return false;
 };
 
 

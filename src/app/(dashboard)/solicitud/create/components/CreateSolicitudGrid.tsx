@@ -97,6 +97,8 @@ export const CreateSolicitudGrid = ({
   indicePresupuestario,
   indicators,
 }: Props) => {
+
+
   const [items, setItems] = useState([] as ItemSolicitud[]);
   const [currentItem, setCurrentItem] = useState({
     cantidad: "",
@@ -146,10 +148,13 @@ export const CreateSolicitudGrid = ({
   const onSubmitRequest = async () => {
     let data = form.getValues();
     data.items = items;
-    data.idMecanismoDeCompra = mecanismoSelected.idMecanismo;
+    data.idMecanismoDeCompra = mecanismoSelected.idMecanismo!;
 
     const dataFinal: PurchaseRequest = transformStringsToNumbers(data);
     dataFinal.afectoIva = dataFinal.afectoIva ? 1 : 0;
+
+    console.log(dataFinal);
+    
 
     const newRequest = await addRequest(dataFinal);
     if (newRequest.status.code === 200) {
@@ -161,12 +166,18 @@ export const CreateSolicitudGrid = ({
     }
   };
 
+  const deleteItem = (index: number) => {
+    const newItems = [...items];
+    newItems.splice(index, 1);
+    setItems(newItems);
+  };
+
  useEffect(() => {
    // transform items ingresdos a utm
    if (items.length > 0) {
      const totalRequest = handleAfectoIva();
      const selectedMoney = monedas.find(
-       (m) => m.idMoneda === Number(form.watch().idMoneda)
+       (m) => Number(m.id) === Number(form.watch().idMoneda)
      )?.codigo;
 
      setValueInUtm(
@@ -239,8 +250,8 @@ export const CreateSolicitudGrid = ({
                       <SelectContent>
                         {monedas.map((moneda: Money) => (
                           <SelectItem
-                            value={String(moneda.idMoneda)}
-                            key={String(moneda.idMoneda)}
+                            value={String(moneda.id)}
+                            key={String(moneda.id)}
                           >
                             {moneda.codigo} / {moneda.descripcion}
                           </SelectItem>
@@ -287,6 +298,7 @@ export const CreateSolicitudGrid = ({
                     <TableHead>Unidad de Medida</TableHead>
                     <TableHead>Clasificación Presupuestaria</TableHead>
                     <TableHead>Precio Neto</TableHead>
+                    <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -295,9 +307,21 @@ export const CreateSolicitudGrid = ({
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{item.cantidad}</TableCell>
                       <TableCell>{item.descripcion}</TableCell>
-                      <TableCell>{item.idUnidad}</TableCell>
                       <TableCell>
-                        {item.idClasificacionPresupuestaria}
+                        {
+                          unidades.find(
+                            (u) => Number(u.id) === Number(item.idUnidad)
+                          )?.nombre
+                        }
+                      </TableCell>
+                      <TableCell>
+                        {
+                          indicePresupuestario.find(
+                            (i) =>
+                              Number(i.id) ===
+                              Number(item.idClasificacionPresupuestaria)
+                          )?.nombre
+                        }
                       </TableCell>
                       <TableCell>
                         {handleformatCurrency(
@@ -305,6 +329,11 @@ export const CreateSolicitudGrid = ({
                             Number(item.precioUnitario) * Number(item.cantidad)
                           )
                         )}
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={() => deleteItem(index)}>
+                          X
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -335,7 +364,9 @@ export const CreateSolicitudGrid = ({
                       <FormItem className="flex flex-row w-full items-center justify-between rounded-lg border p-4 col-span-1 sm:col-span-2">
                         <div className="space-y-0.5">
                           <FormDescription>
-                            Solicitud {form.watch().afectoIva ? 'afecta a' : 'excenta de'} IVA.{" "}
+                            Solicitud{" "}
+                            {form.watch().afectoIva ? "afecta a" : "excenta de"}{" "}
+                            IVA.{" "}
                           </FormDescription>
                         </div>
                         <FormControl>
@@ -368,14 +399,18 @@ export const CreateSolicitudGrid = ({
                     <Input
                       className="w-40"
                       readOnly
-                      value={ form.watch().afectoIva ? items.reduce(
-                        (sum, item) =>
-                          sum +
-                          Number(item.precioUnitario) *
-                            Number(item.cantidad) *
-                            0.19,
-                        0
-                      ) : 0}
+                      value={
+                        form.watch().afectoIva
+                          ? items.reduce(
+                              (sum, item) =>
+                                sum +
+                                Number(item.precioUnitario) *
+                                  Number(item.cantidad) *
+                                  0.19,
+                              0
+                            )
+                          : 0
+                      }
                     />
                   </div>
                   <div className="flex justify-between">
