@@ -1,48 +1,63 @@
-import React, { useState } from 'react'
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tooltip, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { FileIcon, Search } from 'lucide-react';
-import { Requisito } from '@/interfaces/requisito';
-import { NewMecanismo } from '../NuevoMecanimosForType';
-import { cn } from '@/lib/utils';
+import React, { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { FileIcon, Search } from "lucide-react";
+import { Requisito } from "@/interfaces/requisito";
+import { cn } from "@/lib/utils";
+import { NewMecanismo } from "../UpdMecanismoSteps";
 
 interface Props {
+  dataUpd: NewMecanismo;
   requisitosAvailable: Requisito[];
-  dataMecanismo: NewMecanismo;
-  setDataMecanismo: React.Dispatch<React.SetStateAction<NewMecanismo>>;
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  setDataUpd: React.Dispatch<React.SetStateAction<NewMecanismo>>;
 }
 
-export const SelectRequisitos = ({
+export const SelectRequisitoUpd = ({
+  dataUpd,
   requisitosAvailable,
-  dataMecanismo,
-  setDataMecanismo,
   setCurrentStep,
+  setDataUpd,
 }: Props) => {
   const [busqueda, setBusqueda] = useState("");
-
-  const requisitosFiltrados = requisitosAvailable.filter(
-    (requisito) =>
-      requisito.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-      requisito.descripcion.toLowerCase().includes(busqueda.toLowerCase())
+  const [requisitosFiltrados, setRequisitosFiltrados] = useState<Requisito[]>(
+    () =>
+      requisitosAvailable.filter(
+        (requisito) =>
+          requisito.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+          requisito.descripcion.toLowerCase().includes(busqueda.toLowerCase())
+      )
   );
+  const toggleRequisito = (requisito: Requisito) => {
+ 
+    setRequisitosFiltrados((prev) => {
+      return [
+        ...prev
+          .filter((r) => r.id !== requisito.id)
+          .filter((r) => r.nombre.toLowerCase().includes(busqueda.toLowerCase())),
+        requisito,
+      ];
+    });
 
-
-const toggleRequisito = (requisito: Requisito) => {
-  console.log(requisito);
-
-  setDataMecanismo((prev) => {
-    return {
-      ...prev,
-      requisitos: prev.requisitos.some((r) => r.id === requisito.id)
-        ? prev.requisitos.filter((r) => r.id !== requisito.id)
-        : [...prev.requisitos, requisito],
-    };
-  });
-};
+    setDataUpd((prev) => {
+      return {
+        ...prev,
+        current: {
+          ...prev.current,
+          requisitos: prev.current.requisitos.some((r) => r.id === requisito.id)
+            ? prev.current.requisitos.filter((r) => r.id !== requisito.id)
+            : [...prev.current.requisitos, requisito],
+        },
+      };
+    });
+  };
 
   return (
     <div>
@@ -70,7 +85,7 @@ const toggleRequisito = (requisito: Requisito) => {
                         variant="ghost"
                         className={cn(
                           "w-full h-auto p-4 flex items-start gap-2 bg-primary/10 hover:bg-primary/15 border-[#2F2F2F]",
-                          dataMecanismo.requisitos.some(
+                          dataUpd.current.requisitos.some(
                             (r) => r.id === requisito.id
                           ) &&
                             "border-primary bg-primary text-white dark:bg-slate-900 dark:text-white"
@@ -92,17 +107,17 @@ const toggleRequisito = (requisito: Requisito) => {
 
           <div className="col-span-1">
             <h3 className="text-lg font-semibold mb-2">
-              Requisitos seleccionados ({dataMecanismo.requisitos.length}
+              Requisitos seleccionados ({dataUpd.current.requisitos.length}
               ):
             </h3>
             <ScrollArea className="h-[100px]">
               <div className="flex flex-wrap gap-2">
-                {dataMecanismo.requisitos.length > 0 ? (
-                  dataMecanismo.requisitos.map((id) => {
-                    const requisito = requisitosAvailable.find(
-                      (r) => r.id === id.id
-                    );
-                    if (!requisito) return null;
+                {dataUpd.current.requisitos.length > 0 ? (
+                  dataUpd.current.requisitos.map((requisito) => {
+                    // const requisito = requisitosAvailable.find(
+                    //   (r) => r.id === id.id
+                    // );
+                    // if (!requisito) return null;
                     return (
                       <Badge
                         key={requisito.id}
@@ -128,7 +143,8 @@ const toggleRequisito = (requisito: Requisito) => {
       {/* Botón para continuar */}
       <div className="flex justify-end mt-4">
         <Button
-          onClick={() => setCurrentStep(2)} // Deshabilitar si no hay requisitos seleccionados
+          onClick={() => setCurrentStep(2)}
+          disabled={dataUpd.current.requisitos.length === 0} // Deshabilitar si no hay requisitos seleccionados
         >
           Siguiente
         </Button>

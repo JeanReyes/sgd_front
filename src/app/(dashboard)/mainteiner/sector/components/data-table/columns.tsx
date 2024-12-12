@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { UpdateSectorGrid } from "../UpdateSectorGrid";
 import { Sector } from "@/interfaces/sector";
 import { deleteSector } from "@/actions/mainteiner/sector/actions";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<Sector> = (
   row: Row<Sector>,
@@ -77,7 +78,7 @@ export const columns: ColumnDef<Sector>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

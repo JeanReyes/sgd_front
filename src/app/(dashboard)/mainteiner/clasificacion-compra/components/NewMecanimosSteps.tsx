@@ -8,8 +8,7 @@ import { SelectDependency } from './steps/SelectDependency';
 import { Dependencia } from '@/interfaces/dependencia';
 import { DetailMecanimo } from './steps/DetailMecanimo';
 import { SelectRequisitos } from './steps/SelectRequisitos';
-import { Button } from '@/components/ui/button';
-import { CreateMecanismo, MecanismoCompra } from '@/interfaces/mecanismo-compra';
+import { CreateMecanismo } from '@/interfaces/mecanismo-compra';
 import { ResumeMecanismo } from './steps/ResumeMecanismo';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -22,7 +21,6 @@ interface Props {
   dataMecanismo: NewMecanismo;
   requisitosAvailable: Requisito[];
   dependencias: Dependencia[];
-  setTiposDeCompra: (tiposDeCompra: DataClasificacion[]) => void;
   setDataMecanismo: React.Dispatch<SetStateAction<NewMecanismo>>;
 }
 
@@ -33,8 +31,7 @@ export const NewMecanimosSteps = ({
   dataMecanismo,
   requisitosAvailable,
   dependencias,
-  setDataMecanismo,
-  setTiposDeCompra,
+  setDataMecanismo
 }: Props) => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
@@ -50,7 +47,7 @@ export const NewMecanimosSteps = ({
       monedaID: "2",
       requisitos: dataMecanismo.requisitos.map((r) => r.id),
       clasificacionCompraID: String(selectedTipo.idClasificacion),
-      ruta: dataMecanismo.ruta.map((r) => r.id),
+      rutas: dataMecanismo.rutas.map((r) => r.id),
     };
 
     console.log(nuevoMecanismo);
@@ -152,7 +149,7 @@ export const NewMecanimosSteps = ({
 
           <TabsContent value="step3">
             <SelectDependency
-              selectedDependencies={dataMecanismo.ruta}
+              selectedDependencies={dataMecanismo.rutas}
               dependencias={dependencias}
               setStep={setCurrentStep}
               setDataMecanismo={setDataMecanismo}

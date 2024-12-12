@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { Dependencia } from "@/interfaces/dependencia";
 import { UpdateDependenciaGrid } from "../UpdateDependenciaGrid";
 import { deleteDependencia } from "@/actions/mainteiner/dependencia/actions";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<Dependencia> = (
   row: Row<Dependencia>,
@@ -91,7 +92,7 @@ export const columns: ColumnDef<Dependencia>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

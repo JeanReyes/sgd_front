@@ -79,7 +79,7 @@ export const ResumeMecanismo = ({
             </Button>
           </h4>
           <ul className="text-white text-sm space-y-1">
-            {dataMecanismo.ruta.map((dep) => (
+            {dataMecanismo.rutas.map((dep) => (
               <li key={dep.id} className="border-b border-gray-700 pb-1">
                 {dep.nombre}
               </li>
@@ -87,9 +87,15 @@ export const ResumeMecanismo = ({
           </ul>
         </div>
       </div>
-
-      <div className="flex justify-end mt-6">
-        <Button onClick={() => createMecanismo()}>Crear mecanismo</Button>
+      
+      <div className='flex justify-end gap-2'>
+        <div className="flex justify-end mt-6">
+          <Button onClick={() => console.log("cancelar mecanismo")} variant="secondary">
+          Cancelar</Button>
+        </div>
+        <div className="flex justify-end mt-6">
+          <Button onClick={() => createMecanismo()}>Crear mecanismo</Button>
+        </div>
       </div>
     </div>
   );

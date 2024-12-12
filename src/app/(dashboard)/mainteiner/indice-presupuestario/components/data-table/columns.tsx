@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { IndicePresupestrario } from "@/interfaces/indice-presupuestario";
 import { UpdateIndicePresupuestarioGrid } from "../UpdateIndicePresupuestarioSectorGrid";
 import { deleteIndicePresupuestario } from "@/actions/mainteiner/indice-presupuestario/actions";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<IndicePresupestrario> = (
   row: Row<IndicePresupestrario>,
@@ -73,7 +74,7 @@ export const columns: ColumnDef<IndicePresupestrario>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -134,10 +135,10 @@ export const columns: ColumnDef<IndicePresupestrario>[] = [
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
-                onClick={() => {
-                  deleteIndicePresupuestario(+IndicePresupestrario.id);
-                  router.refresh();
-                }}
+                  onClick={() => {
+                    deleteIndicePresupuestario(+IndicePresupestrario.id);
+                    router.refresh();
+                  }}
                 >
                   Eliminar
                 </AlertDialogAction>

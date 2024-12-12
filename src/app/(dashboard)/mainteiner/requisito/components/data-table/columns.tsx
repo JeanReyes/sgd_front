@@ -20,6 +20,7 @@ import { UpdateRequisitoGrid } from "../UpdaterequisitoGrid";
 import { Requisito } from '../../../../../../interfaces/requisito';
 import { deleteRequisito } from "@/actions/mainteiner/requisito/actions";
 import { Badge, BadgeProps } from "@/components/ui/badge";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<Requisito> = (
   row: Row<Requisito>,
@@ -79,7 +80,7 @@ export const columns: ColumnDef<Requisito>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

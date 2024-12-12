@@ -35,7 +35,7 @@ const data = {
   navMain: [
     {
       title: "Solicitudes",
-      url: "#",
+      url: "/solicitud",
       icon: IoCheckboxOutline,
       isActive: true,
       items: [
@@ -45,7 +45,7 @@ const data = {
         },
         {
           title: "Ver solicitudes",
-          url: "#",
+          url: "/solicitud",
         },
         {
           title: "Historial de solcitudes",
@@ -56,7 +56,7 @@ const data = {
   ],
   projects: [
     {
-      name: "Mantendores",
+      name: "Mantenedores",
       url: "/mainteiner",
       icon: Frame,
     },
@@ -84,9 +84,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           )}
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects projects={data.home} />
+        <NavProjects projects={data.home}/>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={data.projects} titleNav="Configuraciones"/>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} session={session} />

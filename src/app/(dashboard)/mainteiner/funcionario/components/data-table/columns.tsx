@@ -22,6 +22,7 @@ import { Funcionario } from "../../../../../../interfaces/funcionario";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { formatRUT } from "@/utils/rut-validate";
 import { deleteFuncionario } from "@/actions/mainteiner/funcionario/actions";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<Funcionario> = (
   row: Row<Funcionario>,
@@ -122,7 +123,7 @@ export const columns: ColumnDef<Funcionario>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

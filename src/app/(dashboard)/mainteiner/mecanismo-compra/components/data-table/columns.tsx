@@ -25,6 +25,7 @@ import { Unidad } from "../../../../../../interfaces/unidad";
 import { MecanismoCompra } from "../../../../../../interfaces/mecanismo-compra";
 import { DialogHeader, DialogFooter, Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<MecanismoCompra> = (
   row: Row<MecanismoCompra>,
@@ -139,7 +140,7 @@ export const columns: ColumnDef<MecanismoCompra>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -196,10 +197,10 @@ export const columns: ColumnDef<MecanismoCompra>[] = [
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
-                  // onClick={() => {
-                  //   deleteUnidad(+mecanismo.idMecanismo);
-                  //   router.refresh();
-                  // }}
+                // onClick={() => {
+                //   deleteUnidad(+mecanismo.idMecanismo);
+                //   router.refresh();
+                // }}
                 >
                   Eliminar
                 </AlertDialogAction>

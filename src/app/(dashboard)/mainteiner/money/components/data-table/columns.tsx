@@ -23,6 +23,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { UpdateMoneyGrid } from "../UpdateMoneyGrid";
 import { deleteMoney } from "@/actions/mainteiner/moneda/actions";
 import { useRouter } from "next/navigation";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<Money> = (
   row: Row<Money>,
@@ -118,7 +119,7 @@ export const columns: ColumnDef<Money>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

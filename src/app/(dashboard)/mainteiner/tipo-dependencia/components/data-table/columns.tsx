@@ -25,6 +25,7 @@ import {  UpdateTipoDependenciaGrid } from "../UpdateTipoDependenciaGrid";
 import { deleteDependencia } from "@/actions/mainteiner/dependencia/actions";
 import { TipoDependencia } from "@/interfaces/tipo-dependencia";
 import { deleteTipoDependencia } from "@/actions/mainteiner/tipo-dependencia/actions";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<TipoDependencia> = (
   row: Row<TipoDependencia>,
@@ -96,7 +97,7 @@ export const columns: ColumnDef<TipoDependencia>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

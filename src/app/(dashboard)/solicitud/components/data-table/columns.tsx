@@ -27,6 +27,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { UpdateMoneyGrid } from "@/app/(dashboard)/mainteiner/money/components/UpdateMoneyGrid";
 import { Solicitud } from "@/interfaces/solicitud";
 import { Badge, BadgeProps } from "@/components/ui/badge";
+import { FaRegEdit } from "react-icons/fa";
 
 const myCustomFilterFn: FilterFn<Solicitud> = (
   row: Row<Solicitud>,
@@ -117,7 +118,7 @@ export const columns: ColumnDef<Solicitud>[] = [
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <FaRegEdit />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

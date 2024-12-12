@@ -28,19 +28,21 @@ import Link from "next/link";
 
 export function NavProjects({
   projects,
+  titleNav,
 }: {
   projects: {
     name: string;
     url: string;
     icon: React.ElementType;
   }[];
+  titleNav?: string;
 }) {
 
   const { setOpenMobile } = useSidebar();
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarGroupLabel>{titleNav} </SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name} onClick={() => setOpenMobile(false)}>

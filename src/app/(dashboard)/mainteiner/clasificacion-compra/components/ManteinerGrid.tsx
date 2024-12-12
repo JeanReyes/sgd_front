@@ -14,6 +14,8 @@ import { DataClasificacion } from "@/interfaces/clasificacion-compra";
 import { Requisito } from "@/interfaces/requisito";
 import { Title } from "@/components";
 import { Dependencia } from "@/interfaces/dependencia";
+import { DataTable } from "./data-table/data-table";
+import { columns } from "./data-table/columns";
 
 
 const MainterGrid = ({
@@ -32,7 +34,14 @@ const MainterGrid = ({
     <>
       <Title title={`Clasificación de la compra`} />
       <div className="mx-auto">
-        <Table className="w-full border-collapse mb-8">
+        <DataTable
+          columns={columns}
+          data={clasificaciones}
+          requisitosAvailable={requisitosAvailable}
+          dependencias={dependencias}
+        ></DataTable>
+
+        {/* <Table className="w-full border-collapse mb-8">
           <TableHeader>
             <TableRow>
               <TableHead>Tipo de Compra</TableHead>
@@ -48,7 +57,6 @@ const MainterGrid = ({
                     <NuevoMecanimosForType
                       selectedTipo={tipo}
                       tiposDeCompra={tiposDeCompra}
-                      setTiposDeCompra={setTiposDeCompra}
                       requisitosAvailable={requisitosAvailable}
                       dependencias={dependencias}
                     />
@@ -57,7 +65,7 @@ const MainterGrid = ({
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </Table> */}
       </div>
     </>
   );

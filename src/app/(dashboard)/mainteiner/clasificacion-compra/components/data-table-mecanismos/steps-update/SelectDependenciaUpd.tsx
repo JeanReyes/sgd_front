@@ -1,47 +1,63 @@
 import React from "react";
 import { useDragAndDrop } from "@formkit/drag-and-drop/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { NewMecanismo } from "../NuevoMecanimosForType";
 import { Button } from "@/components/ui/button";
 import { Dependencia } from "@/interfaces/dependencia";
+import { NewMecanismo } from "../UpdMecanismoSteps";
 
 interface Props {
   dependencias: Dependencia[];
+  dataUpd: NewMecanismo;
   selectedDependencies: Dependencia[];
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  setDataMecanismo: React.Dispatch<React.SetStateAction<NewMecanismo>>;
+  setDataUpd: React.Dispatch<React.SetStateAction<NewMecanismo>>;
 }
 
-export const SelectDependency = ({ dependencias, selectedDependencies, setStep, setDataMecanismo }: Props) => {
-  const todoItems = dependencias.filter((dep) => !selectedDependencies.some((s) => s.id === dep.id));
-  const doneItems = selectedDependencies as Dependencia[];
+export const SelectDependenciaUpd = ({
+  dependencias,
+  selectedDependencies,
+  setStep,
+  setDataUpd,
+}: Props) => {
 
-    const [todoList, todos] = useDragAndDrop<HTMLUListElement, Dependencia>(
-      todoItems,
-      {
-        group: "A",
-        multiDrag: true,
-        selectedClass: "bg-blue-500 text-white",
-      }
-    );
-    const [doneList, dones] = useDragAndDrop<HTMLUListElement, Dependencia>(
-      doneItems,
-      {
-        group: "A",
-        multiDrag: true,
-        selectedClass: "bg-blue-500 text-white",
-      }
-    );
 
-    const handleDependenciesSelected = () => {
-      setDataMecanismo((prev) => {
-        return {
-          ...prev,
-          rutas: dones.map((item) => item),
-        };
-      })
-      setStep(3)
+  const todoItems = dependencias.filter(
+    (dep) => !selectedDependencies.some((s) => s.id === dep.id)
+  );
+  
+  const doneItems = dependencias.filter(
+    (dep) => selectedDependencies.some((s) => s.id === dep.id)
+  );
+
+  const [todoList, todos] = useDragAndDrop<HTMLUListElement, Dependencia>(
+    todoItems,
+    {
+      group: "A",
+      multiDrag: true,
+      selectedClass: "bg-blue-500 text-white",
     }
+  );
+  const [doneList, dones] = useDragAndDrop<HTMLUListElement, Dependencia>(
+    selectedDependencies || [],
+    {
+      group: "A",
+      multiDrag: true,
+      selectedClass: "bg-blue-500 text-white",
+    }
+  );
+
+  const handleDependenciesSelected = () => {
+    setDataUpd((prev) => {
+      return {
+        ...prev,
+        current: {
+          ...prev.current,
+          rutas: dones.map((item) => item) as Dependencia[],
+        },
+      };
+    });
+    setStep(3);
+  };
 
   return (
     <>
@@ -94,9 +110,7 @@ export const SelectDependency = ({ dependencias, selectedDependencies, setStep, 
         </ol>
       </div>
       <div className="flex justify-end mt-4">
-        <Button onClick={() => handleDependenciesSelected()} disabled={dones.length === 0}>
-          Siguiente
-        </Button>
+        <Button onClick={() => handleDependenciesSelected()}>Siguiente</Button>
       </div>
     </>
   );

@@ -7,7 +7,7 @@ export default function HomeDashboard() {
 
   return (
     <div>
-      <Title title="Dashboard" />
+      <Title title="Indicadores" />
       <DashboardGrid />
     </div>
   );

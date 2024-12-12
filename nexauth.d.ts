@@ -31,5 +31,8 @@ declare module "@tanstack/react-table" {
   interface TableMeta<TData> {
     tipoDependencias?: TipoDependencia[];
     sectores?: Sector[];
+    requisitosAvailable?: Requisito[];
+    dependencias?: Dependencia[];
+    selectedtipo?: DataClasificacion;
   }
 }

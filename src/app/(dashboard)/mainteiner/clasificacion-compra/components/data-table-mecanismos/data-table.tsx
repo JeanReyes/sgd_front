@@ -35,9 +35,9 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Requisito } from "@/interfaces/requisito";
 import { Dependencia } from "@/interfaces/dependencia";
+import { DataClasificacion } from "@/interfaces/clasificacion-compra";
 
 
 interface DataTableProps<TData, TValue> {
@@ -46,6 +46,7 @@ interface DataTableProps<TData, TValue> {
   children?: React.ReactNode;
   requisitosAvailable?: Requisito[];
   dependencias?: Dependencia[];
+  selectedtipo?: DataClasificacion;
 }
 
 export function DataTable<TData, TValue>({
@@ -54,6 +55,7 @@ export function DataTable<TData, TValue>({
   children,
   requisitosAvailable = [],
   dependencias = [],
+  selectedtipo,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -83,6 +85,7 @@ export function DataTable<TData, TValue>({
     meta: {
       requisitosAvailable,
       dependencias,
+      selectedtipo,
     }, // Pasamos estas props al contexto de las columnas
   });
 
@@ -90,27 +93,64 @@ export function DataTable<TData, TValue>({
     <div>
       {/* init table */}
       <div>
-        <div className="flex py-2 justify-center items-center gap-2">
-          <Input
-            placeholder="Filtro"
-            value={
-              (table.getColumn("nombre")?.getFilterValue() as string) ?? ""
+        <div className="flex justify-between items-center py-4 gap-2">
+          {/* <Input
+          placeholder="Filter"
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => {
+            //al filtrar por email, se limpian los otros filtros en este caso el status
+            // setCurrentStatus("all");
+            // table.getColumn("status")?.setFilterValue(undefined);
+            table.getColumn("email")?.setFilterValue(event.target.value);
+          }}
+          className="max-w-sm"
+        />
+        <Select
+          value={currentStatus}
+          onValueChange={(value) => {
+            if (value === "all") {
+              table.getColumn("status")?.setFilterValue(undefined);
+              setCurrentStatus("all");
+              return;
             }
-            onChange={(event) => {
-              //al filtrar por email, se limpian los otros filtros en este caso el status
-              // setCurrentStatus("all");
-              // table.getColumn("status")?.setFilterValue(undefined);
-              table.getColumn("nombre")?.setFilterValue(event.target.value);
+
+            setCurrentStatus(value);
+            table.getColumn("status")?.setFilterValue(value);
+          }}
+        >
+          <SelectTrigger className="w-[180px] ml-2">
+            <SelectValue placeholder="Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Status</SelectLabel>
+              <SelectItem value="all">All status</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="processing">Processing</SelectItem>
+              <SelectItem value="success">Success</SelectItem>
+              <SelectItem value="failed">Failed</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {isVisibleDelete && (
+          <Button
+            className="ml-2"
+            variant={"destructive"}
+            onClick={() => {
+              // table.getSelectedRowModel().rows.forEach((row) => {
+              //   console.log(row.original);
+              // })
+              const ids = table.getSelectedRowModel().rows.map((row) => {
+                return (row.original as Payment).clientName;
+              });
+              console.log(ids);
             }}
-            className="max-w-sm"
-          />
+          >
+            Delete
+          </Button>
+        )} */}
 
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
-                Columnas
-              </Button>
-            </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {table
                 .getAllColumns()
@@ -176,17 +216,17 @@ export function DataTable<TData, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No hay resultados.
+                    No results.
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-between space-x-2 py-4 mx-2">
+        {/* <div className="flex items-center justify-between space-x-2 py-4 mx-2">
           <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} de{" "}
-            {table.getFilteredRowModel().rows.length} filas(s) seleccionadas.
+            {table.getFilteredSelectedRowModel().rows.length} of{" "}
+            {table.getFilteredRowModel().rows.length} row(s) selected.
           </div>
           <Button
             variant="outline"
@@ -194,7 +234,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Anterior
+            Previous
           </Button>
           <Button
             variant="outline"
@@ -202,7 +242,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Siguiente
+            Next
           </Button>
         </div>
 
@@ -212,7 +252,7 @@ export function DataTable<TData, TValue>({
           }}
         >
           <SelectTrigger className="w-[180px] ml-2">
-            <SelectValue placeholder="Filas" />
+            <SelectValue placeholder="Rows" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -223,9 +263,8 @@ export function DataTable<TData, TValue>({
               <SelectItem value="100">100</SelectItem>
             </SelectGroup>
           </SelectContent>
-        </Select>
+        </Select> */}
       </div>
-      {/* end table */}
     </div>
   );
 }
