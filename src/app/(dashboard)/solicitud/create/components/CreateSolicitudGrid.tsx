@@ -51,6 +51,7 @@ import { MecanismoCompra } from "@/interfaces/mecanismo-compra";
 import { PurchaseRequest } from "@/interfaces/solicitud";
 import { addRequest } from "@/actions/solicitud/actions";
 import { toast } from "sonner";
+import { RouteTimeline } from "./RouteTimeLine";
 
 const purchaseSchema = z.object({
   cargoCreador: z.string().min(1, "Cargo es requerido"),
@@ -152,7 +153,7 @@ export const CreateSolicitudGrid = ({
 
     const dataFinal: PurchaseRequest = transformStringsToNumbers(data);
     dataFinal.afectoIva = dataFinal.afectoIva ? 1 : 0;
-
+    dataFinal.rutaPorMecanismo = 1;
     console.log(dataFinal);
     
 
@@ -187,17 +188,17 @@ export const CreateSolicitudGrid = ({
          selectedMoney as string
        ) as number
      );
+   } else { 
+     setMecanismoSelected({} as MecanismoCompra);
    }
  }, [items, form.watch().afectoIva]);
 
 // agregar 3 opciones de tamaño de letra para toda la plataforma
   return (
     <Card className="w-full  mx-auto">
-      {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
-      {/* <pre>{JSON.stringify(currentItem, null, 2)}</pre> */}
       <CardContent>
         <EconomicIndicators indicators={indicators} />
-        calculos: {valueInUtm}
+        {/* calculos: {valueInUtm} */}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmitRequest)}
@@ -331,9 +332,7 @@ export const CreateSolicitudGrid = ({
                         )}
                       </TableCell>
                       <TableCell>
-                        <Button onClick={() => deleteItem(index)}>
-                          X
-                        </Button>
+                        <Button onClick={() => deleteItem(index)}>X</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -343,7 +342,7 @@ export const CreateSolicitudGrid = ({
 
             {/* Calulate fiscal y Requisitos */}
             <div className="grid grid-cols-1 md:grid-cols-8 pt-5 gap-6">
-              <div className="col-span-8 md:col-span-5">
+              <div className="col-span-8 md:col-span-4">
                 <TableRequisitos
                   valueInUtm={valueInUtm}
                   solicitudSelected={solicitudSelected}
@@ -351,7 +350,13 @@ export const CreateSolicitudGrid = ({
                   setMecanismoSelected={setMecanismoSelected}
                 />
               </div>
-              <div className="col-span-8 md:col-span-3">
+              <div className="col-span-8 md:col-span-2">
+                {mecanismoSelected.rutas &&
+                  mecanismoSelected.rutas.length > 0 && (
+                    <RouteTimeline routes={mecanismoSelected.rutas} />
+                  )}
+              </div>
+              <div className="col-span-8 md:col-span-2">
                 <span className="flex items-center gap-1">
                   <Calculator className="w-4 h-4" />
                   Calculos de IVA
@@ -425,60 +430,11 @@ export const CreateSolicitudGrid = ({
               </div>
             </div>
 
-            {/* flujo destino */}
-            <div className="space-y-4">
-              {/* <FormField
-                control={form.control}
-                name="destination"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Destino</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccione destino" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="destino1">Destino 1</SelectItem>
-                        <SelectItem value="destino2">Destino 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="program"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Programa</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccione programa" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="programa1">Programa 1</SelectItem>
-                        <SelectItem value="programa2">Programa 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              /> */}
-            </div>
-
             <div className="flex justify-end">
               <Button
                 type="submit"
                 className="w-full flex items-end md:w-[400px]"
+                disabled={!mecanismoSelected.rutas}
               >
                 Crear {solicitudSelected.nombre}
               </Button>

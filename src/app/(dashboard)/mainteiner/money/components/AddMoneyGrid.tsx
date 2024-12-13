@@ -13,6 +13,8 @@ import { addMoney } from "@/actions/mainteiner/moneda/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 export type Money = {
   id: string;
@@ -86,8 +88,19 @@ export const AddMoneyGrid = () => {
 
   return (
     <div className="w-full">
-      <div className="flex justify-end">
-        <Button onClick={() => seDialogOpen(true)}>Agregar</Button>
+      <div className="flex ">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => seDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar nueva moneda</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={seDialogOpen}>
         <AlertDialogContent className="w-[95%]">
@@ -164,7 +177,7 @@ export const AddMoneyGrid = () => {
                   className="mt-4"
                   type="submit"
                 >
-                  Submit
+                  Ingresar
                 </Button>
               </form>
             </Form>

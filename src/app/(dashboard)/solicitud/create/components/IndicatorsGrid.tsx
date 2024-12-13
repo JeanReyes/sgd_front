@@ -12,31 +12,51 @@ import {
 } from "lucide-react";
 
 import { Indicators } from "@/interfaces/money";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { FaChartLine } from "react-icons/fa";
 
 
 export default function EconomicIndicators({ indicators }: { indicators: Indicators[] }) {
 
   return (
-    <TooltipProvider>
-      <Card className="bg-card/50 backdrop-blur border mb-6">
-        <CardContent className="p-4">
-          <div className="flex justify-between md:justify-around">
-            {indicators.map((indicator, index) => (
-              <div key={index} className="flex gap-2">
-                <IndicatorCard
-                  title={indicator.cod}
-                  icon={<BsCashCoin className="h-4 w-4" />}
-                  value={Number(indicator.value)}
-                  // trend={indicators.utm.trend}
-                  // change={indicators.utm.change}
-                  format="$"
-                />
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </TooltipProvider>
+    <>
+      <Accordion
+        type="single"
+        className="w-full mb-2"
+        defaultValue="item-1"
+        collapsible
+      >
+        <AccordionItem value="item-1" className="w-full">
+          <AccordionTrigger className="flex">
+            <div className="flex justify-center items-center gap-2">
+              Indicadores económicos <FaChartLine size={20} />
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <TooltipProvider>
+              <Card className="bg-card/50 backdrop-blur border mb-6">
+                <CardContent className="p-2">
+                  <div className="flex justify-between md:justify-around">
+                    {indicators.map((indicator, index) => (
+                      <div key={index} className="flex gap-2">
+                        <IndicatorCard
+                          title={indicator.cod}
+                          icon={<BsCashCoin className="h-4 w-4" />}
+                          value={Number(indicator.value)}
+                          // trend={indicators.utm.trend}
+                          // change={indicators.utm.change}
+                          format="$"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TooltipProvider>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </>
   );
 }
 
@@ -68,32 +88,16 @@ function IndicatorCard({
   };
 
   return (
-    <div className="flex-1">
-      <div className="flex items-center gap-2 mb-1">
+    <div className="flex justify-center items-center gap-2">
+      <div className="flex items-center gap-2">
         {icon}
         <span className="text-sm font-medium">{title}</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-md md:text-2xl font-bold tabular-nums">
+        <span className="text-md md:text-xl font-bold tabular-nums">
           {format}
           {value.toLocaleString("es-CL")}
         </span>
-        {/* <Tooltip>
-          <TooltipTrigger>
-            <Badge
-              variant="secondary"
-              className={cn("ml-2", trendColor[trend])}
-            >
-              <span className="flex items-center gap-1">
-                {trendIcon[trend]}
-                {change}%
-              </span>
-            </Badge>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Variación últimas 24 horas</p>
-          </TooltipContent>
-        </Tooltip> */}
       </div>
     </div>
   );

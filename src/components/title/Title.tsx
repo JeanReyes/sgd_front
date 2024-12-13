@@ -1,4 +1,6 @@
+
 import { titleFont } from "@/app/config/fonts";
+import { ButtonBack } from "../button-back/ButtonBack";
 
 interface Props {
   title: string;
@@ -8,9 +10,11 @@ interface Props {
 
 export const Title = ({title, subTitle, className}: Props) => {
   return (
-    <div className={`${className}`}>
+    <div className={`${className} md:mb-5 flex gap-4`}>
+      <ButtonBack />
+
       <h1
-        className={`${titleFont.className} antialiased text-2xl md:text-3xl font-semibold`}
+        className={`antialiased text-2xl md:text-3xl font-semibold`}
       >
         {title}
       </h1>

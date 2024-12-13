@@ -26,6 +26,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { addUnidad } from "@/actions/mainteiner/unidad/actions";
 import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 export type Money = {
   id: string;
@@ -84,7 +86,18 @@ export const AddUnidadGrid = () => {
   return (
     <div className="w-full">
       <div className="flex justify-end">
-        <Button onClick={() => seDialogOpen(true)}>Agregar</Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => seDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar unidad de medida</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={seDialogOpen}>
         <AlertDialogContent className="w-[95%]">
@@ -133,7 +146,7 @@ export const AddUnidadGrid = () => {
                   className="mt-4"
                   type="submit"
                 >
-                  Submit
+                  Ingresar
                 </Button>
               </form>
             </Form>

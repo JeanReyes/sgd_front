@@ -69,11 +69,11 @@ export default function AddItemModal({
   const form = useForm<ItemFormValues>({
     resolver: zodResolver(itemSchema),
     defaultValues: {
-      cantidad: "20",
-      idUnidad: "1",
-      descripcion: "detalle",
-      idClasificacionPresupuestaria: "1",
-      precioUnitario: "20",
+      cantidad: "",
+      idUnidad: "",
+      descripcion: "",
+      idClasificacionPresupuestaria: "",
+      precioUnitario: "",
     },
   });
 
@@ -121,25 +121,26 @@ export default function AddItemModal({
 
   return (
     <>
-    <StickyButton>
-      <Button
-        type="button"
-        variant="outline"
-        className="mt-4 w-full md:w-[200px] border-2 dark:bg-black dark:text-white border-flashing dark:border-flashing-dark "
-        onClick={handleOpenModal} // Ejecuta la validación antes de abrir el modal
-      >
-        Nuevo item
-        <FaPlus className="ml-2" />
-      </Button>
-    </StickyButton>
+      {/* <StickyButton> */}
+        <Button
+          type="button"
+          variant="outline"
+          className="mt-4 w-full md:w-[200px] border-2 dark:bg-black dark:text-white border-flashing dark:border-flashing-dark "
+          onClick={handleOpenModal} // Ejecuta la validación antes de abrir el modal
+        >
+          Nuevo item
+          <FaPlus className="ml-2" />
+        </Button>
+      {/* </StickyButton> */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="w-[95%] sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="flex justify-between">
-              Item valorizado en:{" "}
+              Ingreso de ítems:{" "}
               {
-                monedas.find((m) => Number(m.id) === Number(formValues.idMoneda))
-                  ?.codigo
+                monedas.find(
+                  (m) => Number(m.id) === Number(formValues.idMoneda)
+                )?.codigo
               }
             </DialogTitle>
           </DialogHeader>
@@ -160,7 +161,7 @@ export default function AddItemModal({
                       <FormItem>
                         <FormLabel className="flex py-2">Cantidad</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input placeholder="0" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -175,7 +176,7 @@ export default function AddItemModal({
                       <FormItem>
                         <FormLabel className="flex py-2">Precio Neto</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input placeholder="0" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

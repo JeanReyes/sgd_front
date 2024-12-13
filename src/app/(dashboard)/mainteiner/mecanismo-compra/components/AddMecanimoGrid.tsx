@@ -133,7 +133,7 @@ export const AddMecanismoGrid = () => {
                   className="mt-4"
                   type="submit"
                 >
-                  Submit
+                  Ingresar
                 </Button>
               </form>
             </Form>

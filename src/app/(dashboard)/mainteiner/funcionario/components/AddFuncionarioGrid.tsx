@@ -34,6 +34,8 @@ import { cn } from "@/lib/utils";
 import { es } from "date-fns/locale";
 import { format, setYear as setDateYear } from "date-fns";
 import { Label } from "@/components/ui/label";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 const formSchema = z.object({
   rut: z.string().refine((rut) => validarRUT(rut), {
@@ -131,13 +133,24 @@ export const AddFuncionarioGrid = () => {
   return (
     <div className="w-full">
       <div className="flex justify-end">
-        <Button onClick={() => seDialogOpen(true)}>Agregar</Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => seDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar funcionario</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={seDialogOpen}>
         <AlertDialogContent className="w-[95%]">
           <AlertDialogHeader>
             <div className="flex justify-between items-center">
-              <AlertDialogTitle >Nuevo funcionario</AlertDialogTitle>
+              <AlertDialogTitle>Nuevo funcionario</AlertDialogTitle>
               <AlertDialogCancel>
                 <AiOutlineClose />
               </AlertDialogCancel>
@@ -290,7 +303,7 @@ export const AddFuncionarioGrid = () => {
                   className="mt-4"
                   type="submit"
                 >
-                  Submit
+                  Ingresar
                 </Button>
 
                 {/* <Popover>

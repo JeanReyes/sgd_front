@@ -77,7 +77,7 @@ export const UpdMecanismoSteps = ({
       // actualizar el mecanismo solapado
       if (dataUpd.other.length > 0) {
         for (const mecanismo of dataUpd.other as MecanismoCompra[]) {
-          console.log({
+          const otroMecanismo = {
             id: mecanismo.idMecanismo,
             nombre: mecanismo.nombre,
             montoMinimo: mecanismo.montoMinimo,
@@ -87,9 +87,26 @@ export const UpdMecanismoSteps = ({
             clasificacionCompraID: String(selectedtipo.idClasificacion),
             requisitos: mecanismo.requisitos.map((r) => r.id),
             rutas: mecanismo.rutas.map((r: Dependencia) => r.id),
-          } as MecanimosUpd);
-        }
-      }
+          } as MecanimosUpd;
+
+          const res = await updateMecanismo(otroMecanismo);
+          if (!res.status.hasError) {
+            toast.success(`mecanismo actualizado: ${otroMecanismo.nombre}`, {
+              position: "top-right",
+              description: res.data.message,
+            });
+            router.refresh();
+            setDialogOpen(false);
+            // form.reset();
+          } else {
+            toast.error("Error", {
+              position: "top-right",
+              description: res.data.message,
+            });
+          }
+      } 
+    }
+      
       const mecanimosUpd = {
         id: dataUpd.current.idMecanismo,
         nombre: dataUpd.current.nombre,
@@ -102,18 +119,20 @@ export const UpdMecanismoSteps = ({
         rutas: dataUpd.current.rutas.map((r: Dependencia) => r.id),
       };
 
-      console.log(mecanimosUpd);
+      console.log("1",mecanimosUpd.rutas);
+      
+      console.log(dataUpd.current.rutas.map((r: Dependencia) => r));
+      
 
       const res = await updateMecanismo(mecanimosUpd);
       if (!res.status.hasError) {
-        toast.success("mecanismo actualizado", {
+        toast.success(`mecanismo actualizado: ${mecanimosUpd.nombre}`, {
           position: "top-right",
           description: res.data.message,
         });
         router.refresh();
         setDialogOpen(false);
         // form.reset();
-        return;
       } else {
         toast.error("Error", {
           position: "top-right",

@@ -15,7 +15,7 @@ export default async function HomeIndicePresupuestario() {
 
   return (
     <div>
-      <Title title="Indices presupuestarios" />
+      <Title title="Clasificación Presupuestaria" />
       <DataTable columns={columns} data={indicePresupestario.data}>
         <AddIndicePresupuestarioGrid />
       </DataTable>

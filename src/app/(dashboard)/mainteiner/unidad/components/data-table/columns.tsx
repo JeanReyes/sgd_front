@@ -34,37 +34,14 @@ const myCustomFilterFn: FilterFn<Unidad> = (
   const filterParts = filterValue.split(" ");
   const rowValues = `${row.original.descripcion} ${row.original.nombre}`.toLowerCase();
   return filterParts.every((part) => rowValues.includes(part));
-
-  //esto es cada campo por separado
-  // if (row.original.email.includes(filterValue)) {
-  //   return true
-  // }
-
-  // if (row.original.clientName.includes(filterValue)) {
-  //   return true;
-  // }
-
-  // if (row.original.status.includes(filterValue)) {
-  //   return true;
-  // }
-  return false;
 };
 
-
-const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
-  if (isSorted === "asc") {
-    return <ChevronUpIcon className="h-4 w-4"/>
-  }
-
-  if (isSorted === 'desc') {
-    return <ChevronDownIcon className="h-4 w-4" />;
-  }
-
-  return null;
-};
- 
 
 export const columns: ColumnDef<Unidad>[] = [
+  {
+    accessorKey: "id",
+    header: () => <div className="text-left">id</div>,
+  },
   {
     accessorKey: "nombre",
     header: () => <div className="text-left">Nombre</div>,

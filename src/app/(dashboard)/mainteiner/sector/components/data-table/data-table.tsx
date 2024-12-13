@@ -94,7 +94,7 @@ export function DataTable<TData, TValue>({
         />
 
         {/* Opciones de Columnas */}
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columnas
@@ -115,7 +115,7 @@ export function DataTable<TData, TValue>({
                 </DropdownMenuCheckboxItem>
               ))}
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
 
         {/* Contenido Extra */}
         <div>{children}</div>

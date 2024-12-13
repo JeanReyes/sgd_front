@@ -15,9 +15,6 @@ export default async function HomeclasificacionCompra() {
   const requisitosAvailable = await getAllRequisitoAvailable();
   const dependencias = await getAllDependencias();
 
-  console.log(clasificaciones.data);
-  
-
   return (
     <div>
       <ManteinerGrid

@@ -68,13 +68,13 @@ const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
  
 
 export const columns: ColumnDef<Money>[] = [
-  {
-    accessorKey: "idMoneda",
-    header: () => <div className="text-left">id</div>,
-    cell: ({ row }) => {
-      return <div>{row.getValue("idMoneda")}</div>;
-    },
-  },
+  // {
+  //   accessorKey: "id",
+  //   header: () => <div className="text-left">id</div>,
+  //   cell: ({ row }) => {
+  //     return <div>{row.getValue("id")}</div>;
+  //   },
+  // },
   {
     accessorKey: "codigo",
     header: "Código",

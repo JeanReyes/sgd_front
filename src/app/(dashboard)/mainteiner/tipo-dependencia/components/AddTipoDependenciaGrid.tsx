@@ -27,6 +27,8 @@ import { toast } from "sonner";
 // import { addTipoDependencia } from "@/actions/mainteiner/tipo-dependencia/actions"; // Supuesta acción para agregar TipoDependencia
 import { useRouter } from "next/navigation";
 import { addTipoDependencia } from "@/actions/mainteiner/tipo-dependencia/actions";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 // Esquema de validación con Zod
 const formSchema = z.object({
@@ -69,9 +71,19 @@ export const AddTipoDependenciaGrid = () => {
   return (
     <div className="w-full">
       <div className="flex justify-end">
-        <Button onClick={() => setDialogOpen(true)}>
-          Agregar Tipo Dependencia
-        </Button>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => setDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar tipo de dependencia</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <AlertDialogContent className="w-[95%] sm:max-w-lg">
@@ -127,7 +139,7 @@ export const AddTipoDependenciaGrid = () => {
                 disabled={!form.formState.isValid}
                 className="mt-4"
               >
-                Crear Tipo de Dependencia
+                Ingresar
               </Button>
             </form>
           </Form>

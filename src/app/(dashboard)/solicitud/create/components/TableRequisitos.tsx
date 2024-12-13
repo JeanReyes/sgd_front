@@ -7,6 +7,7 @@ import { FileText, Upload } from "lucide-react";
 import { ItemSolicitud } from "./CreateSolicitudGrid";
 import { MecanismoCompra } from "@/interfaces/mecanismo-compra";
 import { useEffect, useState } from "react";
+import { RouteTimeline } from "./RouteTimeLine";
 
 interface Props {
   valueInUtm: number;
@@ -44,7 +45,10 @@ export const TableRequisitos = ({
       if (mecanismo) {
         setSelected(mecanismo);
         setMecanismoSelected(mecanismo);
-      } 
+      } else {
+        setSelected(null);
+        setMecanismoSelected({} as MecanismoCompra);
+      }
     }
   }, [valueInUtm]);
 
@@ -65,7 +69,7 @@ export const TableRequisitos = ({
         <TableBody>
           {items.length === 0 ? (
             <TableRow>
-              <TableCell  className="text-2xl flex justify-center font-medium">
+              <TableCell className="text-2xl flex justify-center font-medium">
                 No hay items agregados
               </TableCell>
             </TableRow>

@@ -82,7 +82,7 @@ export const columns: ColumnDef<MecanismoCompra>[] = [
   },
   {
     accessorKey: "ruta",
-    header: () => <div className="text-left">Ruta</div>,
+    header: () => <div className="text-left">Flujo aprobación</div>,
     cell: ({ row }) => {
       const rutas = row.original.rutas as Dependencia[];
       const BadgeRequisitos = ({

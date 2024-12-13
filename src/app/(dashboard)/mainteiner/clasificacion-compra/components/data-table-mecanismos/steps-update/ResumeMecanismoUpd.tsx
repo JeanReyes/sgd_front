@@ -23,7 +23,7 @@ export const ResumeMecanismoUpd = ({
 }: Props) => {
   return (
     <div className="flex flex-col mt-4 rounded-lg p-6 border border-gray-700 shadow-md">
-      <h3 className="text-white text-lg font-semibold mb-6">
+      <h3 className=" text-lg font-semibold mb-6">
         Resumen de Mecanismo
       </h3>
 
@@ -33,21 +33,20 @@ export const ResumeMecanismoUpd = ({
           <h4 className="text-primary text-md font-semibold mb-2">
             Detalle
             <Button
-              variant="secondary"
               onClick={() => setCurrentStep(0)}
               className="ml-2"
             >
               Editar
             </Button>
           </h4>
-          <p className="text-white text-sm">
+          <p className=" text-sm">
             <span className="font-bold">Nombre:</span> {dataUpd.current.nombre}
           </p>
-          <p className="text-white text-sm">
+          <p className=" text-sm">
             <span className="font-bold">Monto Mínimo:</span>{" "}
             {dataUpd.current.montoMinimo}
           </p>
-          <p className="text-white text-sm">
+          <p className=" text-sm">
             <span className="font-bold">Monto Máximo:</span>{" "}
             {dataUpd.current.montoMaximo}
           </p>
@@ -88,14 +87,13 @@ export const ResumeMecanismoUpd = ({
           <h4 className="text-primary text-md font-semibold mb-2">
             Requisitos
             <Button
-              variant="secondary"
               onClick={() => setCurrentStep(1)}
               className="ml-2"
             >
               Editar
             </Button>
           </h4>
-          <ul className="text-white text-sm space-y-1">
+          <ul className=" text-sm space-y-1">
             {dataUpd.current.requisitos.map((req) => (
               <li key={req.id} className="border-b border-gray-700 pb-1">
                 {req.nombre}
@@ -108,14 +106,13 @@ export const ResumeMecanismoUpd = ({
           <h4 className="text-primary text-md font-semibold mb-2">
             Dependencias
             <Button
-              variant="secondary"
               onClick={() => setCurrentStep(2)}
               className="ml-2"
             >
               Editar
             </Button>
           </h4>
-          <ul className="text-white text-sm space-y-1">
+          <ul className=" text-sm space-y-1">
             {(dataUpd.current.rutas as Dependencia[]).map((dep) => (
               <li key={dep.id} className="border-b border-gray-700 pb-1">
                 {dep.nombre}

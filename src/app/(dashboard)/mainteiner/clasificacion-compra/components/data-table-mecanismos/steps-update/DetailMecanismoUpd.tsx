@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MecanismoCompra } from '@/interfaces/mecanismo-compra';
@@ -8,6 +7,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { NewMecanismo } from '../UpdMecanismoSteps';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { BiTerminal } from 'react-icons/bi';
 
 interface Props {
   mecanismo: MecanismoCompra;
@@ -40,126 +42,157 @@ export const DetailMecanismoUpd = ({
   setCurrentStep,
   setDataUpd,
 }: Props) => {
-  const actualizarMecanismos = (
-    idMecanismo: string,
-    newData: Partial<MecanismoCompra>,
-    mecanismos: MecanismoCompra[]
+const actualizarMecanismos = (
+  idMecanismo: string,
+  newData: Partial<MecanismoCompra>,
+  mecanismos: MecanismoCompra[]
+) => {
+  const nuevoMinimo = parseFloat(newData.montoMinimo!);
+  const nuevoMaximo = parseFloat(newData.montoMaximo!);
+
+  // Validación inicial del mecanismo actual
+  if (isNaN(nuevoMinimo) || isNaN(nuevoMaximo) || nuevoMinimo >= nuevoMaximo) {
+    return;
+  }
+
+  const originalMecanismos = [...mecanismos];
+  const index = originalMecanismos.findIndex(
+    (m) => m.idMecanismo === idMecanismo
+  );
+  if (index === -1) {
+    return;
+  }
+
+  const mecanismoActual = originalMecanismos[index];
+  const mecanismosAfectados: {
+    mecanismo: MecanismoCompra;
+    nuevoMinimo: string;
+    nuevoMaximo: string;
+  }[] = [];
+  const redundantes: MecanismoCompra[] = [];
+
+  // Actualizar el mecanismo actual con los nuevos rangos
+  mecanismosAfectados.push({
+    mecanismo: mecanismoActual,
+    nuevoMinimo: newData.montoMinimo!,
+    nuevoMaximo: newData.montoMaximo!,
+  });
+
+  // Función para ajustar un mecanismo dado su min y max propuestos
+  const ajustarMecanismo = (
+    mecanismo: MecanismoCompra,
+    propuestoMin: number,
+    propuestoMax: number
   ) => {
-    const nuevoMinimo = parseFloat(newData.montoMinimo!);
-    const nuevoMaximo = parseFloat(newData.montoMaximo!);
-
-    if (
-      isNaN(nuevoMinimo) ||
-      isNaN(nuevoMaximo) ||
-      nuevoMinimo >= nuevoMaximo
-    ) {
-      toast.error("El rango máximo debe ser mayor que el rango mínimo.", {
-        position: "top-right",
-      });
-      return;
+    if (propuestoMin <= propuestoMax) {
+      return {
+        mecanismo,
+        nuevoMinimo: propuestoMin.toString(),
+        nuevoMaximo: propuestoMax.toString(),
+      };
+    } else {
+      // No se puede ajustar este mecanismo sin invalidarlo
+      redundantes.push(mecanismo);
+      return null;
     }
+  };
 
-    const mecanismosAfectados: {
-      mecanismo: MecanismoCompra;
-      nuevoMinimo: string;
-      nuevoMaximo: string;
-    }[] = [];
-    const redundantes: MecanismoCompra[] = [];
+  // Ajustar el mecanismo anterior (si existe)
+  if (index > 0) {
+    const mecanismoAnterior = originalMecanismos[index - 1];
+    const minAnterior = parseFloat(mecanismoAnterior.montoMinimo);
+    const maxAnterior = parseFloat(mecanismoAnterior.montoMaximo);
 
-    const originalMecanismos = [...mecanismos]; // Mantenemos intacto el estado actual
-    const index = originalMecanismos.findIndex(
-      (m) => m.idMecanismo === idMecanismo
+    // Comparar maxAnterior con nuevoMinimo del actual
+    // Caso 1: Solapamiento si maxAnterior >= nuevoMinimo
+    // Caso 2: Gap si maxAnterior + 1 < nuevoMinimo
+    // Si maxAnterior + 1 == nuevoMinimo, ya están contiguos, no hacer nada.
+
+    if (maxAnterior >= nuevoMinimo) {
+      // Solapamiento: reducir el maxAnterior para que maxAnterior = nuevoMinimo - 1
+      const ajuste = ajustarMecanismo(
+        mecanismoAnterior,
+        minAnterior,
+        nuevoMinimo - 1
+      );
+      if (ajuste) mecanismosAfectados.push(ajuste);
+    } else if (maxAnterior + 1 < nuevoMinimo) {
+      // Gap: expandir el anterior para cubrir hasta nuevoMinimo - 1
+      const ajuste = ajustarMecanismo(
+        mecanismoAnterior,
+        minAnterior,
+        nuevoMinimo - 1
+      );
+      if (ajuste) mecanismosAfectados.push(ajuste);
+    }
+    // Si maxAnterior + 1 == nuevoMinimo, están alineados y no hace falta cambio.
+  }
+
+  // Ajustar el mecanismo siguiente (si existe)
+  if (index < originalMecanismos.length - 1) {
+    const mecanismoSiguiente = originalMecanismos[index + 1];
+    const minSiguiente = parseFloat(mecanismoSiguiente.montoMinimo);
+    const maxSiguiente = parseFloat(mecanismoSiguiente.montoMaximo);
+
+    // Comparar minSiguiente con nuevoMaximo del actual
+    // Caso 1: Solapamiento si minSiguiente <= nuevoMaximo
+    // Caso 2: Gap si minSiguiente > nuevoMaximo + 1
+    // Si minSiguiente == nuevoMaximo + 1, ya están alineados, no hacer nada.
+
+    if (minSiguiente <= nuevoMaximo) {
+      // Solapamiento: aumentar minSiguiente para que minSiguiente = nuevoMaximo + 1
+      const ajuste = ajustarMecanismo(
+        mecanismoSiguiente,
+        nuevoMaximo + 1,
+        maxSiguiente
+      );
+      if (ajuste) mecanismosAfectados.push(ajuste);
+    } else if (minSiguiente > nuevoMaximo + 1) {
+      // Gap: reducir el minSiguiente para que minSiguiente = nuevoMaximo + 1
+      const ajuste = ajustarMecanismo(
+        mecanismoSiguiente,
+        nuevoMaximo + 1,
+        maxSiguiente
+      );
+      if (ajuste) mecanismosAfectados.push(ajuste);
+    }
+    // Si minSiguiente == nuevoMaximo + 1, están alineados y no hace falta cambio.
+  }
+
+  // Actualizar estados
+  setMecanismosAfectados(mecanismosAfectados);
+  setRedundantes(redundantes);
+  setDataUpd((prev) => {
+    const mecanismoActualizado = mecanismosAfectados.find(
+      (m) => m.mecanismo.idMecanismo === idMecanismo
     );
 
-    if (index === -1) {
-      toast.error("Mecanimo no encontrado.", {
-        position: "top-right",
-      });
-      return;
-    }
+    const otrosAfectados = mecanismosAfectados.filter(
+      (m) => m.mecanismo.idMecanismo !== idMecanismo
+    );
 
-    // Mecanismo actualizado (sin modificar el actual aún)
-    mecanismosAfectados.push({
-      mecanismo: originalMecanismos[index],
-      nuevoMinimo: newData.montoMinimo!,
-      nuevoMaximo: newData.montoMaximo!,
-    });
+    return {
+      ...prev,
+      current: {
+        ...mecanismoActual,
+        nombre: newData.nombre ?? mecanismoActual.nombre,
+        montoMinimo: mecanismoActualizado
+          ? mecanismoActualizado.nuevoMinimo
+          : mecanismoActual.montoMinimo,
+        montoMaximo: mecanismoActualizado
+          ? mecanismoActualizado.nuevoMaximo
+          : mecanismoActual.montoMaximo,
+      },
+      other: otrosAfectados.map((m) => ({
+        ...m.mecanismo,
+        nombre: m.mecanismo.nombre,
+        montoMinimo: m.nuevoMinimo,
+        montoMaximo: m.nuevoMaximo,
+      })),
+    };
+  });
+};
 
-    // Analizamos mecanismos anteriores
-    for (let i = index - 1; i >= 0; i--) {
-      const mecanismo = originalMecanismos[i];
-      const minimoActual = parseFloat(mecanismo.montoMinimo);
-      const maximoActual = parseFloat(mecanismo.montoMaximo);
-
-      if (maximoActual <= nuevoMaximo && maximoActual >= nuevoMinimo) {
-        if (minimoActual >= nuevoMinimo) {
-          // Mecanismo está completamente dentro del rango: redundante
-          redundantes.push(mecanismo);
-        } else {
-          // Mecanismo parcialmente solapado: ajustar su monto máximo
-          const nuevoMaximoAjustado = (nuevoMinimo - 1).toString();
-          mecanismosAfectados.push({
-            mecanismo,
-            nuevoMinimo: mecanismo.montoMinimo,
-            nuevoMaximo: nuevoMaximoAjustado,
-          });
-        }
-      } else if (maximoActual < nuevoMinimo) {
-        // Si no hay más solapamientos, terminamos
-        break;
-      }
-    }
-
-    // Analizamos mecanismos siguientes
-    for (let i = index + 1; i < originalMecanismos.length; i++) {
-      const mecanismo = originalMecanismos[i];
-      const minimoActual = parseFloat(mecanismo.montoMinimo);
-      const maximoActual = parseFloat(mecanismo.montoMaximo);
-
-      if (minimoActual >= nuevoMinimo && maximoActual <= nuevoMaximo) {
-        // Mecanismo está completamente dentro del rango: redundante
-        redundantes.push(mecanismo);
-      } else if (minimoActual <= nuevoMaximo && maximoActual > nuevoMaximo) {
-        // Mecanismo parcialmente solapado: ajustar su monto mínimo
-        const nuevoMinimoAjustado = (nuevoMaximo + 1).toString();
-        mecanismosAfectados.push({
-          mecanismo,
-          nuevoMinimo: nuevoMinimoAjustado,
-          nuevoMaximo: mecanismo.montoMaximo,
-        });
-      } else if (minimoActual > nuevoMaximo) {
-        // Si no hay más solapamientos, terminamos
-        break;
-      }
-    }
-
-    console.log(mecanismosAfectados);
-    
-    // setMecanismosAfectados(mecanismosAfectados);
-    setMecanismosAfectados(mecanismosAfectados);
-    setRedundantes(redundantes);
-    setDataUpd((prev) => {
-      const otherMecanismoToUpd = mecanismosAfectados.filter((m) => m.mecanismo.idMecanismo !== mecanismo.idMecanismo)
-      
-      return {
-        ...prev,
-        current: {
-          ...mecanismo,
-          nombre: newData.nombre ?? "",
-          montoMinimo: newData.montoMinimo ?? "",
-          montoMaximo: newData.montoMaximo ?? "",
-        },
-        other: otherMecanismoToUpd.map((m) => {
-          return {
-            ...m.mecanismo,
-            nombre: newData.nombre ?? "",
-            montoMinimo: m.nuevoMinimo ?? "",
-            montoMaximo: m.nuevoMaximo ?? "",
-          }
-        }),
-      };
-    })
-  };
 
   return (
     <div className="grid gap-4">
@@ -178,6 +211,16 @@ export const DetailMecanismoUpd = ({
         />
       </div>
       <div>
+        {redundantes.length > 0 && (
+          <Alert variant={"warning"}>
+            <BiTerminal className="h-4 w-4" />
+            <AlertTitle>Advertencia</AlertTitle>
+            <AlertDescription>
+              No puede continuar si existen mecanismos redundantes, por favor
+              valide los datos nuevamente
+            </AlertDescription>
+          </Alert>
+        )}
         {/* Listado de mecanismos afectados */}
         {mecanismosAfectados.length > 0 && (
           <div className="mt-4 p-4 rounded-md border shadow-md bg-white dark:bg-gray-800">
@@ -186,22 +229,27 @@ export const DetailMecanismoUpd = ({
             </h3>
             <ul className="space-y-4">
               {mecanismosAfectados.map(
-                ({ mecanismo, nuevoMinimo, nuevoMaximo }) => (
+                ({
+                  mecanismo: mecanismoAfectado,
+                  nuevoMinimo,
+                  nuevoMaximo,
+                }) => (
                   <li
-                    key={mecanismo.idMecanismo}
+                    key={mecanismoAfectado.idMecanismo}
                     className={`flex justify-between items-center p-3 rounded-md ${
-                      actualizados.includes(mecanismo.idMecanismo!)
+                      actualizados.includes(mecanismoAfectado.idMecanismo!)
                         ? "bg-green-100 dark:bg-green-800"
                         : "bg-gray-50 dark:bg-gray-700"
                     }`}
                   >
                     <div>
                       <h4 className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                        {mecanismo.nombre}
+                        {mecanismoAfectado.idMecanismo === mecanismo.idMecanismo ? 'Mecanismo actual: ' : ''}
+                        {mecanismoAfectado.nombre}
                       </h4>
                       <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Rango actual: {mecanismo.montoMinimo} -{" "}
-                        {mecanismo.montoMaximo}
+                        Rango actual: {mecanismoAfectado.montoMinimo} -{" "}
+                        {mecanismoAfectado.montoMaximo}
                       </p>
                       <p className="text-xs text-green-600 dark:text-green-400">
                         Nuevo rango: {nuevoMinimo} - {nuevoMaximo}

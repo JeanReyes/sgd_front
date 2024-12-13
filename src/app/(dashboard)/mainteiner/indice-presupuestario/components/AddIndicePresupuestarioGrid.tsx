@@ -26,6 +26,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addIndicePresupuestario } from "@/actions/mainteiner/indice-presupuestario/actions"; // Supuesta acción para agregar índice presupuestario
 import { AiOutlineClose } from "react-icons/ai";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 // Esquema de validación con Zod
 const formSchema = z.object({
@@ -76,9 +78,18 @@ export const AddIndicePresupuestarioGrid = () => {
     <div className="w-full">
       {/* Botón para abrir el modal */}
       <div className="flex justify-end">
-        <Button onClick={() => setDialogOpen(true)}>
-          Agregar Índice Presupuestario
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => setDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar indice presupuestario</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {/* Modal */}
@@ -184,7 +195,7 @@ export const AddIndicePresupuestarioGrid = () => {
                 disabled={!form.formState.isValid}
                 className="mt-4"
               >
-                Crear Índice Presupuestario
+                Ingresar
               </Button>
             </form>
           </Form>

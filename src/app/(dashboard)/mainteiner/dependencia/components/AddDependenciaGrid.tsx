@@ -32,6 +32,8 @@ import { addDependencia } from "@/actions/mainteiner/dependencia/actions";
 import { TipoDependencia } from "@/interfaces/tipo-dependencia";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sector } from "@/interfaces/sector";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 const formSchema = z.object({
   nombre: z.string().min(1, "El nombre es obligatorio"), // Cambio realizado aquí
@@ -106,7 +108,18 @@ export const AddDependenciaGrid = ({ tipoDependencias, sectores }: Props) => {
   return (
     <div className="w-full">
       <div className="flex justify-end">
-        <Button onClick={() => setDialogOpen(true)}>Agregar Dependencia</Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => setDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar dependencia</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <AlertDialogContent className="w-[95%]">
@@ -260,7 +273,7 @@ export const AddDependenciaGrid = ({ tipoDependencias, sectores }: Props) => {
                 />
 
                 <Button className="mt-4" type="submit">
-                  Crear Dependencia
+                  Ingresar
                 </Button>
               </form>
             </Form>

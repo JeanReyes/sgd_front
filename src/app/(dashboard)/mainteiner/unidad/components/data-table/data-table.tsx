@@ -140,7 +140,7 @@ export function DataTable<TData, TValue>({
           </Button>
         )} */}
 
-          <DropdownMenu>
+          {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columnas
@@ -166,7 +166,7 @@ export function DataTable<TData, TValue>({
                 );
               })}
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
           <div>{children}</div>
         </div>
         <div className="rounded-md">

@@ -17,12 +17,12 @@ export const manteinerRoutes = [
     detail: "Configura y administra los tipos de compras del sistema.",
     icon: <BiPurchaseTag size={30} />,
   },
-  {
-    url: "/mainteiner/mecanismo-compra",
-    title: "Mecanismo de compra",
-    detail: "Configura y administra las compras del sistema.",
-    icon: <MdEventNote size={30} />,
-  },
+  // {
+  //   url: "/mainteiner/mecanismo-compra",
+  //   title: "Mecanismo de compra",
+  //   detail: "Configura y administra las compras del sistema.",
+  //   icon: <MdEventNote size={30} />,
+  // },
   {
     url: "/mainteiner/requisito",
     title: "Requisitos",
@@ -61,13 +61,13 @@ export const manteinerRoutes = [
   },
   {
     url: "/mainteiner/sector",
-    title: "Sector",
+    title: "Área Municipal",
     detail: "Configura y administra los sectores del sistema.",
     icon: <BsTextareaResize size={30} />,
   },
   {
     url: "/mainteiner/indice-presupuestario",
-    title: "Indice Presupuestario",
+    title: "Clasificación Presupuestaria",
     detail: "Configura y administra los Indices Presupuestarios del sistema.",
     icon: <AiOutlineNodeIndex size={30} />,
   },

@@ -37,8 +37,7 @@ export const NewMecanimosSteps = ({
   const [currentStep, setCurrentStep] = useState(0);
 
   const createMecanismo = async() => {
-    console.log(dataMecanismo);
-    
+
     const nuevoMecanismo: CreateMecanismo = {
       nombre: dataMecanismo.detail.nombreMecanismo,
       montoMinimo: String(dataMecanismo.detail.rangoMin),

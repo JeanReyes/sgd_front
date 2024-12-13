@@ -26,6 +26,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addSector } from "@/actions/mainteiner/sector/actions"; // Supuesta acción para agregar sector
 import { AiOutlineClose } from "react-icons/ai";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 // Esquema de validación con Zod
 const formSchema = z.object({
@@ -69,7 +71,18 @@ export const AddSectorGrid = () => {
     <div className="w-full">
       {/* Botón para abrir el modal */}
       <div className="flex justify-end">
-        <Button onClick={() => setDialogOpen(true)}>Agregar Sector</Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => setDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar Sector</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {/* Modal */}
@@ -127,7 +140,7 @@ export const AddSectorGrid = () => {
                 disabled={!form.formState.isValid}
                 className="mt-4"
               >
-                Crear Sector
+                Ingresar
               </Button>
             </form>
           </Form>

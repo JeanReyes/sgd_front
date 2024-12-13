@@ -15,7 +15,7 @@ export default async function HomeMoneda() {
 
   return (
     <div>
-      <Title title="Unidad" />
+      <Title title="Unidad de medida" />
       <DataTable columns={columns} data={unidades.data}>
         <AddUnidadGrid />
       </DataTable>

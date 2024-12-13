@@ -110,7 +110,7 @@ export const SelectRequisitoUpd = ({
               Requisitos seleccionados ({dataUpd.current.requisitos.length}
               ):
             </h3>
-            <ScrollArea className="h-[100px]">
+            <ScrollArea className="h-[150px]">
               <div className="flex flex-wrap gap-2">
                 {dataUpd.current.requisitos.length > 0 ? (
                   dataUpd.current.requisitos.map((requisito) => {
@@ -125,8 +125,8 @@ export const SelectRequisitoUpd = ({
                         className="text-sm cursor-pointer"
                         onClick={() => toggleRequisito(requisito)}
                       >
+                        <FileIcon className="ml-1 h-3 w-3 mr-2" />
                         {requisito.nombre}
-                        <FileIcon className="ml-1 h-3 w-3" />
                       </Badge>
                     );
                   })

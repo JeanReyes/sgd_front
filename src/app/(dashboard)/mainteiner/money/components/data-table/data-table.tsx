@@ -80,7 +80,7 @@ export function DataTable<TData, TValue>({
     <div>
       {/* init table */}
       <div>
-        <div className="flex py-2 justify-center items-center gap-2">
+        <div className="flex py-2 justify-between items-center gap-2">
           <Input
             placeholder="Filtro"
             value={
@@ -140,7 +140,7 @@ export function DataTable<TData, TValue>({
           </Button>
         )} */}
 
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
                 Columnas
@@ -165,8 +165,8 @@ export function DataTable<TData, TValue>({
                   );
                 })}
             </DropdownMenuContent>
-          </DropdownMenu>
-          <div>{children}</div>
+          </DropdownMenu> */}
+          <div >{children}</div>
         </div>
         <div className="rounded-md">
           <Table>

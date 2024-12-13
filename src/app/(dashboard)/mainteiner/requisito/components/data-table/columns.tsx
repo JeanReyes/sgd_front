@@ -60,9 +60,10 @@ export const columns: ColumnDef<Requisito>[] = [
       };
 
       const status = row.getValue("obligatorio") as StatusKey;
+      const isTrue = status === "true" ? 'si' : 'no';
 
       return (
-        <Badge variant={map[status] as BadgeProps["variant"]}>{status}</Badge>
+        <Badge variant={map[status] as BadgeProps["variant"]}>{isTrue}</Badge>
       );
     },
   },

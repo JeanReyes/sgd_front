@@ -19,7 +19,7 @@ export default async function HomeSector() {
 
   return (
     <div>
-      <Title title="Sector Municiapal" />
+      <Title title="Área Municipal" />
       <DataTable columns={columns} data={sectores.data}>
         <AddSectorGrid />
       </DataTable>

@@ -29,6 +29,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { extensiones, formatoBase } from "../utils/data";
 import { addRequisito } from "@/actions/mainteiner/requisito/actions";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 export type Money = {
   id: string;
@@ -105,7 +107,18 @@ export const AddrequisitoGrid = () => {
   return (
     <div className="w-full">
       <div className="flex justify-end">
-        <Button onClick={() => seDialogOpen(true)}>Agregar</Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={() => seDialogOpen(true)}>
+                <IoMdAddCircleOutline />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Agregar nuevo requisito</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <AlertDialog open={dialogOpen} onOpenChange={seDialogOpen}>
         <AlertDialogContent className="w-[95%]">
@@ -259,7 +272,7 @@ export const AddrequisitoGrid = () => {
                   className="mt-4"
                   type="submit"
                 >
-                  Submit
+                  Ingresar
                 </Button>
               </form>
             </Form>

@@ -45,17 +45,17 @@ export const SelectDependency = ({ dependencias, selectedDependencies, setStep, 
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 p-6 bg-gray-900 rounded-lg">
+      <div className="grid grid-cols-2 gap-4 p-6  rounded-lg">
         {/* Dependencias Disponibles */}
-        <div className="bg-gray-800 p-4 rounded-lg border border-gray-700 shadow-md">
-          <h2 className="text-white text-lg font-semibold mb-4">
+        <div className="p-4 rounded-lg border border-gray-700 shadow-md">
+          <h2 className=" text-lg font-semibold mb-4">
             Dependencias Disponibles
           </h2>
           <ul ref={todoList} className="space-y-2 w-full h-full">
             {todos.map((todo) => (
               <li
                 key={todo.id}
-                className="kanban-item bg-gray-700 text-white p-3 rounded-lg border border-gray-600 shadow-sm cursor-pointer hover:bg-gray-600"
+                className="kanban-item  p-3 rounded-lg border border-gray-600 shadow-sm cursor-pointer "
               >
                 {todo.nombre}
               </li>
@@ -64,15 +64,15 @@ export const SelectDependency = ({ dependencias, selectedDependencies, setStep, 
         </div>
 
         {/* Dependencias Seleccionadas */}
-        <div className="bg-gray-800 p-4 rounded-lg border border-gray-700 shadow-md">
-          <h2 className="text-white text-lg font-semibold mb-4">
+        <div className=" p-4 rounded-lg border border-gray-700 shadow-md">
+          <h2 className=" text-lg font-semibold mb-4">
             Dependencias Seleccionadas
           </h2>
           <ul ref={doneList} className="space-y-2 w-full h-full">
             {dones.map((done) => (
               <li
                 key={done.id}
-                className="kanban-item bg-gray-700 text-white p-3 rounded-lg border border-gray-600 shadow-sm cursor-pointer hover:bg-gray-600"
+                className="kanban-item  p-3 rounded-lg border border-gray-600 shadow-sm cursor-pointer "
               >
                 {done.nombre}
               </li>
@@ -81,11 +81,11 @@ export const SelectDependency = ({ dependencias, selectedDependencies, setStep, 
         </div>
       </div>
       <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-2 text-white">
+        <h3 className="text-lg font-semibold mb-2 ">
           El Orden configurado para la ruta de la Solicitud a crear será el
           siguiente:
         </h3>
-        <ol className="list-decimal list-inside text-gray-300">
+        <ol className="list-decimal list-inside ">
           {dones.map((dep, index) => (
             <li key={dep.id} className="mb-1">
               {dep.nombre}

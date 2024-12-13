@@ -12,6 +12,8 @@ export interface PurchaseRequest {
   materia: string;
   items: Item[];
   afectoIva: number;
+  rutaPorMecanismo: number;
+  rutaPersonalizada: number | string;
 }
 
 interface Item {
